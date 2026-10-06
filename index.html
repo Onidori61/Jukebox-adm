@@ -12,11 +12,12 @@
 <body class="bg-surface text-ink font-body min-h-screen">
   <header class="fixed top-0 z-20 w-full bg-white/90 backdrop-blur-xl shadow-sm"><div class="h-14 max-w-md mx-auto px-3 flex items-center justify-between gap-2.5"><div class="flex min-w-0 items-center gap-2.5"><img src="assets/logo-al.png" alt="Logo AL" class="w-8 h-8 object-contain"><div><div class="font-headline text-sm font-bold leading-tight">Chapa Renovação</div><div class="text-[11px] text-muted leading-tight">Jukebox • Recreio</div></div></div><button id="open-settings" type="button" aria-label="Configurações" title="Configurações" class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-muted hover:bg-soft hover:text-primary"><span class="material-symbols-outlined">settings</span></button></div></header>
   <main class="max-w-md w-full mx-auto pt-16 px-3 pb-6 min-h-screen flex flex-col">
-    <div class="grid grid-cols-4 gap-1 bg-slate-200 p-1 rounded-xl mb-4 shrink-0">
+    <div class="grid grid-cols-5 gap-1 bg-slate-200 p-1 rounded-xl mb-4 shrink-0">
       <button data-tab="pendente" class="tab py-2 rounded-lg text-[10px] sm:text-xs font-bold bg-white text-primary shadow-sm">Pendentes <b id="count-pendente" class="ml-1">0</b></button>
-      <button data-tab="recados" class="tab py-2 rounded-lg text-[10px] sm:text-xs font-bold text-muted">Recados <b id="count-recados" class="ml-1">0</b></button>
       <button data-tab="aprovada" class="tab py-2 rounded-lg text-[10px] sm:text-xs font-bold text-muted">Aprovadas <b id="count-aprovada" class="ml-1">0</b></button>
+      <button data-tab="historico" class="tab py-2 rounded-lg text-[10px] sm:text-xs font-bold text-muted">Histórico <b id="count-historico" class="ml-1">0</b></button>
       <button data-tab="barrada" class="tab py-2 rounded-lg text-[10px] sm:text-xs font-bold text-muted">Barradas <b id="count-barrada" class="ml-1">0</b></button>
+      <button data-tab="recados" class="tab py-2 rounded-lg text-[10px] sm:text-xs font-bold text-muted">Recados <b id="count-recados" class="ml-1">0</b></button>
     </div>
     <div id="admin-list" class="flex flex-col gap-2.5 flex-1 min-h-0"><p class="text-xs text-muted text-center p-4 bg-white rounded-xl">Carregando pedidos...</p></div>
   </main>
@@ -50,9 +51,21 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import { getFirestore, collection, query, where, getDocs, onSnapshot, doc, updateDoc, deleteDoc, setDoc, runTransaction, Timestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
     const config={apiKey:"AIzaSyDGbDeolFBC-Dw6EBZnNXygq9WuEdH8nS4",authDomain:"jukebox-c6d07.firebaseapp.com",projectId:"jukebox-c6d07",storageBucket:"jukebox-c6d07.firebasestorage.app",messagingSenderId:"56386350624",appId:"1:56386350624:web:df7a6fe404a1242176d645"},db=getFirestore(initializeApp(config)),songs=collection(db,"musicas"),recados=collection(db,"recados"),presence=collection(db,"presenca"),settingsRef=doc(db,"configuracoes","jukebox");
-    const lists={pendente:[],aprovada:[],barrada:[]};let noteDocs=[],active="pendente",rejectId=null,rejectType="song",currentSongId=null,maintenanceEnabled=false,activeTheme="default";
+    const lists={pendente:[],aprovada:[],barrada:[]};let noteDocs=[],playHistory=[],playHistoryDate="",active="pendente",rejectId=null,rejectType="song",currentSongId=null,maintenanceEnabled=false,activeTheme="default";
     const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
     function localDateKey(date=new Date()){return `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,"0")}-${String(date.getDate()).padStart(2,"0")}`;}
+    function compactPlayHistory(history){
+      const tracksBySong=new Map();
+      for(const track of history){
+        const key=track.songId||`legacy:${track.nome_low||track.nome||""}:${track.artista||""}`,
+          previous=tracksBySong.get(key),playCount=Math.max(1,Number(track.playCount)||1);
+        if(!previous){tracksBySong.set(key,{...track,playCount});continue}
+        const previousTime=Date.parse(previous.playedAt||""),trackTime=Date.parse(track.playedAt||""),
+          latest=trackTime>=previousTime?track:previous;
+        tracksBySong.set(key,{...previous,...latest,playCount:previous.playCount+playCount});
+      }
+      return [...tracksBySong.values()];
+    }
     function titleLooksExplicit(value){const words=String(value??"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();return /(?:^|[^a-z0-9])(puta|putinha|putas|puto|putinho|putos|caralho|porra|buceta|bucetinha|foda|foder|fodendo|fuck|fucking|shit|bitch|dick|pussy|motherfucker)(?:$|[^a-z0-9])/.test(words);}
     async function purgeStalePresence(){
       const cutoff=Date.now()-90000,stale=await getDocs(query(presence,where("lastSeen","<=",Timestamp.fromMillis(cutoff))));
@@ -73,19 +86,19 @@
       const songRef=doc(songs,id);
       await runTransaction(db,async transaction=>{
         const [songSnapshot,settingsSnapshot]=await Promise.all([transaction.get(songRef),transaction.get(settingsRef)]);
-        if(!songSnapshot.exists())throw new Error("Pedido não encontrado.");
+        if(!songSnapshot.exists()&&!settingsSnapshot.exists())throw new Error("Pedido não encontrado.");
         const settings=settingsSnapshot.data()||{},history=Array.isArray(settings.playHistory)?settings.playHistory:[],
           filteredHistory=history.filter(track=>track.songId!==id),updates={};
         if(settings.currentSongId===id){updates.currentSongId=null;updates.currentSongName="";}
         if(filteredHistory.length!==history.length)updates.playHistory=filteredHistory;
         if(Object.keys(updates).length)transaction.set(settingsRef,{...updates,updatedAt:new Date()},{merge:true});
-        transaction.delete(songRef);
+        if(songSnapshot.exists())transaction.delete(songRef);
       });
     }
-    ["pendente","aprovada","barrada"].forEach(status=>onSnapshot(query(songs,where("status","==",status)),snap=>{lists[status]=snap.docs;document.getElementById(`count-${status}`).textContent=snap.size;render();},error=>{console.error(`Falha ao carregar ${status}`,error);}));
+    ["pendente","aprovada","barrada"].forEach(status=>onSnapshot(query(songs,where("status","==",status)),snap=>{lists[status]=snap.docs;document.getElementById(`count-${status}`).textContent=status==="aprovada"?snap.docs.filter(song=>song.data().jaTocou!==true).length:snap.size;render();},error=>{console.error(`Falha ao carregar ${status}`,error);}));
     onSnapshot(recados,snap=>{noteDocs=snap.docs;document.getElementById("count-recados").textContent=noteDocs.filter(s=>s.data().status==="barrada").length;render();},error=>console.error("Falha ao carregar recados",error));
     document.querySelectorAll(".tab").forEach(btn=>btn.onclick=()=>{active=btn.dataset.tab;document.querySelectorAll(".tab").forEach(b=>b.className="tab py-2 rounded-lg text-[10px] sm:text-xs font-bold text-muted");btn.className="tab py-2 rounded-lg text-[10px] sm:text-xs font-bold bg-white text-primary shadow-sm";render();});
-    const power=document.getElementById("toggle-jukebox"),maintenanceButton=document.getElementById("toggle-maintenance"),themeSelect=document.getElementById("theme-select"),settingsModal=document.getElementById("settings-modal");onSnapshot(settingsRef,snap=>{const settings=snap.data()||{},enabled=settings.enabled===true;currentSongId=settings.currentSongId||null;maintenanceEnabled=settings.maintenance===true;activeTheme=settings.theme==="halloween"?"halloween":"default";if(document.activeElement!==themeSelect)themeSelect.value=activeTheme;power.dataset.enabled=enabled;power.className=`px-3 py-2 rounded-full text-xs font-bold flex items-center gap-1 ${enabled?"bg-green-100 text-green":"bg-soft text-primary"}`;power.lastElementChild.textContent=enabled?"Jukebox ligada":"Ligar Jukebox";document.getElementById("announcement-message").value=settings.announcementText||"";document.getElementById("maintenance-message").value=settings.maintenanceMessage||"";maintenanceButton.textContent=maintenanceEnabled?"Encerrar manutenção":"Ativar manutenção";maintenanceButton.className=`mt-2 w-full rounded-lg py-2.5 text-xs font-bold ${maintenanceEnabled?"bg-green-50 text-green":"bg-amber-50 text-amber-800"}`;if(active==="aprovada")render();},error=>console.error("Falha ao ler estado",error));power.onclick=async()=>{const enabled=power.dataset.enabled!=="true";power.disabled=true;try{await setDoc(settingsRef,{enabled,updatedAt:new Date()},{merge:true})}catch(error){console.error(error);showToast("Não foi possível alterar o estado.");power.disabled=false;return}power.disabled=false;if(!enabled){showToast("Jukebox desligada.");return}try{const deleted=await purgeStalePresence();showToast(`Jukebox ligada. ${deleted} presença(s) offline removida(s).`)}catch(error){console.error("Falha ao limpar presenças antigas",error);showToast("Jukebox ligada, mas não foi possível limpar as presenças antigas.")}};
+    const power=document.getElementById("toggle-jukebox"),maintenanceButton=document.getElementById("toggle-maintenance"),themeSelect=document.getElementById("theme-select"),settingsModal=document.getElementById("settings-modal");onSnapshot(settingsRef,snap=>{const settings=snap.data()||{},enabled=settings.enabled===true;currentSongId=settings.currentSongId||null;playHistoryDate=settings.playHistoryDate||"";playHistory=Array.isArray(settings.playHistory)?settings.playHistory:[];document.getElementById("count-historico").textContent=playHistoryDate===localDateKey()?compactPlayHistory(playHistory).filter(track=>track.songId!==currentSongId).length:0;maintenanceEnabled=settings.maintenance===true;activeTheme=settings.theme==="halloween"?"halloween":"default";if(document.activeElement!==themeSelect)themeSelect.value=activeTheme;power.dataset.enabled=enabled;power.className=`px-3 py-2 rounded-full text-xs font-bold flex items-center gap-1 ${enabled?"bg-green-100 text-green":"bg-soft text-primary"}`;power.lastElementChild.textContent=enabled?"Jukebox ligada":"Ligar Jukebox";document.getElementById("announcement-message").value=settings.announcementText||"";document.getElementById("maintenance-message").value=settings.maintenanceMessage||"";maintenanceButton.textContent=maintenanceEnabled?"Encerrar manutenção":"Ativar manutenção";maintenanceButton.className=`mt-2 w-full rounded-lg py-2.5 text-xs font-bold ${maintenanceEnabled?"bg-green-50 text-green":"bg-amber-50 text-amber-800"}`;if(active==="aprovada"||active==="historico")render();},error=>console.error("Falha ao ler estado",error));power.onclick=async()=>{const enabled=power.dataset.enabled!=="true";power.disabled=true;try{await setDoc(settingsRef,{enabled,updatedAt:new Date()},{merge:true})}catch(error){console.error(error);showToast("Não foi possível alterar o estado.");power.disabled=false;return}power.disabled=false;if(!enabled){showToast("Jukebox desligada.");return}try{const deleted=await purgeStalePresence();showToast(`Jukebox ligada. ${deleted} presença(s) offline removida(s).`)}catch(error){console.error("Falha ao limpar presenças antigas",error);showToast("Jukebox ligada, mas não foi possível limpar as presenças antigas.")}};
     const settingsHome=document.getElementById("settings-home"),settingsTitle=document.getElementById("settings-title"),settingsSubtitle=document.getElementById("settings-subtitle"),settingsBack=document.getElementById("settings-back"),settingsIcon=document.getElementById("settings-icon");
     const settingsViews={jukebox:{title:"Jukebox",subtitle:"Ligue ou desligue os pedidos",icon:"power_settings_new"},announcement:{title:"Avisos",subtitle:"Comunique-se com os alunos",icon:"campaign"},maintenance:{title:"Manutenção",subtitle:"Configure a indisponibilidade",icon:"build"},theme:{title:"Tema visual",subtitle:"Personalize o site do aluno",icon:"palette"}};
     function showSettingsHome(){settingsHome.classList.remove("hidden");document.querySelectorAll("[data-settings-panel]").forEach(panel=>panel.classList.add("hidden"));settingsBack.classList.add("hidden");settingsTitle.textContent="Configurações";settingsSubtitle.textContent="Escolha o que deseja configurar";settingsIcon.querySelector(".material-symbols-outlined").textContent="settings";}
@@ -97,7 +110,31 @@
     document.getElementById("publish-announcement").onclick=async()=>{const text=document.getElementById("announcement-message").value.trim();if(!text){showToast("Escreva um aviso antes de publicar.");return}try{await setDoc(settingsRef,{announcementText:text,announcementId:crypto.randomUUID(),updatedAt:new Date()},{merge:true});showToast("Aviso publicado para os alunos.")}catch(error){console.error(error);showToast("Não foi possível publicar o aviso.")}};
     document.getElementById("clear-announcement").onclick=async()=>{try{await setDoc(settingsRef,{announcementText:"",announcementId:"",updatedAt:new Date()},{merge:true});showToast("Aviso removido.")}catch(error){console.error(error);showToast("Não foi possível remover o aviso.")}};
     maintenanceButton.onclick=async()=>{const message=document.getElementById("maintenance-message").value.trim();if(!maintenanceEnabled&&!message){showToast("Explique o motivo antes de ativar a manutenção.");return}try{await setDoc(settingsRef,{maintenance:!maintenanceEnabled,maintenanceMessage:maintenanceEnabled?"":message,updatedAt:new Date()},{merge:true});showToast(maintenanceEnabled?"Manutenção encerrada.":"Modo de manutenção ativado.")}catch(error){console.error(error);showToast("Não foi possível alterar o modo de manutenção.")}};
-    function render(){const list=document.getElementById("admin-list");if(active==="recados"){const docs=noteDocs.filter(s=>s.data().status==="barrada").sort((a,b)=>(b.data().createdAt?.toMillis?.()||0)-(a.data().createdAt?.toMillis?.()||0));list.innerHTML=docs.length?docs.map(noteCard).join(""):'<p class="text-xs text-muted text-center p-4 bg-white rounded-xl">Nenhum recado barrado.</p>';}else{const docs=[...lists[active]].sort((a,b)=>(Number(b.data().votos)||0)-(Number(a.data().votos)||0));if(active==="aprovada"&&currentSongId){const currentIndex=docs.findIndex(song=>song.id===currentSongId);if(currentIndex>0)docs.unshift(docs.splice(currentIndex,1)[0]);}list.innerHTML=docs.length?docs.map(card).join(""):'<p class="text-xs text-muted text-center p-4 bg-white rounded-xl">Nenhum pedido nesta aba.</p>';}list.querySelectorAll("[data-action]").forEach(btn=>btn.onclick=()=>action(btn.dataset.action,btn.dataset.id));}
+    function render(){const list=document.getElementById("admin-list");if(active==="recados"){const docs=noteDocs.filter(s=>s.data().status==="barrada").sort((a,b)=>(b.data().createdAt?.toMillis?.()||0)-(a.data().createdAt?.toMillis?.()||0));list.innerHTML=docs.length?docs.map(noteCard).join(""):'<p class="text-xs text-muted text-center p-4 bg-white rounded-xl">Nenhum recado barrado.</p>';}else if(active==="historico"){const tracks=playHistoryDate===localDateKey()?compactPlayHistory(playHistory).filter(track=>track.songId!==currentSongId).sort((a,b)=>Date.parse(b.playedAt||"")-Date.parse(a.playedAt||"")):[];list.innerHTML=tracks.length?tracks.map(historyCard).join(""):'<p class="text-xs text-muted text-center p-4 bg-white rounded-xl">Nenhuma música tocou hoje.</p>';}else{const docs=[...lists[active]].filter(song=>active!=="aprovada"||song.data().jaTocou!==true).sort((a,b)=>(Number(b.data().votos)||0)-(Number(a.data().votos)||0));if(active==="aprovada"&&currentSongId){const currentIndex=docs.findIndex(song=>song.id===currentSongId);if(currentIndex>0)docs.unshift(docs.splice(currentIndex,1)[0]);}list.innerHTML=docs.length?docs.map(card).join(""):'<p class="text-xs text-muted text-center p-4 bg-white rounded-xl">Nenhum pedido nesta aba.</p>';}list.querySelectorAll("[data-action]").forEach(btn=>btn.onclick=()=>action(btn.dataset.action,btn.dataset.id));}
+    function historyCard(track){
+      const cover=track.capa?`<img class="w-12 h-12 rounded-xl object-cover" src="${esc(track.capa)}" alt="">`:`<div class="w-12 h-12 rounded-xl bg-soft text-primary flex items-center justify-center"><span class="material-symbols-outlined">album</span></div>`,
+        playedAt=new Date(track.playedAt||""),time=Number.isNaN(playedAt.getTime())?"":playedAt.toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"}),
+        current=track.songId===currentSongId,playCount=Math.max(1,Number(track.playCount)||1);
+      return `<article class="doodle bg-white p-3 rounded-xl shadow-sm ring-1 ring-slate-200"><div class="flex items-center gap-3">${cover}<div class="min-w-0 flex-1"><b class="block truncate text-sm">${esc(track.nome||"Música")}</b><span class="block truncate text-xs text-muted">${esc(track.artista||"Artista não informado")}</span><small class="text-[10px] text-muted">${current?"Tocando agora":time||"Reproduzida"}${playCount>1?` • Tocada ${playCount} vezes`:""}</small></div>${track.songId?`<button data-action="delete-history" data-id="${esc(track.songId)}" aria-label="Apagar ${esc(track.nome||"música")} do histórico e do sistema" title="Apagar música e histórico" class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-soft text-muted hover:bg-red-50 hover:text-danger"><span class="material-symbols-outlined text-base">delete</span></button>`:""}</div></article>`;
+    }
+    async function finishCurrentSong(currentId,nextId=null){
+      const finishedAt=new Date(),dateKey=localDateKey(finishedAt);
+      await runTransaction(db,async transaction=>{
+        const settingsSnapshot=await transaction.get(settingsRef),settings=settingsSnapshot.data()||{};
+        if(settings.currentSongId!==currentId)throw new Error("A música atual mudou. Atualize o painel e tente novamente.");
+        const currentRef=doc(songs,currentId),nextRef=nextId?doc(songs,nextId):null,
+          currentSnapshot=await transaction.get(currentRef),nextSnapshot=nextRef?await transaction.get(nextRef):null;
+        if(!currentSnapshot.exists()||currentSnapshot.data().status!=="aprovada")throw new Error("A música atual não está mais aprovada.");
+        if(nextId&&(!nextSnapshot?.exists()||nextSnapshot.data().status!=="aprovada"||nextSnapshot.data().jaTocou===true))throw new Error("A próxima música não está mais disponível na fila.");
+        const history=compactPlayHistory(settings.playHistoryDate===dateKey&&Array.isArray(settings.playHistory)?settings.playHistory:[]),
+          current=currentSnapshot.data(),previousTrack=history.find(track=>track.songId===currentId),
+          completedTrack={songId:currentId,nome:current.nome,artista:current.artista||"",capa:current.capa||"",duracao:current.duracao||"",playedAt:finishedAt.toISOString(),playCount:(Number(previousTrack?.playCount)||0)+1},
+          updatedHistory=[...history.filter(track=>track.songId!==currentId),completedTrack];
+        transaction.update(currentRef,{jaTocou:true,skipVotes:0,skipVotedBy:[]});
+        if(nextSnapshot&&nextRef)transaction.update(nextRef,{skipVotes:0,skipVotedBy:[]});
+        transaction.set(settingsRef,{currentSongId:nextId,currentSongName:nextSnapshot?.data().nome||"",playHistoryDate:dateKey,playHistory:updatedHistory,updatedAt:finishedAt},{merge:true});
+      });
+    }
     function card(snap){
       const d=snap.data(),explicit=d.explicita===true||titleLooksExplicit(d.nome),explicitByTitle=d.classificacaoConteudo==="termo_explicito_no_titulo"||titleLooksExplicit(d.nome),
         cover=d.capa?`<img class="w-12 h-12 rounded-xl object-cover" src="${esc(d.capa)}" alt="">`:`<div class="w-12 h-12 rounded-xl bg-soft text-primary flex items-center justify-center"><span class="material-symbols-outlined">album</span></div>`,
@@ -106,8 +143,9 @@
         skipSummary=active==="aprovada"&&currentSongId===snap.id?`<div class="mt-2 inline-flex items-center gap-1.5 rounded-full border border-amber-200 bg-amber-50 px-2.5 py-1 text-[10px] font-bold text-amber-800"><span class="material-symbols-outlined text-sm">skip_next</span>${skipVotes} voto(s) para pular — decisão do Grêmio</div>`:"",
         moderation=active==="pendente"?`<button data-action="reject" data-id="${snap.id}" class="flex-1 rounded-lg bg-red-50 py-2 text-xs font-bold text-danger">Barrar música</button><button data-action="approve" data-id="${snap.id}" class="flex-1 rounded-lg bg-green-50 py-2 text-xs font-bold text-green">Aprovar música</button><button data-action="delete" data-id="${snap.id}" aria-label="Apagar pedido" title="Apagar pedido" class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-soft text-muted hover:bg-red-50 hover:text-danger"><span class="material-symbols-outlined text-base">delete</span></button>`:"",
         player=active==="aprovada"?`<div class="mt-2 flex items-center rounded-xl border border-slate-200 bg-slate-50 p-1"><button data-action="copy" data-id="${snap.id}" aria-label="Copiar comando" class="flex min-h-9 flex-1 items-center justify-center gap-1 rounded-lg px-1 py-1.5 text-[10px] font-semibold text-muted hover:bg-white hover:text-primary"><span class="material-symbols-outlined text-base">content_copy</span>Copiar</button><button data-action="play" data-id="${snap.id}" aria-label="${currentSongId===snap.id?"Encerrar tocando agora":"Marcar tocando agora"}" class="flex min-h-9 flex-1 items-center justify-center gap-1 rounded-lg px-1 py-1.5 text-[10px] font-semibold ${currentSongId===snap.id?"bg-green-100 text-green":"text-muted hover:bg-white hover:text-primary"}"><span class="material-symbols-outlined text-base">${currentSongId===snap.id?"graphic_eq":"play_circle"}</span>${currentSongId===snap.id?"Tocando":"Tocar agora"}</button><button data-action="delete" data-id="${snap.id}" aria-label="Apagar música" class="flex min-h-9 flex-1 items-center justify-center gap-1 rounded-lg px-1 py-1.5 text-[10px] font-semibold text-muted hover:bg-red-50 hover:text-danger"><span class="material-symbols-outlined text-base">delete</span>Apagar</button></div>`:"",
+        advance=active==="aprovada"&&currentSongId===snap.id?`<button data-action="next" data-id="${snap.id}" class="mt-2 inline-flex min-h-10 w-full items-center justify-center gap-2 rounded-xl bg-primary px-3 py-2 text-xs font-bold text-white hover:bg-blue-800"><span class="material-symbols-outlined text-base">skip_next</span>${lists.aprovada.some(song=>song.id!==snap.id&&song.data().jaTocou!==true)?"Próxima música":"Encerrar e enviar ao histórico"}</button>`:"",
         history=active==="barrada"?`<button data-action="delete-history" data-id="${snap.id}" aria-label="Apagar música do histórico" class="mt-2 inline-flex min-h-9 w-full items-center justify-center gap-1 rounded-lg bg-soft px-2 py-1.5 text-[10px] font-semibold text-muted hover:bg-red-50 hover:text-danger"><span class="material-symbols-outlined text-base">delete</span>Apagar do histórico</button>`:"";
-      return `<article class="doodle ${explicit?"bg-red-50/70 ring-1 ring-red-300":"bg-white ring-1 ring-slate-200"} p-3 rounded-xl shadow-sm"><div class="flex items-center gap-3">${cover}<div class="min-w-0 flex-1"><b class="block truncate text-sm ${explicit?"text-red-700":""}">${esc(d.nome)}</b><span class="block truncate text-xs text-muted">${esc(d.artista||"Artista não informado")}</span><small class="text-[10px] text-muted">${Number(d.votos)||0} voto(s)${d.motivo?` • ${esc(d.motivo)}`:""}</small></div></div>${explicit?`<div class="mt-2 inline-flex items-center gap-1 rounded-full bg-red-100 px-2.5 py-1 text-[10px] font-bold text-red-700"><span class="material-symbols-outlined text-sm">explicit</span>${explicitByTitle?"Possível conteúdo explícito no título":"Faixa marcada como explícita pelo iTunes"} — revisar</div>`:""}${skipSummary}${songNotes.length?`<div class="mt-2 space-y-1.5">${songNotes.map(note=>noteInline(note)).join("")}</div>`:""}${moderation?`<div class="mt-2 flex gap-2">${moderation}</div>`:""}${player}${history}</article>`;
+      return `<article class="doodle ${explicit?"bg-red-50/70 ring-1 ring-red-300":"bg-white ring-1 ring-slate-200"} p-3 rounded-xl shadow-sm"><div class="flex items-center gap-3">${cover}<div class="min-w-0 flex-1"><b class="block truncate text-sm ${explicit?"text-red-700":""}">${esc(d.nome)}</b><span class="block truncate text-xs text-muted">${esc(d.artista||"Artista não informado")}</span><small class="text-[10px] text-muted">${Number(d.votos)||0} voto(s)${d.motivo?` • ${esc(d.motivo)}`:""}</small></div></div>${explicit?`<div class="mt-2 inline-flex items-center gap-1 rounded-full bg-red-100 px-2.5 py-1 text-[10px] font-bold text-red-700"><span class="material-symbols-outlined text-sm">explicit</span>${explicitByTitle?"Possível conteúdo explícito no título":"Faixa marcada como explícita pelo iTunes"} — revisar</div>`:""}${skipSummary}${songNotes.length?`<div class="mt-2 space-y-1.5">${songNotes.map(note=>noteInline(note)).join("")}</div>`:""}${moderation?`<div class="mt-2 flex gap-2">${moderation}</div>`:""}${player}${advance}${history}</article>`;
     }
     function noteInline(snap){const d=snap.data(),pending=d.status==="pendente";return `<div class="flex items-start gap-2 rounded-xl border ${pending?"border-amber-200 bg-amber-50/70":"border-green-100 bg-green-50/60"} p-2.5"><span class="material-symbols-outlined mt-0.5 text-sm ${pending?"text-amber-700":"text-green"}">${pending?"schedule":"chat"}</span><div class="min-w-0 flex-1"><div class="flex items-center justify-between gap-2"><span class="text-[10px] font-bold ${pending?"text-amber-800":"text-green"}">${pending?"Recado pendente":"Recado liberado"}</span><div class="flex items-center gap-1">${pending?`<button data-action="approve-note" data-id="${esc(snap.id)}" aria-label="Aprovar recado" title="Aprovar recado" class="flex h-7 w-7 items-center justify-center rounded-full text-green hover:bg-green-100"><span class="material-symbols-outlined text-base">check</span></button>`:""}<button data-action="reject-note" data-id="${esc(snap.id)}" aria-label="Apagar recado" title="Apagar recado" class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-muted hover:bg-red-100 hover:text-danger"><span class="material-symbols-outlined text-base">close</span></button></div></div><p class="mt-1 whitespace-pre-wrap break-words text-xs leading-relaxed text-ink">${esc(d.texto)}</p></div></div>`;}
     function noteCard(snap){
@@ -133,39 +171,37 @@
         if(type==="approve"){
           const song=lists[active].find(item=>item.id===id)?.data();
           if(!song)throw new Error("Pedido pendente não encontrado.");
-          await updateDoc(doc(songs,id),{status:"aprovada",motivo:"",requestedBy:Array.isArray(song.requestedBy)?song.requestedBy:Array.isArray(song.votedBy)?song.votedBy:[]});
+          await updateDoc(doc(songs,id),{status:"aprovada",motivo:"",jaTocou:false,requestedBy:Array.isArray(song.requestedBy)?song.requestedBy:Array.isArray(song.votedBy)?song.votedBy:[]});
         }
         else if(type==="approve-note")await updateDoc(doc(recados,id),{status:"aprovada",motivo:""});
         else if(type==="play"){
-          const startedAt=new Date(),dateKey=localDateKey(startedAt);
+          if(currentSongId===id){
+            await finishCurrentSong(id);
+            showToast("Música encerrada e enviada ao histórico.");
+            return;
+          }
+          if(currentSongId){
+            await finishCurrentSong(currentSongId,id);
+            showToast("A música atual foi para o histórico e a selecionada começou.");
+            return;
+          }
+          const startedAt=new Date();
           await runTransaction(db,async transaction=>{
             const songRef=doc(songs,id),songSnapshot=await transaction.get(songRef),settingsSnapshot=await transaction.get(settingsRef);
-            if(!songSnapshot.exists()||songSnapshot.data().status!=="aprovada")throw new Error("Música aprovada não encontrada.");
-            if(settingsSnapshot.data()?.currentSongId===id)transaction.set(settingsRef,{currentSongId:null,currentSongName:"",updatedAt:new Date()},{merge:true});
-            else{
-              const song=songSnapshot.data(),settings=settingsSnapshot.data()||{},
-                playHistory=settings.playHistoryDate===dateKey&&Array.isArray(settings.playHistory)?settings.playHistory:[];
-              const compactedHistory=new Map();
-              for(const track of playHistory){
-                const trackKey=track.songId||`legacy:${track.nome_low||track.nome||""}:${track.artista||""}`,
-                  previous=compactedHistory.get(trackKey),playCount=Math.max(1,Number(track.playCount)||1);
-                if(!previous){compactedHistory.set(trackKey,{...track,playCount});continue}
-                const previousTime=Date.parse(previous.playedAt||""),trackTime=Date.parse(track.playedAt||""),
-                  latest=trackTime>=previousTime?track:previous;
-                compactedHistory.set(trackKey,{...previous,...latest,playCount:previous.playCount+playCount});
-              }
-              const previousTrack=compactedHistory.get(id),
-                playedTrack={songId:id,nome:song.nome,artista:song.artista||"",capa:song.capa||"",duracao:song.duracao||"",playedAt:startedAt.toISOString(),playCount:(Number(previousTrack?.playCount)||0)+1},
-                uniquePlayHistory=[...compactedHistory.values()].filter(track=>track.songId!==id);
-              transaction.update(songRef,{skipVotes:0,skipVotedBy:[]});
-              transaction.set(settingsRef,{currentSongId:id,currentSongName:song.nome,playHistoryDate:dateKey,playHistory:[...uniquePlayHistory,playedTrack],updatedAt:new Date()},{merge:true});
-            }
+            if(!songSnapshot.exists()||songSnapshot.data().status!=="aprovada"||songSnapshot.data().jaTocou===true)throw new Error("Música aprovada não encontrada na fila.");
+            if(settingsSnapshot.data()?.currentSongId)throw new Error("A música atual mudou. Atualize o painel e tente novamente.");
+            transaction.update(songRef,{skipVotes:0,skipVotedBy:[]});
+            transaction.set(settingsRef,{currentSongId:id,currentSongName:songSnapshot.data().nome,updatedAt:startedAt},{merge:true});
           });
+        }else if(type==="next"){
+          const next=lists.aprovada.filter(song=>song.id!==id&&song.data().jaTocou!==true).sort((a,b)=>(Number(b.data().votos)||0)-(Number(a.data().votos)||0))[0];
+          await finishCurrentSong(id,next?.id||null);
+          showToast(next?"Música enviada ao histórico; a próxima da fila começou.":"Música enviada ao histórico. A fila está vazia.");
         }else if(type==="delete-history"){
-          const selected=lists.barrada.find(song=>song.id===id);if(!selected)throw new Error("Música barrada não encontrada no histórico.");
-          const confirmed=await askDelete("Apagar música do histórico?",`“${selected.data().nome}” será removida permanentemente do histórico.`,"Apagar do histórico");
+          const selected=playHistory.find(track=>track.songId===id);if(!selected)throw new Error("Música não encontrada no histórico de hoje.");
+          const confirmed=await askDelete("Apagar música do histórico?",`“${selected.nome||"Esta música"}” e seu registro serão removidos permanentemente.`,"Apagar música");
           if(!confirmed)return;
-          await deleteSongAndHistory(id);showToast("Música removida do histórico.");return;
+          await deleteSongAndHistory(id);showToast("Música e registro removidos do histórico.");return;
         }else if(type==="delete"||type==="delete-note"){
           const selectedSong=Object.values(lists).flat().find(song=>song.id===id),
             confirmed=type==="delete-note"
