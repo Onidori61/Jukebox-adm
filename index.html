@@ -10,19 +10,28 @@
   <style>html,body{width:100%;max-width:100%;overflow-x:hidden}.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 500,'GRAD' 0,'opsz' 24}.doodle{position:relative}.doodle:after{content:"";position:absolute;inset:5px;border:1px solid rgba(0,98,157,.13);border-radius:18px 14px 20px 15px;pointer-events:none;transform:rotate(-.35deg)}.doodle>*{position:relative;z-index:1}</style>
 </head>
 <body class="bg-surface text-ink font-body min-h-screen">
-  <header class="fixed top-0 z-20 w-full bg-white/90 backdrop-blur-xl shadow-sm"><div class="h-14 max-w-md mx-auto px-3 flex items-center justify-between gap-2.5"><div class="flex min-w-0 items-center gap-2.5"><img src="assets/logo-al.png" alt="Logo AL" class="w-8 h-8 object-contain"><div><div class="font-headline text-sm font-bold leading-tight">Chapa Renovação</div><div class="text-[11px] text-muted leading-tight">Jukebox • Recreio</div></div></div><button id="open-settings" type="button" aria-label="Configurações" title="Configurações" class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-muted hover:bg-soft hover:text-primary"><span class="material-symbols-outlined">settings</span></button></div></header>
-  <main class="max-w-md w-full mx-auto pt-16 px-3 pb-6 min-h-screen flex flex-col">
-    <div class="grid grid-cols-5 gap-1 bg-slate-200 p-1 rounded-xl mb-4 shrink-0">
-      <button data-tab="pendente" class="tab py-2 rounded-lg text-[10px] sm:text-xs font-bold bg-white text-primary shadow-sm">Pendentes <b id="count-pendente" class="ml-1">0</b></button>
-      <button data-tab="aprovada" class="tab py-2 rounded-lg text-[10px] sm:text-xs font-bold text-muted">Aprovadas <b id="count-aprovada" class="ml-1">0</b></button>
-      <button data-tab="historico" class="tab py-2 rounded-lg text-[10px] sm:text-xs font-bold text-muted">Histórico <b id="count-historico" class="ml-1">0</b></button>
-      <button data-tab="barrada" class="tab py-2 rounded-lg text-[10px] sm:text-xs font-bold text-muted">Barradas <b id="count-barrada" class="ml-1">0</b></button>
-      <button data-tab="recados" class="tab py-2 rounded-lg text-[10px] sm:text-xs font-bold text-muted">Recados <b id="count-recados" class="ml-1">0</b></button>
+  <header id="admin-header" class="fixed top-0 z-20 w-full bg-white/90 backdrop-blur-xl shadow-sm"><div class="h-14 max-w-md mx-auto px-3 flex items-center justify-between gap-2.5"><div class="flex min-w-0 items-center gap-2.5"><img src="assets/logo-al.png" alt="Logo AL" class="w-8 h-8 object-contain"><div><div class="font-headline text-sm font-bold leading-tight">Chapa Renovação</div><div id="admin-identity" class="text-[11px] text-muted leading-tight">Painel do Grêmio</div></div></div><div class="flex items-center gap-1"><button id="open-settings" type="button" aria-label="Configurações" title="Configurações" class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-muted hover:bg-soft hover:text-primary"><span class="material-symbols-outlined">settings</span></button></div></div></header>
+  <main id="admin-app" class="max-w-md w-full mx-auto pt-16 px-3 pb-6 min-h-screen flex flex-col">
+    <div class="mb-3 flex shrink-0 gap-1 overflow-x-auto rounded-xl bg-slate-200 p-1">
+      <button data-tab="pendente" class="tab shrink-0 rounded-lg bg-white px-2.5 py-2 text-[10px] font-bold text-primary shadow-sm">Pendentes <b id="count-pendente" class="ml-1">0</b></button>
+      <button data-tab="aprovada" class="tab shrink-0 rounded-lg px-2.5 py-2 text-[10px] font-bold text-muted">Aprovadas <b id="count-aprovada" class="ml-1">0</b></button>
+      <button data-tab="historico" class="tab shrink-0 rounded-lg px-2.5 py-2 text-[10px] font-bold text-muted">Histórico <b id="count-historico" class="ml-1">0</b></button>
+      <button data-tab="barrada" class="tab shrink-0 rounded-lg px-2.5 py-2 text-[10px] font-bold text-muted">Barradas <b id="count-barrada" class="ml-1">0</b></button>
+      <button data-tab="recados" class="tab shrink-0 rounded-lg px-2.5 py-2 text-[10px] font-bold text-muted">Recados <b id="count-recados" class="ml-1">0</b></button>
+      <button data-tab="atividade" class="tab shrink-0 rounded-lg px-2.5 py-2 text-[10px] font-bold text-muted">Atividade <b id="count-atividade" class="ml-1">0</b></button>
+    </div>
+    <div id="admin-toolbar" class="mb-3 grid shrink-0 grid-cols-[minmax(0,1fr)_auto] gap-2">
+      <label class="relative"><span class="sr-only">Buscar nesta aba</span><span class="material-symbols-outlined absolute left-2.5 top-2.5 text-base text-muted">search</span><input id="admin-search" type="search" placeholder="Buscar música ou artista" class="w-full rounded-xl border border-slate-200 bg-white py-2.5 pl-9 pr-3 text-xs outline-none focus:ring-2 focus:ring-brand"></label>
+      <select id="admin-filter" aria-label="Filtrar conteúdo" class="max-w-36 rounded-xl border border-slate-200 bg-white px-2 text-[11px] outline-none focus:ring-2 focus:ring-brand"><option value="all">Todos</option><option value="explicit">Sinalizados</option></select>
+      <select id="admin-sort" aria-label="Ordenar pedidos" class="hidden col-span-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs outline-none focus:ring-2 focus:ring-brand"><option value="votes">Ordenar: mais votados</option><option value="recent">Ordenar: mais recentes</option></select>
+      <label id="admin-date-wrap" class="hidden col-span-2"><span class="sr-only">Data do histórico</span><input id="admin-date" type="date" class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs outline-none focus:ring-2 focus:ring-brand"></label>
+      <label id="admin-audit-date-wrap" class="hidden col-span-2"><span class="sr-only">Data da atividade</span><input id="admin-audit-date" type="date" class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs outline-none focus:ring-2 focus:ring-brand"></label>
+      <select id="recado-filter" aria-label="Filtrar estado dos recados" class="hidden col-span-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs outline-none focus:ring-2 focus:ring-brand"><option value="pendente">Pendentes</option><option value="aprovada">Aprovados</option><option value="barrada">Barrados</option><option value="all">Todos os estados</option></select>
     </div>
     <div id="admin-list" class="flex flex-col gap-2.5 flex-1 min-h-0"><p class="text-xs text-muted text-center p-4 bg-white rounded-xl">Carregando pedidos...</p></div>
   </main>
   <div id="reject-modal" class="hidden fixed inset-0 z-30 bg-black/60 backdrop-blur-sm items-center justify-center p-4"><div class="w-full max-w-sm bg-white rounded-2xl p-5 shadow-2xl"><div class="flex justify-between items-center mb-3"><h2 id="reject-title" class="font-headline font-bold">Barrar pedido</h2><button id="cancel-reject" class="text-muted"><span class="material-symbols-outlined">close</span></button></div><p id="reject-song-name" class="text-xs text-muted mb-3"></p><label id="reject-reason-label" for="custom-reject-reason" class="text-xs font-bold">Motivo</label><textarea id="custom-reject-reason" rows="4" class="mt-1 w-full rounded-xl border border-slate-200 p-3 text-sm outline-none focus:ring-2 focus:ring-brand" placeholder="Explique brevemente a decisão..."></textarea><div class="flex gap-2 mt-3"><button id="confirm-reject" class="flex-1 py-2.5 rounded-xl bg-danger text-white text-xs font-bold">Confirmar</button><button id="cancel-reject-2" class="flex-1 py-2.5 rounded-xl bg-soft text-xs font-bold">Cancelar</button></div></div></div>
-  <div id="toast" class="hidden fixed bottom-4 left-1/2 -translate-x-1/2 bg-slate-900 text-white px-4 py-3 rounded-xl text-xs shadow-xl"></div>
+  <div id="toast" role="status" class="hidden fixed bottom-4 left-1/2 z-[80] flex w-max max-w-[calc(100vw-24px)] -translate-x-1/2 items-center gap-4 rounded-xl bg-slate-900 px-4 py-3 text-xs text-white shadow-xl"><span id="toast-message"></span><button id="toast-undo" type="button" class="hidden shrink-0 font-bold text-amber-300 hover:text-amber-200">Desfazer</button></div>
   <div id="settings-modal" class="hidden fixed inset-0 z-50 items-center justify-center bg-black/60 p-4 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="settings-title">
     <div class="w-full max-w-sm rounded-2xl bg-white p-5 shadow-2xl">
       <div class="flex items-center gap-2">
@@ -46,25 +55,68 @@
     </div>
   </div>
   <div id="confirm-modal" class="hidden fixed inset-0 z-40 bg-black/60 backdrop-blur-sm items-center justify-center p-4"><div class="w-full max-w-xs bg-white rounded-2xl p-5 shadow-2xl"><h2 class="font-headline font-bold">Excluir pedido?</h2><p class="text-xs text-muted mt-2">Essa ação não pode ser desfeita.</p><div class="flex gap-2 mt-4"><button id="confirm-delete" class="flex-1 py-2.5 rounded-xl bg-danger text-white text-xs font-bold">Excluir</button><button id="cancel-delete" class="flex-1 py-2.5 rounded-xl bg-soft text-xs font-bold">Cancelar</button></div></div></div>
-  <div id="institutional-modal" aria-hidden="true" class="hidden fixed inset-0 z-50 items-center justify-center p-4 bg-black/60 backdrop-blur-sm"><div class="w-full max-w-md max-h-[90vh] overflow-y-auto bg-white rounded-3xl shadow-2xl"><div class="sticky top-0 bg-white/95 backdrop-blur px-5 py-4 border-b border-slate-100 flex items-center justify-between"><div class="flex items-center gap-2"><span class="w-9 h-9 rounded-xl bg-blue-50 text-primary flex items-center justify-center"><span class="material-symbols-outlined">gavel</span></span><div><h2 class="font-headline text-base font-bold">Institucional</h2><p class="text-[10px] text-muted">Termos, transparência e contato</p></div></div><button id="institutional-close" class="w-8 h-8 rounded-full bg-soft text-muted"><span class="material-symbols-outlined text-lg">close</span></button></div><div class="p-5 space-y-4 text-xs text-muted"><section class="rounded-2xl bg-soft p-4"><h3 class="font-headline font-bold text-ink flex items-center gap-2"><span class="material-symbols-outlined text-primary text-lg">music_note</span>Sobre a Jukebox</h3><p class="mt-2 leading-relaxed">Iniciativa do Grêmio Estudantil Azarias Leite para organizar sugestões musicais e a moderação da playlist.</p></section><section><h3 class="font-bold text-ink flex items-center gap-2"><span class="material-symbols-outlined text-green text-lg">visibility</span>Transparência</h3><p class="mt-1.5 leading-relaxed">Pedidos são analisados antes da publicação. Aprovações, recusas, votos e justificativas são registrados no Firestore para manter o processo rastreável.</p></section><section><h3 class="font-bold text-ink flex items-center gap-2"><span class="material-symbols-outlined text-orange text-lg">description</span>Termos de uso</h3><ul class="mt-1.5 space-y-1.5 list-disc pl-5 leading-relaxed"><li>Modere com respeito e coerência com as regras do ambiente escolar.</li><li>O Grêmio pode aprovar ou barrar pedidos inadequados.</li><li>Não insira informações pessoais nos campos de justificativa.</li></ul></section><section class="rounded-2xl border border-blue-100 bg-blue-50/60 p-4"><h3 class="font-bold text-ink flex items-center gap-2"><span class="material-symbols-outlined text-brand text-lg">alternate_email</span>Contato oficial</h3><a class="mt-2 inline-flex items-center gap-2 font-bold text-primary hover:underline" href="https://www.instagram.com/gremioestudantilazariasleite/" target="_blank" rel="noopener noreferrer"><span class="material-symbols-outlined">photo_camera</span>@gremioestudantilazariasleite<span class="material-symbols-outlined text-sm">open_in_new</span></a></section></div></div></div>
+  <div id="institutional-modal" aria-hidden="true" class="hidden fixed inset-0 z-50 items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+    <div class="w-full max-w-md max-h-[90vh] overflow-y-auto bg-white rounded-3xl shadow-2xl">
+      <div class="sticky top-0 bg-white/95 backdrop-blur px-5 py-4 border-b border-slate-100 flex items-center justify-between">
+        <div class="flex items-center gap-2"><span class="w-9 h-9 rounded-xl bg-blue-50 text-primary flex items-center justify-center"><span class="material-symbols-outlined">gavel</span></span><div><h2 class="font-headline text-base font-bold">Institucional</h2><p class="text-[10px] text-muted">Termos, transparência e contato</p></div></div>
+        <button id="institutional-close" class="w-8 h-8 rounded-full bg-soft text-muted"><span class="material-symbols-outlined text-lg">close</span></button>
+      </div>
+      <div class="p-5 space-y-4 text-xs text-muted">
+        <section class="rounded-2xl bg-soft p-4"><h3 class="font-headline font-bold text-ink flex items-center gap-2"><span class="material-symbols-outlined text-primary text-lg">music_note</span>Sobre a Jukebox</h3><p class="mt-2 leading-relaxed">Iniciativa do Grêmio Estudantil Azarias Leite para organizar sugestões musicais e a moderação da playlist.</p></section>
+        <section><h3 class="font-bold text-ink flex items-center gap-2"><span class="material-symbols-outlined text-green text-lg">visibility</span>Transparência</h3><p class="mt-1.5 leading-relaxed">Pedidos são analisados antes da publicação. Aprovações, recusas, reproduções e ações administrativas ficam registradas. Como o painel não exige login, esses registros não identificam quem realizou cada ação. O histórico de reprodução e os registros administrativos são apagados automaticamente após 90 dias.</p></section>
+        <section><h3 class="font-bold text-ink flex items-center gap-2"><span class="material-symbols-outlined text-orange text-lg">description</span>Termos de uso</h3><ul class="mt-1.5 space-y-1.5 list-disc pl-5 leading-relaxed"><li>Modere com respeito e coerência com as regras do ambiente escolar.</li><li>O Grêmio pode aprovar ou barrar pedidos inadequados.</li><li>Não insira informações pessoais nos campos de justificativa.</li><li>Um identificador anônimo limita votos repetidos e permite acompanhar seus pedidos neste navegador.</li></ul></section>
+        <section class="rounded-2xl border border-blue-100 bg-blue-50/60 p-4"><h3 class="font-bold text-ink flex items-center gap-2"><span class="material-symbols-outlined text-brand text-lg">alternate_email</span>Contato oficial</h3><a class="mt-2 inline-flex items-center gap-2 font-bold text-primary hover:underline" href="https://www.instagram.com/gremioestudantilazariasleite/" target="_blank" rel="noopener noreferrer"><span class="material-symbols-outlined">photo_camera</span>@gremioestudantilazariasleite<span class="material-symbols-outlined text-sm">open_in_new</span></a></section>
+      </div>
+    </div>
+  </div>
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getFirestore, collection, query, where, getDocs, onSnapshot, doc, updateDoc, deleteDoc, setDoc, runTransaction, Timestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-    const config={apiKey:"AIzaSyDGbDeolFBC-Dw6EBZnNXygq9WuEdH8nS4",authDomain:"jukebox-c6d07.firebaseapp.com",projectId:"jukebox-c6d07",storageBucket:"jukebox-c6d07.firebasestorage.app",messagingSenderId:"56386350624",appId:"1:56386350624:web:df7a6fe404a1242176d645"},db=getFirestore(initializeApp(config)),songs=collection(db,"musicas"),recados=collection(db,"recados"),presence=collection(db,"presenca"),settingsRef=doc(db,"configuracoes","jukebox");
-    const lists={pendente:[],aprovada:[],barrada:[]};let noteDocs=[],playHistory=[],playHistoryDate="",active="pendente",rejectId=null,rejectType="song",currentSongId=null,maintenanceEnabled=false,activeTheme="default";
+    import { getFirestore, collection, query, where, getDocs, getDoc, onSnapshot, doc, setDoc, runTransaction, writeBatch, serverTimestamp, Timestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    const config={apiKey:"AIzaSyDGbDeolFBC-Dw6EBZnNXygq9WuEdH8nS4",authDomain:"jukebox-c6d07.firebaseapp.com",projectId:"jukebox-c6d07",storageBucket:"jukebox-c6d07.firebasestorage.app",messagingSenderId:"56386350624",appId:"1:56386350624:web:df7a6fe404a1242176d645"},
+      app=initializeApp(config),db=getFirestore(app),songs=collection(db,"musicas"),recados=collection(db,"recados"),
+      presence=collection(db,"presenca"),settingsRef=doc(db,"configuracoes","jukebox"),historyCollection=collection(db,"historico_musicas"),
+      auditCollection=collection(db,"admin_auditoria");
+    let legacyHistoryCheckedDate="",toastTimeout=null;
+    const lists={pendente:[],aprovada:[],barrada:[]};let noteDocs=[],historyDocs=[],auditDocs=[],playHistory=[],playHistoryDate="",active="pendente",rejectId=null,rejectType="song",currentSongId=null,maintenanceEnabled=false,activeTheme="default",selectedHistoryDate=localDateKey(),selectedAuditDate=localDateKey(),historyUnsubscribe=null,auditUnsubscribe=null,undoAction=null,actionInProgress=false;
     const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
     function localDateKey(date=new Date()){return `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,"0")}-${String(date.getDate()).padStart(2,"0")}`;}
+    function historyMillis(track){const value=track.playedAt?.toMillis?.()??Date.parse(track.playedAt||"");return Number.isFinite(value)?value:0;}
     function compactPlayHistory(history){
       const tracksBySong=new Map();
       for(const track of history){
         const key=track.songId||`legacy:${track.nome_low||track.nome||""}:${track.artista||""}`,
-          previous=tracksBySong.get(key),playCount=Math.max(1,Number(track.playCount)||1);
-        if(!previous){tracksBySong.set(key,{...track,playCount});continue}
-        const previousTime=Date.parse(previous.playedAt||""),trackTime=Date.parse(track.playedAt||""),
+          previous=tracksBySong.get(key),playCount=Math.max(1,Number(track.playCount)||1),
+          eventIds=track.eventId?[track.eventId]:Array.isArray(track.eventIds)?track.eventIds:[];
+        if(!previous){tracksBySong.set(key,{...track,playCount,eventIds});continue}
+        const previousTime=historyMillis(previous),trackTime=historyMillis(track),
           latest=trackTime>=previousTime?track:previous;
-        tracksBySong.set(key,{...previous,...latest,playCount:previous.playCount+playCount});
+        tracksBySong.set(key,{...previous,...latest,playCount:previous.playCount+playCount,eventIds:[...new Set([...previous.eventIds,...eventIds])]});
       }
       return [...tracksBySong.values()];
+    }
+    function historyExpiration(date){return Timestamp.fromDate(new Date(date.getTime()+90*24*60*60*1000));}
+    function auditData(action,targetType,targetId,targetLabel,details={}){
+      const now=new Date();
+      return {action,targetType,targetId:targetId||"",targetLabel:String(targetLabel||"").slice(0,180),details,adminUid:"Painel do Grêmio",adminEmail:"",actionDate:localDateKey(now),createdAt:serverTimestamp(),expiresAt:historyExpiration(now)};
+    }
+    function recordAdminAction(action,targetType,targetId,targetLabel,details={}){return setDoc(doc(auditCollection),auditData(action,targetType,targetId,targetLabel,details));}
+    async function updateWithAudit(reference,updates,action,targetType,targetLabel,details={}){
+      await runTransaction(db,async transaction=>{
+        const snapshot=await transaction.get(reference);
+        if(!snapshot.exists())throw new Error("Este item não está mais disponível.");
+        transaction.update(reference,updates);
+        transaction.set(doc(auditCollection),auditData(action,targetType,reference.id,targetLabel,details));
+      });
+    }
+    async function saveSettingsWithAudit(updates,action,targetLabel){
+      await runTransaction(db,async transaction=>{
+        transaction.set(settingsRef,{...updates,updatedAt:serverTimestamp()},{merge:true});
+        transaction.set(doc(auditCollection),auditData(action,"configuracao","jukebox",targetLabel));
+      });
+    }
+    function showError(error,fallback="Não foi possível concluir a ação."){
+      console.error(fallback,error);
+      showToast(error?.code==="permission-denied"?"Sem permissão para esta ação. Confira a configuração de acesso.":fallback);
     }
     function titleLooksExplicit(value){const words=String(value??"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();return /(?:^|[^a-z0-9])(puta|putinha|putas|puto|putinho|putos|caralho|porra|buceta|bucetinha|foda|foder|fodendo|fuck|fucking|shit|bitch|dick|pussy|motherfucker)(?:$|[^a-z0-9])/.test(words);}
     async function purgeStalePresence(){
@@ -82,23 +134,116 @@
       }
       return deleted;
     }
-    async function deleteSongAndHistory(id){
+    async function deleteSong(id){
       const songRef=doc(songs,id);
-      await runTransaction(db,async transaction=>{
+      return runTransaction(db,async transaction=>{
         const [songSnapshot,settingsSnapshot]=await Promise.all([transaction.get(songRef),transaction.get(settingsRef)]);
-        if(!songSnapshot.exists()&&!settingsSnapshot.exists())throw new Error("Pedido não encontrado.");
-        const settings=settingsSnapshot.data()||{},history=Array.isArray(settings.playHistory)?settings.playHistory:[],
-          filteredHistory=history.filter(track=>track.songId!==id),updates={};
-        if(settings.currentSongId===id){updates.currentSongId=null;updates.currentSongName="";}
-        if(filteredHistory.length!==history.length)updates.playHistory=filteredHistory;
+        if(!songSnapshot.exists())throw new Error("Pedido não encontrado.");
+        const settings=settingsSnapshot.data()||{},wasCurrentSong=settings.currentSongId===id,updates={};
+        if(wasCurrentSong){updates.currentSongId=null;updates.currentSongName="";}
         if(Object.keys(updates).length)transaction.set(settingsRef,{...updates,updatedAt:new Date()},{merge:true});
-        if(songSnapshot.exists())transaction.delete(songRef);
+        transaction.delete(songRef);
+        transaction.set(doc(auditCollection),auditData("excluir_pedido","musica",id,songSnapshot.data().nome||"Pedido"));
+        return {wasCurrentSong,songData:songSnapshot.data()};
       });
     }
-    ["pendente","aprovada","barrada"].forEach(status=>onSnapshot(query(songs,where("status","==",status)),snap=>{lists[status]=snap.docs;document.getElementById(`count-${status}`).textContent=status==="aprovada"?snap.docs.filter(song=>song.data().jaTocou!==true).length:snap.size;render();},error=>{console.error(`Falha ao carregar ${status}`,error);}));
-    onSnapshot(recados,snap=>{noteDocs=snap.docs;document.getElementById("count-recados").textContent=noteDocs.filter(s=>s.data().status==="barrada").length;render();},error=>console.error("Falha ao carregar recados",error));
-    document.querySelectorAll(".tab").forEach(btn=>btn.onclick=()=>{active=btn.dataset.tab;document.querySelectorAll(".tab").forEach(b=>b.className="tab py-2 rounded-lg text-[10px] sm:text-xs font-bold text-muted");btn.className="tab py-2 rounded-lg text-[10px] sm:text-xs font-bold bg-white text-primary shadow-sm";render();});
-    const power=document.getElementById("toggle-jukebox"),maintenanceButton=document.getElementById("toggle-maintenance"),themeSelect=document.getElementById("theme-select"),settingsModal=document.getElementById("settings-modal");onSnapshot(settingsRef,snap=>{const settings=snap.data()||{},enabled=settings.enabled===true;currentSongId=settings.currentSongId||null;playHistoryDate=settings.playHistoryDate||"";playHistory=Array.isArray(settings.playHistory)?settings.playHistory:[];document.getElementById("count-historico").textContent=playHistoryDate===localDateKey()?compactPlayHistory(playHistory).filter(track=>track.songId!==currentSongId).length:0;maintenanceEnabled=settings.maintenance===true;activeTheme=settings.theme==="halloween"?"halloween":"default";if(document.activeElement!==themeSelect)themeSelect.value=activeTheme;power.dataset.enabled=enabled;power.className=`px-3 py-2 rounded-full text-xs font-bold flex items-center gap-1 ${enabled?"bg-green-100 text-green":"bg-soft text-primary"}`;power.lastElementChild.textContent=enabled?"Jukebox ligada":"Ligar Jukebox";document.getElementById("announcement-message").value=settings.announcementText||"";document.getElementById("maintenance-message").value=settings.maintenanceMessage||"";maintenanceButton.textContent=maintenanceEnabled?"Encerrar manutenção":"Ativar manutenção";maintenanceButton.className=`mt-2 w-full rounded-lg py-2.5 text-xs font-bold ${maintenanceEnabled?"bg-green-50 text-green":"bg-amber-50 text-amber-800"}`;if(active==="aprovada"||active==="historico")render();},error=>console.error("Falha ao ler estado",error));power.onclick=async()=>{const enabled=power.dataset.enabled!=="true";power.disabled=true;try{await setDoc(settingsRef,{enabled,updatedAt:new Date()},{merge:true})}catch(error){console.error(error);showToast("Não foi possível alterar o estado.");power.disabled=false;return}power.disabled=false;if(!enabled){showToast("Jukebox desligada.");return}try{const deleted=await purgeStalePresence();showToast(`Jukebox ligada. ${deleted} presença(s) offline removida(s).`)}catch(error){console.error("Falha ao limpar presenças antigas",error);showToast("Jukebox ligada, mas não foi possível limpar as presenças antigas.")}};
+    async function migrateLegacyHistory(){
+      const today=localDateKey();if(legacyHistoryCheckedDate===today)return;
+      const currentSettings=await getDoc(settingsRef),settings=currentSettings.data()||{},date=settings.playHistoryDate;
+      if(date&&settings.legacyHistoryMigratedDate===date&&Array.isArray(settings.playHistory)&&settings.playHistory.length){
+        await runTransaction(db,async transaction=>{
+          const latestSnapshot=await transaction.get(settingsRef),latest=latestSnapshot.data()||{};
+          if(latest.legacyHistoryMigratedDate===date)transaction.set(settingsRef,{playHistory:[],playHistoryDate:""},{merge:true});
+        });
+        legacyHistoryCheckedDate=today;return;
+      }
+      if(!date||date!==today||!Array.isArray(settings.playHistory)||!settings.playHistory.length){legacyHistoryCheckedDate=today;return}
+      const tracks=settings.playHistory;
+      for(let offset=0;offset<tracks.length;offset+=400){
+        const batch=writeBatch(db);
+        tracks.slice(offset,offset+400).forEach((track,index)=>{
+          const trackIndex=offset+index,key=track.songId||`${track.nome||"musica"}-${track.artista||trackIndex}`,
+            eventId=`legado-${date}-${trackIndex}-${encodeURIComponent(key)}`,
+            playedAt=track.playedAt?.toDate?track.playedAt.toDate():new Date(track.playedAt||Date.now());
+          batch.set(doc(historyCollection,eventId),{songId:track.songId||"",nome:track.nome||"Música",artista:track.artista||"",capa:track.capa||"",duracao:track.duracao||"",playCount:Math.max(1,Number(track.playCount)||1),playDate:date,playedAt:Timestamp.fromDate(playedAt),expiresAt:historyExpiration(playedAt),migrado:true});
+        });
+        await batch.commit();
+      }
+      await runTransaction(db,async transaction=>{
+        const latestSnapshot=await transaction.get(settingsRef),latest=latestSnapshot.data()||{};
+        if(latest.legacyHistoryMigratedDate===date)return;
+        if(latest.playHistoryDate!==date||(Array.isArray(latest.playHistory)?latest.playHistory.length:0)!==tracks.length)throw new Error("O histórico mudou durante a migração. Tente novamente.");
+        transaction.set(settingsRef,{legacyHistoryMigratedDate:date,playHistory:[],playHistoryDate:""},{merge:true});
+      });
+      legacyHistoryCheckedDate=today;
+    }
+    function subscribeHistory(date){
+      selectedHistoryDate=date;document.getElementById("count-historico").textContent="…";
+      if(historyUnsubscribe)historyUnsubscribe();
+      historyUnsubscribe=onSnapshot(query(historyCollection,where("playDate","==",date)),snapshot=>{
+        historyDocs=snapshot.docs;
+        const tracks=compactPlayHistory(historyDocs.map(item=>({...item.data(),eventId:item.id}))).filter(track=>track.songId!==currentSongId);
+        document.getElementById("count-historico").textContent=String(tracks.length);
+        if(active==="historico")render();
+      },error=>{showError(error,"Não foi possível carregar o histórico.");document.getElementById("count-historico").textContent="!";});
+    }
+    function subscribeAudit(date){
+      selectedAuditDate=date;document.getElementById("count-atividade").textContent="…";
+      if(auditUnsubscribe)auditUnsubscribe();
+      auditUnsubscribe=onSnapshot(query(auditCollection,where("actionDate","==",date)),snapshot=>{
+        auditDocs=snapshot.docs;document.getElementById("count-atividade").textContent=String(auditDocs.length);
+        if(active==="atividade")render();
+      },error=>{showError(error,"Não foi possível carregar a atividade administrativa.");document.getElementById("count-atividade").textContent="!";});
+    }
+    ["pendente","aprovada","barrada"].forEach(status=>onSnapshot(query(songs,where("status","==",status)),snap=>{lists[status]=snap.docs;document.getElementById(`count-${status}`).textContent=status==="aprovada"?snap.docs.filter(song=>song.data().jaTocou!==true).length:snap.size;render();},error=>{showError(error,`Falha ao carregar ${status}.`);}));
+    onSnapshot(recados,snap=>{noteDocs=snap.docs;document.getElementById("count-recados").textContent=noteDocs.filter(s=>s.data().status==="pendente").length;render();},error=>showError(error,"Falha ao carregar os recados."));
+    document.getElementById("admin-date").value=selectedHistoryDate;
+    document.querySelectorAll(".tab").forEach(btn=>btn.onclick=()=>{
+      active=btn.dataset.tab;document.querySelectorAll(".tab").forEach(item=>item.className="tab shrink-0 rounded-lg px-2.5 py-2 text-[10px] font-bold text-muted");
+      btn.className="tab shrink-0 rounded-lg bg-white px-2.5 py-2 text-[10px] font-bold text-primary shadow-sm";
+      document.getElementById("admin-date-wrap").classList.toggle("hidden",active!=="historico");
+      document.getElementById("admin-audit-date-wrap").classList.toggle("hidden",active!=="atividade");
+      document.getElementById("recado-filter").classList.toggle("hidden",active!=="recados");
+      document.getElementById("admin-filter").classList.toggle("hidden",!["pendente","aprovada","barrada"].includes(active));
+      document.getElementById("admin-sort").classList.toggle("hidden",!["pendente","aprovada","barrada"].includes(active));
+      document.getElementById("admin-search").placeholder=active==="atividade"?"Buscar ação, conta ou música":active==="recados"?"Buscar recado ou música":"Buscar música ou artista";
+      if(active==="historico"&&!historyUnsubscribe)subscribeHistory(selectedHistoryDate);
+      if(active==="atividade"&&!auditUnsubscribe)subscribeAudit(selectedAuditDate);
+      render();
+    });
+    document.getElementById("admin-search").addEventListener("input",render);
+    document.getElementById("admin-filter").addEventListener("change",render);
+    document.getElementById("admin-sort").addEventListener("change",render);
+    document.getElementById("recado-filter").addEventListener("change",render);
+    document.getElementById("admin-date").addEventListener("change",event=>subscribeHistory(event.target.value||localDateKey()));
+    document.getElementById("admin-audit-date").value=selectedAuditDate;
+    document.getElementById("admin-audit-date").addEventListener("change",event=>subscribeAudit(event.target.value||localDateKey()));
+    subscribeHistory(selectedHistoryDate);subscribeAudit(selectedAuditDate);
+    const power=document.getElementById("toggle-jukebox"),maintenanceButton=document.getElementById("toggle-maintenance"),themeSelect=document.getElementById("theme-select"),settingsModal=document.getElementById("settings-modal");
+    onSnapshot(settingsRef,snap=>{
+      const settings=snap.data()||{},enabled=settings.enabled===true;
+      currentSongId=settings.currentSongId||null;playHistoryDate=settings.playHistoryDate||"";playHistory=Array.isArray(settings.playHistory)?settings.playHistory:[];
+      maintenanceEnabled=settings.maintenance===true;activeTheme=settings.theme==="halloween"?"halloween":"default";
+      if(document.activeElement!==themeSelect)themeSelect.value=activeTheme;
+      if(document.activeElement!==document.getElementById("announcement-message"))document.getElementById("announcement-message").value=settings.announcementText||"";
+      if(document.activeElement!==document.getElementById("maintenance-message"))document.getElementById("maintenance-message").value=settings.maintenanceMessage||"";
+      power.dataset.enabled=enabled;power.className=`px-3 py-2 rounded-full text-xs font-bold flex items-center gap-1 ${enabled?"bg-green-100 text-green":"bg-soft text-primary"}`;
+      power.lastElementChild.textContent=enabled?"Jukebox ligada":"Ligar Jukebox";
+      maintenanceButton.textContent=maintenanceEnabled?"Encerrar manutenção":"Ativar manutenção";
+      maintenanceButton.className=`mt-2 w-full rounded-lg py-2.5 text-xs font-bold ${maintenanceEnabled?"bg-green-50 text-green":"bg-amber-50 text-amber-800"}`;
+      migrateLegacyHistory().catch(error=>showError(error,"Não foi possível migrar o histórico de hoje."));
+      if(active==="aprovada"||active==="historico")render();
+    },error=>showError(error,"Falha ao ler o estado da Jukebox."));
+    power.onclick=async()=>{
+      const enabled=power.dataset.enabled!=="true";power.disabled=true;
+      try{
+        await saveSettingsWithAudit({enabled},enabled?"ligar_jukebox":"desligar_jukebox",enabled?"Jukebox ligada":"Jukebox desligada");
+        if(!enabled){showToast("Jukebox desligada.");return}
+        try{const deleted=await purgeStalePresence();if(deleted)await recordAdminAction("limpar_presencas","presenca","",`${deleted} presença(s) antiga(s)`,{deleted});showToast(`Jukebox ligada. ${deleted} presença(s) offline removida(s).`);}
+        catch(error){showError(error,"Jukebox ligada, mas não foi possível limpar as presenças antigas.");}
+      }catch(error){showError(error,"Não foi possível alterar o estado da Jukebox.");}
+      finally{power.disabled=false;}
+    };
     const settingsHome=document.getElementById("settings-home"),settingsTitle=document.getElementById("settings-title"),settingsSubtitle=document.getElementById("settings-subtitle"),settingsBack=document.getElementById("settings-back"),settingsIcon=document.getElementById("settings-icon");
     const settingsViews={jukebox:{title:"Jukebox",subtitle:"Ligue ou desligue os pedidos",icon:"power_settings_new"},announcement:{title:"Avisos",subtitle:"Comunique-se com os alunos",icon:"campaign"},maintenance:{title:"Manutenção",subtitle:"Configure a indisponibilidade",icon:"build"},theme:{title:"Tema visual",subtitle:"Personalize o site do aluno",icon:"palette"}};
     function showSettingsHome(){settingsHome.classList.remove("hidden");document.querySelectorAll("[data-settings-panel]").forEach(panel=>panel.classList.add("hidden"));settingsBack.classList.add("hidden");settingsTitle.textContent="Configurações";settingsSubtitle.textContent="Escolha o que deseja configurar";settingsIcon.querySelector(".material-symbols-outlined").textContent="settings";}
@@ -106,16 +251,63 @@
     const closeSettings=()=>{settingsModal.classList.add("hidden");settingsModal.classList.remove("flex");showSettingsHome()};
     settingsBack.onclick=showSettingsHome;document.querySelectorAll("[data-settings-view]").forEach(button=>button.onclick=()=>openSettingsView(button.dataset.settingsView));
     document.getElementById("open-settings").onclick=()=>{themeSelect.value=activeTheme;showSettingsHome();settingsModal.classList.remove("hidden");settingsModal.classList.add("flex")};
-    document.getElementById("close-settings").onclick=closeSettings;document.getElementById("cancel-settings").onclick=closeSettings;document.getElementById("save-theme").onclick=async()=>{try{await setDoc(settingsRef,{theme:themeSelect.value,updatedAt:new Date()},{merge:true});closeSettings();showToast(themeSelect.value==="halloween"?"Tema de Halloween ativado para os alunos.":"Tema padrão ativado para os alunos.")}catch(error){console.error(error);showToast("Não foi possível salvar o tema.")}};
-    document.getElementById("publish-announcement").onclick=async()=>{const text=document.getElementById("announcement-message").value.trim();if(!text){showToast("Escreva um aviso antes de publicar.");return}try{await setDoc(settingsRef,{announcementText:text,announcementId:crypto.randomUUID(),updatedAt:new Date()},{merge:true});showToast("Aviso publicado para os alunos.")}catch(error){console.error(error);showToast("Não foi possível publicar o aviso.")}};
-    document.getElementById("clear-announcement").onclick=async()=>{try{await setDoc(settingsRef,{announcementText:"",announcementId:"",updatedAt:new Date()},{merge:true});showToast("Aviso removido.")}catch(error){console.error(error);showToast("Não foi possível remover o aviso.")}};
-    maintenanceButton.onclick=async()=>{const message=document.getElementById("maintenance-message").value.trim();if(!maintenanceEnabled&&!message){showToast("Explique o motivo antes de ativar a manutenção.");return}try{await setDoc(settingsRef,{maintenance:!maintenanceEnabled,maintenanceMessage:maintenanceEnabled?"":message,updatedAt:new Date()},{merge:true});showToast(maintenanceEnabled?"Manutenção encerrada.":"Modo de manutenção ativado.")}catch(error){console.error(error);showToast("Não foi possível alterar o modo de manutenção.")}};
-    function render(){const list=document.getElementById("admin-list");if(active==="recados"){const docs=noteDocs.filter(s=>s.data().status==="barrada").sort((a,b)=>(b.data().createdAt?.toMillis?.()||0)-(a.data().createdAt?.toMillis?.()||0));list.innerHTML=docs.length?docs.map(noteCard).join(""):'<p class="text-xs text-muted text-center p-4 bg-white rounded-xl">Nenhum recado barrado.</p>';}else if(active==="historico"){const tracks=playHistoryDate===localDateKey()?compactPlayHistory(playHistory).filter(track=>track.songId!==currentSongId).sort((a,b)=>Date.parse(b.playedAt||"")-Date.parse(a.playedAt||"")):[];list.innerHTML=tracks.length?tracks.map(historyCard).join(""):'<p class="text-xs text-muted text-center p-4 bg-white rounded-xl">Nenhuma música tocou hoje.</p>';}else{const docs=[...lists[active]].filter(song=>active!=="aprovada"||song.data().jaTocou!==true).sort((a,b)=>(Number(b.data().votos)||0)-(Number(a.data().votos)||0));if(active==="aprovada"&&currentSongId){const currentIndex=docs.findIndex(song=>song.id===currentSongId);if(currentIndex>0)docs.unshift(docs.splice(currentIndex,1)[0]);}list.innerHTML=docs.length?docs.map(card).join(""):'<p class="text-xs text-muted text-center p-4 bg-white rounded-xl">Nenhum pedido nesta aba.</p>';}list.querySelectorAll("[data-action]").forEach(btn=>btn.onclick=()=>action(btn.dataset.action,btn.dataset.id));}
+    document.getElementById("close-settings").onclick=closeSettings;document.getElementById("cancel-settings").onclick=closeSettings;
+    document.getElementById("save-theme").onclick=async()=>{
+      try{await saveSettingsWithAudit({theme:themeSelect.value},"alterar_tema",themeSelect.value==="halloween"?"Tema Halloween":"Tema padrão");closeSettings();showToast("Tema atualizado para os alunos.");}
+      catch(error){showError(error,"Não foi possível salvar o tema.");}
+    };
+    document.getElementById("publish-announcement").onclick=async()=>{
+      const text=document.getElementById("announcement-message").value.trim();if(!text){showToast("Escreva um aviso antes de publicar.");return}
+      try{await saveSettingsWithAudit({announcementText:text,announcementId:crypto.randomUUID()},"publicar_aviso",text);showToast("Aviso publicado para os alunos.");}
+      catch(error){showError(error,"Não foi possível publicar o aviso.");}
+    };
+    document.getElementById("clear-announcement").onclick=async()=>{
+      try{await saveSettingsWithAudit({announcementText:"",announcementId:""},"remover_aviso","Aviso removido");showToast("Aviso removido.");}
+      catch(error){showError(error,"Não foi possível remover o aviso.");}
+    };
+    maintenanceButton.onclick=async()=>{
+      const message=document.getElementById("maintenance-message").value.trim();if(!maintenanceEnabled&&!message){showToast("Explique o motivo antes de ativar a manutenção.");return}
+      try{await saveSettingsWithAudit({maintenance:!maintenanceEnabled,maintenanceMessage:maintenanceEnabled?"":message},maintenanceEnabled?"encerrar_manutencao":"ativar_manutencao",maintenanceEnabled?"Manutenção encerrada":"Manutenção ativada");showToast(maintenanceEnabled?"Manutenção encerrada.":"Modo de manutenção ativado.");}
+      catch(error){showError(error,"Não foi possível alterar o modo de manutenção.");}
+    };
+    function render(){
+      const list=document.getElementById("admin-list"),term=document.getElementById("admin-search").value.trim().toLocaleLowerCase("pt-BR"),
+        filter=document.getElementById("admin-filter").value,sortBy=document.getElementById("admin-sort").value,noteFilter=document.getElementById("recado-filter").value;
+      if(active==="recados"){
+        const docs=noteDocs.filter(snapshot=>(noteFilter==="all"||snapshot.data().status===noteFilter)&&`${snapshot.data().texto||""} ${snapshot.data().nomeMusica||""} ${snapshot.data().artista||""}`.toLocaleLowerCase("pt-BR").includes(term))
+          .sort((a,b)=>(b.data().createdAt?.toMillis?.()||0)-(a.data().createdAt?.toMillis?.()||0));
+        list.innerHTML=docs.length?docs.map(noteCard).join(""):`<p class="text-xs text-muted text-center p-4 bg-white rounded-xl">Nenhum recado ${noteFilter==="pendente"?"pendente":noteFilter==="aprovada"?"aprovado":noteFilter==="barrada"?"barrado":""}.</p>`;
+      }else if(active==="historico"){
+        const tracks=historyDocs.map(item=>({...item.data(),eventId:item.id}));
+        const filtered=compactPlayHistory(tracks).filter(track=>track.songId!==currentSongId&&`${track.nome||""} ${track.artista||""}`.toLocaleLowerCase("pt-BR").includes(term)).sort((a,b)=>historyMillis(b)-historyMillis(a));
+        list.innerHTML=filtered.length?filtered.map(historyCard).join(""):'<p class="text-xs text-muted text-center p-4 bg-white rounded-xl">Nenhuma música neste dia.</p>';
+      }else if(active==="atividade"){
+        const actions=auditDocs.map(item=>({...item.data(),eventId:item.id})).filter(item=>`${item.action||""} ${item.targetLabel||""} ${item.adminEmail||""}`.toLocaleLowerCase("pt-BR").includes(term)).sort((a,b)=>historyMillis({playedAt:b.createdAt})-historyMillis({playedAt:a.createdAt}));
+        list.innerHTML=actions.length?actions.map(auditCard).join(""):'<p class="text-xs text-muted text-center p-4 bg-white rounded-xl">Nenhuma ação nesta data.</p>';
+      }else{
+        let docs=[...lists[active]].filter(song=>active!=="aprovada"||song.data().jaTocou!==true);
+        docs=docs.filter(song=>{
+          const data=song.data(),matches=`${data.nome||""} ${data.artista||""}`.toLocaleLowerCase("pt-BR").includes(term),
+            explicit=data.explicita===true||titleLooksExplicit(data.nome);
+          return matches&&(filter!=="explicit"||explicit);
+        });
+        docs.sort((a,b)=>sortBy==="recent"?(b.data().createdAt?.toMillis?.()||0)-(a.data().createdAt?.toMillis?.()||0):(Number(b.data().votos)||0)-(Number(a.data().votos)||0));
+        if(active==="aprovada"&&currentSongId){const currentIndex=docs.findIndex(song=>song.id===currentSongId);if(currentIndex>0)docs.unshift(docs.splice(currentIndex,1)[0]);}
+        list.innerHTML=docs.length?docs.map(card).join(""):'<p class="text-xs text-muted text-center p-4 bg-white rounded-xl">Nenhum pedido corresponde a este filtro.</p>';
+      }
+      list.querySelectorAll("[data-action]").forEach(btn=>btn.onclick=()=>action(btn.dataset.action,btn.dataset.id));
+    }
     function historyCard(track){
       const cover=track.capa?`<img class="w-12 h-12 rounded-xl object-cover" src="${esc(track.capa)}" alt="">`:`<div class="w-12 h-12 rounded-xl bg-soft text-primary flex items-center justify-center"><span class="material-symbols-outlined">album</span></div>`,
-        playedAt=new Date(track.playedAt||""),time=Number.isNaN(playedAt.getTime())?"":playedAt.toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"}),
+        playedAt=new Date(historyMillis(track)),time=Number.isNaN(playedAt.getTime())?"":playedAt.toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"}),
         current=track.songId===currentSongId,playCount=Math.max(1,Number(track.playCount)||1);
-      return `<article class="doodle bg-white p-3 rounded-xl shadow-sm ring-1 ring-slate-200"><div class="flex items-center gap-3">${cover}<div class="min-w-0 flex-1"><b class="block truncate text-sm">${esc(track.nome||"Música")}</b><span class="block truncate text-xs text-muted">${esc(track.artista||"Artista não informado")}</span><small class="text-[10px] text-muted">${current?"Tocando agora":time||"Reproduzida"}${playCount>1?` • Tocada ${playCount} vezes`:""}</small></div>${track.songId?`<button data-action="delete-history" data-id="${esc(track.songId)}" aria-label="Apagar ${esc(track.nome||"música")} do histórico e do sistema" title="Apagar música e histórico" class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-soft text-muted hover:bg-red-50 hover:text-danger"><span class="material-symbols-outlined text-base">delete</span></button>`:""}</div></article>`;
+      return `<article class="doodle bg-white p-3 rounded-xl shadow-sm ring-1 ring-slate-200"><div class="flex items-center gap-3">${cover}<div class="min-w-0 flex-1"><b class="block truncate text-sm">${esc(track.nome||"Música")}</b><span class="block truncate text-xs text-muted">${esc(track.artista||"Artista não informado")}</span><small class="text-[10px] text-muted">${current?"Tocando agora":time||"Reproduzida"}${playCount>1?` • Tocada ${playCount} vezes`:""}</small></div>${track.songId?`<button data-action="delete-history" data-id="${esc(track.songId)}" aria-label="Remover ${esc(track.nome||"música")} apenas deste histórico" title="Remover deste histórico" class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-soft text-muted hover:bg-red-50 hover:text-danger"><span class="material-symbols-outlined text-base">delete</span></button>`:""}</div></article>`;
+    }
+    function auditCard(entry){
+      const createdAt=new Date(historyMillis({playedAt:entry.createdAt})),
+        time=Number.isNaN(createdAt.getTime())?"":createdAt.toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"}),
+        labels={aprovar_musica:"Aprovou música",barrar_musica:"Barrou música",aprovar_recado:"Aprovou recado",barrar_recado:"Barrou recado",avancar_faixa:"Avançou faixa",encerrar_faixa:"Encerrou faixa",iniciar_faixa:"Iniciou faixa",excluir_pedido:"Excluiu pedido",excluir_historico:"Removeu do histórico",excluir_recado:"Apagou recado",limpar_presencas:"Limpou presenças antigas"};
+      return `<article class="doodle bg-white p-3 rounded-xl shadow-sm ring-1 ring-slate-200"><div class="flex items-start justify-between gap-2"><div class="min-w-0"><b class="block text-xs text-ink">${esc(labels[entry.action]||entry.action||"Ação administrativa")}</b><span class="mt-1 block break-words text-xs text-muted">${esc(entry.targetLabel||"Configuração")}</span><small class="mt-1 block truncate text-[10px] text-muted">${esc(entry.adminEmail||entry.adminUid||"Admin")}${time?` • ${time}`:""}</small></div><span class="material-symbols-outlined text-base text-primary">history</span></div></article>`;
     }
     async function finishCurrentSong(currentId,nextId=null){
       const finishedAt=new Date(),dateKey=localDateKey(finishedAt);
@@ -126,13 +318,12 @@
           currentSnapshot=await transaction.get(currentRef),nextSnapshot=nextRef?await transaction.get(nextRef):null;
         if(!currentSnapshot.exists()||currentSnapshot.data().status!=="aprovada")throw new Error("A música atual não está mais aprovada.");
         if(nextId&&(!nextSnapshot?.exists()||nextSnapshot.data().status!=="aprovada"||nextSnapshot.data().jaTocou===true))throw new Error("A próxima música não está mais disponível na fila.");
-        const history=compactPlayHistory(settings.playHistoryDate===dateKey&&Array.isArray(settings.playHistory)?settings.playHistory:[]),
-          current=currentSnapshot.data(),previousTrack=history.find(track=>track.songId===currentId),
-          completedTrack={songId:currentId,nome:current.nome,artista:current.artista||"",capa:current.capa||"",duracao:current.duracao||"",playedAt:finishedAt.toISOString(),playCount:(Number(previousTrack?.playCount)||0)+1},
-          updatedHistory=[...history.filter(track=>track.songId!==currentId),completedTrack];
+        const current=currentSnapshot.data(),historyRef=doc(historyCollection);
         transaction.update(currentRef,{jaTocou:true,skipVotes:0,skipVotedBy:[]});
         if(nextSnapshot&&nextRef)transaction.update(nextRef,{skipVotes:0,skipVotedBy:[]});
-        transaction.set(settingsRef,{currentSongId:nextId,currentSongName:nextSnapshot?.data().nome||"",playHistoryDate:dateKey,playHistory:updatedHistory,updatedAt:finishedAt},{merge:true});
+        transaction.set(historyRef,{songId:currentId,nome:current.nome,artista:current.artista||"",capa:current.capa||"",duracao:current.duracao||"",playCount:1,playDate:dateKey,playedAt:Timestamp.fromDate(finishedAt),expiresAt:historyExpiration(finishedAt)});
+        transaction.set(settingsRef,{currentSongId:nextId,currentSongName:nextSnapshot?.data().nome||"",updatedAt:serverTimestamp()},{merge:true});
+        transaction.set(doc(auditCollection),auditData(nextId?"avancar_faixa":"encerrar_faixa","musica",currentId,current.nome,{nextSongId:nextId||""}));
       });
     }
     function card(snap){
@@ -141,84 +332,147 @@
         songNotes=noteDocs.filter(note=>note.data().songId===snap.id&&note.data().status!=="barrada"),
         skipVotes=Math.max(Number(d.skipVotes)||0,Array.isArray(d.skipVotedBy)?d.skipVotedBy.length:0),
         skipSummary=active==="aprovada"&&currentSongId===snap.id?`<div class="mt-2 inline-flex items-center gap-1.5 rounded-full border border-amber-200 bg-amber-50 px-2.5 py-1 text-[10px] font-bold text-amber-800"><span class="material-symbols-outlined text-sm">skip_next</span>${skipVotes} voto(s) para pular — decisão do Grêmio</div>`:"",
-        moderation=active==="pendente"?`<button data-action="reject" data-id="${snap.id}" class="flex-1 rounded-lg bg-red-50 py-2 text-xs font-bold text-danger">Barrar música</button><button data-action="approve" data-id="${snap.id}" class="flex-1 rounded-lg bg-green-50 py-2 text-xs font-bold text-green">Aprovar música</button><button data-action="delete" data-id="${snap.id}" aria-label="Apagar pedido" title="Apagar pedido" class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-soft text-muted hover:bg-red-50 hover:text-danger"><span class="material-symbols-outlined text-base">delete</span></button>`:"",
-        player=active==="aprovada"?`<div class="mt-2 flex items-center rounded-xl border border-slate-200 bg-slate-50 p-1"><button data-action="copy" data-id="${snap.id}" aria-label="Copiar comando" class="flex min-h-9 flex-1 items-center justify-center gap-1 rounded-lg px-1 py-1.5 text-[10px] font-semibold text-muted hover:bg-white hover:text-primary"><span class="material-symbols-outlined text-base">content_copy</span>Copiar</button><button data-action="play" data-id="${snap.id}" aria-label="${currentSongId===snap.id?"Encerrar tocando agora":"Marcar tocando agora"}" class="flex min-h-9 flex-1 items-center justify-center gap-1 rounded-lg px-1 py-1.5 text-[10px] font-semibold ${currentSongId===snap.id?"bg-green-100 text-green":"text-muted hover:bg-white hover:text-primary"}"><span class="material-symbols-outlined text-base">${currentSongId===snap.id?"graphic_eq":"play_circle"}</span>${currentSongId===snap.id?"Tocando":"Tocar agora"}</button><button data-action="delete" data-id="${snap.id}" aria-label="Apagar música" class="flex min-h-9 flex-1 items-center justify-center gap-1 rounded-lg px-1 py-1.5 text-[10px] font-semibold text-muted hover:bg-red-50 hover:text-danger"><span class="material-symbols-outlined text-base">delete</span>Apagar</button></div>`:"",
-        advance=active==="aprovada"&&currentSongId===snap.id?`<button data-action="next" data-id="${snap.id}" class="mt-2 inline-flex min-h-10 w-full items-center justify-center gap-2 rounded-xl bg-primary px-3 py-2 text-xs font-bold text-white hover:bg-blue-800"><span class="material-symbols-outlined text-base">skip_next</span>${lists.aprovada.some(song=>song.id!==snap.id&&song.data().jaTocou!==true)?"Próxima música":"Encerrar e enviar ao histórico"}</button>`:"",
-        history=active==="barrada"?`<button data-action="delete-history" data-id="${snap.id}" aria-label="Apagar música do histórico" class="mt-2 inline-flex min-h-9 w-full items-center justify-center gap-1 rounded-lg bg-soft px-2 py-1.5 text-[10px] font-semibold text-muted hover:bg-red-50 hover:text-danger"><span class="material-symbols-outlined text-base">delete</span>Apagar do histórico</button>`:"";
-      return `<article class="doodle ${explicit?"bg-red-50/70 ring-1 ring-red-300":"bg-white ring-1 ring-slate-200"} p-3 rounded-xl shadow-sm"><div class="flex items-center gap-3">${cover}<div class="min-w-0 flex-1"><b class="block truncate text-sm ${explicit?"text-red-700":""}">${esc(d.nome)}</b><span class="block truncate text-xs text-muted">${esc(d.artista||"Artista não informado")}</span><small class="text-[10px] text-muted">${Number(d.votos)||0} voto(s)${d.motivo?` • ${esc(d.motivo)}`:""}</small></div></div>${explicit?`<div class="mt-2 inline-flex items-center gap-1 rounded-full bg-red-100 px-2.5 py-1 text-[10px] font-bold text-red-700"><span class="material-symbols-outlined text-sm">explicit</span>${explicitByTitle?"Possível conteúdo explícito no título":"Faixa marcada como explícita pelo iTunes"} — revisar</div>`:""}${skipSummary}${songNotes.length?`<div class="mt-2 space-y-1.5">${songNotes.map(note=>noteInline(note)).join("")}</div>`:""}${moderation?`<div class="mt-2 flex gap-2">${moderation}</div>`:""}${player}${advance}${history}</article>`;
+        moderation=active==="pendente"?`<button data-action="reject" data-id="${snap.id}" class="flex-1 rounded-lg bg-red-50 py-2 text-xs font-bold text-danger">Barrar música</button><button data-action="approve" data-id="${snap.id}" class="flex-1 rounded-lg bg-green-50 py-2 text-xs font-bold text-green">Aprovar música</button><button data-action="delete" data-id="${snap.id}" aria-label="Apagar pedido" title="Apagar pedido" class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-soft text-muted hover:bg-red-50 hover:text-danger"><span class="material-symbols-outlined text-base">delete</span></button>`:active==="barrada"?`<button data-action="delete" data-id="${snap.id}" aria-label="Apagar pedido barrado" title="Apagar pedido barrado" class="ml-auto flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-soft text-muted hover:bg-red-50 hover:text-danger"><span class="material-symbols-outlined text-base">delete</span></button>`:"",
+        player=active==="aprovada"?`<div class="mt-2 flex items-center rounded-xl border border-slate-200 bg-slate-50 p-1"><button data-action="copy" data-id="${snap.id}" aria-label="Copiar comando" class="flex min-h-9 flex-1 items-center justify-center gap-1 rounded-lg px-1 py-1.5 text-[10px] font-semibold text-muted hover:bg-white hover:text-primary"><span class="material-symbols-outlined text-base">content_copy</span>Copiar</button><button data-action="play" data-id="${snap.id}" aria-label="${currentSongId===snap.id?"Finalizar faixa":currentSongId?"Substituir música atual":"Tocar agora"}" class="flex min-h-9 flex-1 items-center justify-center gap-1 rounded-lg px-1 py-1.5 text-[10px] font-semibold ${currentSongId===snap.id?"bg-green-100 text-green":"text-muted hover:bg-white hover:text-primary"}"><span class="material-symbols-outlined text-base">${currentSongId===snap.id?"graphic_eq":"play_circle"}</span>${currentSongId===snap.id?"Finalizar":currentSongId?"Substituir atual":"Tocar agora"}</button><button data-action="delete" data-id="${snap.id}" aria-label="Apagar música" class="flex min-h-9 flex-1 items-center justify-center gap-1 rounded-lg px-1 py-1.5 text-[10px] font-semibold text-muted hover:bg-red-50 hover:text-danger"><span class="material-symbols-outlined text-base">delete</span>Apagar</button></div>`:"",
+        advance=active==="aprovada"&&currentSongId===snap.id?`<button data-action="next" data-id="${snap.id}" class="mt-2 inline-flex min-h-10 w-full items-center justify-center gap-2 rounded-xl bg-primary px-3 py-2 text-xs font-bold text-white hover:bg-blue-800"><span class="material-symbols-outlined text-base">skip_next</span>${lists.aprovada.some(song=>song.id!==snap.id&&song.data().jaTocou!==true)?"Próxima música":"Encerrar e enviar ao histórico"}</button>`:"";
+      return `<article class="doodle ${explicit?"bg-red-50/70 ring-1 ring-red-300":"bg-white ring-1 ring-slate-200"} p-3 rounded-xl shadow-sm"><div class="flex items-center gap-3">${cover}<div class="min-w-0 flex-1"><b class="block truncate text-sm ${explicit?"text-red-700":""}">${esc(d.nome)}</b><span class="block truncate text-xs text-muted">${esc(d.artista||"Artista não informado")}</span><small class="text-[10px] text-muted">${Number(d.votos)||0} voto(s) · ${Array.isArray(d.requestedBy)?d.requestedBy.length:1} pedido(s)${d.motivo?` • ${esc(d.motivo)}`:""}</small></div></div>${explicit?`<div class="mt-2 inline-flex items-center gap-1 rounded-full bg-red-100 px-2.5 py-1 text-[10px] font-bold text-red-700"><span class="material-symbols-outlined text-sm">explicit</span>${explicitByTitle?"Possível conteúdo explícito no título":"Faixa marcada como explícita pelo iTunes"} — revisar</div>`:""}${skipSummary}${songNotes.length?`<div class="mt-2 space-y-1.5">${songNotes.map(noteInline).join("")}</div>`:""}${moderation?`<div class="mt-2 flex gap-2">${moderation}</div>`:""}${player}${advance}</article>`;
     }
     function noteInline(snap){const d=snap.data(),pending=d.status==="pendente";return `<div class="flex items-start gap-2 rounded-xl border ${pending?"border-amber-200 bg-amber-50/70":"border-green-100 bg-green-50/60"} p-2.5"><span class="material-symbols-outlined mt-0.5 text-sm ${pending?"text-amber-700":"text-green"}">${pending?"schedule":"chat"}</span><div class="min-w-0 flex-1"><div class="flex items-center justify-between gap-2"><span class="text-[10px] font-bold ${pending?"text-amber-800":"text-green"}">${pending?"Recado pendente":"Recado liberado"}</span><div class="flex items-center gap-1">${pending?`<button data-action="approve-note" data-id="${esc(snap.id)}" aria-label="Aprovar recado" title="Aprovar recado" class="flex h-7 w-7 items-center justify-center rounded-full text-green hover:bg-green-100"><span class="material-symbols-outlined text-base">check</span></button>`:""}<button data-action="reject-note" data-id="${esc(snap.id)}" aria-label="Apagar recado" title="Apagar recado" class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-muted hover:bg-red-100 hover:text-danger"><span class="material-symbols-outlined text-base">close</span></button></div></div><p class="mt-1 whitespace-pre-wrap break-words text-xs leading-relaxed text-ink">${esc(d.texto)}</p></div></div>`;}
     function noteCard(snap){
       const d=snap.data(),song=Object.values(lists).flat().find(item=>item.id===d.songId)?.data(),
         coverUrl=d.capa||song?.capa,artist=d.artista||song?.artista,
         cover=coverUrl?`<img class="h-14 w-14 shrink-0 rounded-xl object-cover" src="${esc(coverUrl)}" alt="Capa de ${esc(d.nomeMusica||song?.nome||"música")}">`:`<div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-soft text-primary"><span class="material-symbols-outlined">album</span></div>`,
-        songName=d.nomeMusica||song?.nome||"Música não identificada";
-      return `<article class="doodle bg-white p-3.5 rounded-xl shadow-sm ring-1 ring-red-200"><div class="flex min-w-0 items-start gap-3">${cover}<div class="min-w-0 flex-1"><div class="flex items-start justify-between gap-2"><div class="min-w-0"><b class="block text-xs text-red-700">Recado barrado</b><p class="mt-1 break-words text-[11px] text-muted">Música: <b class="text-ink">${esc(songName)}</b></p>${artist?`<p class="mt-0.5 truncate text-[10px] text-muted">${esc(artist)}</p>`:""}</div><span class="shrink-0 text-[10px] text-muted">${d.createdAt?.toDate?.().toLocaleDateString?.("pt-BR")||""}</span></div></div></div><p class="mt-3 break-words rounded-xl bg-soft p-3 text-xs leading-relaxed text-ink">${esc(d.texto)}</p><div class="mt-3 rounded-xl bg-red-50 p-3"><span class="text-[10px] font-bold uppercase tracking-wide text-red-700">Motivo informado</span><p class="mt-1 break-words text-xs leading-relaxed text-red-900">${esc(d.motivo||"Sem justificativa registrada.")}</p></div><button data-action="delete-note" data-id="${snap.id}" aria-label="Apagar recado do histórico" class="mt-3 inline-flex min-h-10 w-full items-center justify-center gap-2 rounded-xl bg-soft px-3 py-2 text-xs font-bold text-muted transition-colors hover:bg-red-50 hover:text-danger focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-danger"><span class="material-symbols-outlined text-base">delete</span>Apagar do histórico</button></article>`;
+        songName=d.nomeMusica||song?.nome||"Música não identificada",
+        statusLabel={pendente:"Pendente",aprovada:"Aprovado",barrada:"Barrado"}[d.status]||"Sem estado",
+        actions=d.status==="pendente"?`<button data-action="approve-note" data-id="${snap.id}" class="flex-1 rounded-lg bg-green-50 py-2.5 text-xs font-bold text-green">Aprovar recado</button><button data-action="reject-note" data-id="${snap.id}" class="flex-1 rounded-lg bg-red-50 py-2.5 text-xs font-bold text-danger">Barrar recado</button>`:
+          d.status==="aprovada"?`<button data-action="reject-note" data-id="${snap.id}" class="flex-1 rounded-lg bg-amber-50 py-2.5 text-xs font-bold text-amber-800">Reprovar recado</button>`:
+          `<button data-action="delete-note" data-id="${snap.id}" class="flex-1 rounded-lg bg-soft py-2.5 text-xs font-bold text-muted hover:bg-red-50 hover:text-danger">Apagar recado barrado</button>`;
+      return `<article class="doodle bg-white p-3.5 rounded-xl shadow-sm ring-1 ring-slate-200"><div class="flex min-w-0 items-start gap-3">${cover}<div class="min-w-0 flex-1"><div class="flex items-start justify-between gap-2"><div class="min-w-0"><b class="block text-xs ${d.status==="barrada"?"text-red-700":d.status==="pendente"?"text-amber-800":"text-green"}">Recado ${statusLabel.toLocaleLowerCase("pt-BR")}</b><p class="mt-1 break-words text-[11px] text-muted">Música: <b class="text-ink">${esc(songName)}</b></p>${artist?`<p class="mt-0.5 truncate text-[10px] text-muted">${esc(artist)}</p>`:""}</div><span class="shrink-0 text-[10px] text-muted">${d.createdAt?.toDate?.().toLocaleDateString?.("pt-BR")||""}</span></div></div></div><p class="mt-3 break-words rounded-xl bg-soft p-3 text-xs leading-relaxed text-ink">${esc(d.texto)}</p>${d.status==="barrada"?`<div class="mt-3 rounded-xl bg-red-50 p-3"><span class="text-[10px] font-bold uppercase tracking-wide text-red-700">Motivo informado</span><p class="mt-1 break-words text-xs leading-relaxed text-red-900">${esc(d.motivo||"Sem justificativa registrada.")}</p></div>`:""}<div class="mt-3 flex gap-2">${actions}</div></article>`;
     }
     async function action(type,id){
       if(type==="reject"||type==="reject-note"){
         rejectId=id;rejectType=type==="reject-note"?"note":"song";
-        const d=rejectType==="note"?noteDocs.find(s=>s.id===id)?.data():lists[active].find(s=>s.id===id)?.data();
+        const d=rejectType==="note"?noteDocs.find(item=>item.id===id)?.data():Object.values(lists).flat().find(item=>item.id===id)?.data();
         if(!d){showToast("Este item não está mais disponível.");return}
-        document.getElementById("reject-title").textContent=rejectType==="note"?"Apagar apenas o recado":"Barrar pedido";
+        document.getElementById("reject-title").textContent=rejectType==="note"?"Reprovar recado":"Barrar pedido";
         document.getElementById("reject-song-name").textContent=rejectType==="note"?`Música: ${d.nomeMusica||"não identificada"}`:d.nome;
-        document.getElementById("reject-reason-label").textContent=rejectType==="note"?"Motivo para apagar o recado (obrigatório)":"Motivo para barrar a música";
-        document.getElementById("custom-reject-reason").placeholder=rejectType==="note"?"Explique por que este recado será removido...":"Explique brevemente a decisão...";
+        document.getElementById("reject-reason-label").textContent=rejectType==="note"?"Motivo para reprovar o recado (opcional)":"Motivo para barrar a música";
+        document.getElementById("custom-reject-reason").placeholder=rejectType==="note"?"Explique brevemente a decisão...":"Explique brevemente a decisão...";
         document.getElementById("custom-reject-reason").value="";
-        document.getElementById("reject-modal").classList.replace("hidden","flex");return;
+        document.getElementById("reject-modal").classList.replace("hidden","flex");document.getElementById("custom-reject-reason").focus();return;
       }
+      if(actionInProgress)return;
+      actionInProgress=true;document.querySelectorAll("#admin-list button[data-action]").forEach(button=>button.disabled=true);
       try{
         if(type==="approve"){
-          const song=lists[active].find(item=>item.id===id)?.data();
+          const song=Object.values(lists).flat().find(item=>item.id===id)?.data();
           if(!song)throw new Error("Pedido pendente não encontrado.");
-          await updateDoc(doc(songs,id),{status:"aprovada",motivo:"",jaTocou:false,requestedBy:Array.isArray(song.requestedBy)?song.requestedBy:Array.isArray(song.votedBy)?song.votedBy:[]});
-        }
-        else if(type==="approve-note")await updateDoc(doc(recados,id),{status:"aprovada",motivo:""});
-        else if(type==="play"){
+          await updateWithAudit(doc(songs,id),{status:"aprovada",motivo:"",jaTocou:false,requestedBy:Array.isArray(song.requestedBy)?song.requestedBy:Array.isArray(song.votedBy)?song.votedBy:[]},"aprovar_musica","musica",song.nome);
+          showToast("Música aprovada e adicionada à fila.");
+        }else if(type==="approve-note"){
+          const note=noteDocs.find(item=>item.id===id)?.data();if(!note||note.status!=="pendente")throw new Error("Recado pendente não encontrado.");
+          await updateWithAudit(doc(recados,id),{status:"aprovada",motivo:""},"aprovar_recado","recado",note.nomeMusica||"Recado");
+          showToast("Recado aprovado.");
+        }else if(type==="play"){
+          const selected=Object.values(lists).flat().find(item=>item.id===id);if(!selected)throw new Error("Música aprovada não encontrada.");
           if(currentSongId===id){
-            await finishCurrentSong(id);
-            showToast("Música encerrada e enviada ao histórico.");
-            return;
+            await finishCurrentSong(id);showToast("Faixa finalizada e registrada no histórico.");return;
           }
           if(currentSongId){
-            await finishCurrentSong(currentSongId,id);
-            showToast("A música atual foi para o histórico e a selecionada começou.");
-            return;
+            const currentSong=lists.aprovada.find(item=>item.id===currentSongId)?.data(),target=selected.data();
+            const confirmed=await askDelete("Substituir música atual?",`“${currentSong?.nome||"A música atual"}” irá para o histórico e “${target.nome}” começará agora.`,"Substituir atual");
+            if(!confirmed)return;
+            await finishCurrentSong(currentSongId,id);showToast("Faixa substituída; a anterior foi para o histórico.");return;
           }
-          const startedAt=new Date();
           await runTransaction(db,async transaction=>{
             const songRef=doc(songs,id),songSnapshot=await transaction.get(songRef),settingsSnapshot=await transaction.get(settingsRef);
             if(!songSnapshot.exists()||songSnapshot.data().status!=="aprovada"||songSnapshot.data().jaTocou===true)throw new Error("Música aprovada não encontrada na fila.");
             if(settingsSnapshot.data()?.currentSongId)throw new Error("A música atual mudou. Atualize o painel e tente novamente.");
             transaction.update(songRef,{skipVotes:0,skipVotedBy:[]});
-            transaction.set(settingsRef,{currentSongId:id,currentSongName:songSnapshot.data().nome,updatedAt:startedAt},{merge:true});
+            transaction.set(settingsRef,{currentSongId:id,currentSongName:songSnapshot.data().nome,updatedAt:serverTimestamp()},{merge:true});
+            transaction.set(doc(auditCollection),auditData("iniciar_faixa","musica",id,songSnapshot.data().nome));
           });
+          showToast("Música marcada como tocando agora.");
         }else if(type==="next"){
+          const current=lists.aprovada.find(song=>song.id===id);if(!current||currentSongId!==id)throw new Error("A faixa atual mudou. Atualize e tente novamente.");
           const next=lists.aprovada.filter(song=>song.id!==id&&song.data().jaTocou!==true).sort((a,b)=>(Number(b.data().votos)||0)-(Number(a.data().votos)||0))[0];
           await finishCurrentSong(id,next?.id||null);
-          showToast(next?"Música enviada ao histórico; a próxima da fila começou.":"Música enviada ao histórico. A fila está vazia.");
+          showToast(next?"Faixa finalizada; a mais votada da fila começou.":"Faixa finalizada. A fila está vazia.");
         }else if(type==="delete-history"){
-          const selected=playHistory.find(track=>track.songId===id);if(!selected)throw new Error("Música não encontrada no histórico de hoje.");
-          const confirmed=await askDelete("Apagar música do histórico?",`“${selected.nome||"Esta música"}” e seu registro serão removidos permanentemente.`,"Apagar música");
+          const selectedEvents=historyDocs.filter(item=>item.data().songId===id);
+          if(!selectedEvents.length)throw new Error("Não há reproduções desta música nesta data.");
+          const selectedTrack=selectedEvents[0].data(),confirmed=await askDelete("Remover do histórico?",`“${selectedTrack.nome||"Esta música"}” será removida apenas do histórico de ${new Date(`${selectedHistoryDate}T12:00:00`).toLocaleDateString("pt-BR")}. O pedido e os dados da música serão preservados.`,"Remover do histórico");
           if(!confirmed)return;
-          await deleteSongAndHistory(id);showToast("Música e registro removidos do histórico.");return;
+          if(selectedEvents.length>450)throw new Error("Há reproduções demais para remover em uma única ação. Exclua por outra data.");
+          const batch=writeBatch(db),backup=selectedEvents.map(item=>({id:item.id,data:item.data()}));
+          selectedEvents.forEach(item=>batch.delete(item.ref));batch.set(doc(auditCollection),auditData("excluir_historico","historico",id,selectedTrack.nome,{playDate:selectedHistoryDate,eventCount:selectedEvents.length}));
+          await batch.commit();
+          showUndoToast("Registros removidos apenas deste dia.",async()=>{
+            const restoreBatch=writeBatch(db);backup.forEach(item=>restoreBatch.set(doc(historyCollection,item.id),item.data));
+            restoreBatch.set(doc(auditCollection),auditData("restaurar_historico","historico",id,selectedTrack.nome,{playDate:selectedHistoryDate}));
+            await restoreBatch.commit();
+          });
         }else if(type==="delete"||type==="delete-note"){
-          const selectedSong=Object.values(lists).flat().find(song=>song.id===id),
-            confirmed=type==="delete-note"
-              ?await askDelete("Apagar recado barrado?","Esta ação remove somente o recado do histórico. A música não será alterada.","Apagar recado")
-              :await askDelete("Apagar pedido?",`“${selectedSong?.data().nome||"Este pedido"}” será removido permanentemente.`,"Apagar pedido");
-          if(!confirmed)return;
-          if(type==="delete-note"){await deleteDoc(doc(recados,id));showToast("Recado apagado do histórico.");return}
-          await deleteSongAndHistory(id);
+          if(type==="delete-note"){
+            const note=noteDocs.find(item=>item.id===id);if(!note)throw new Error("Recado não encontrado.");
+            const confirmed=await askDelete("Apagar recado barrado?",`“${note.data().texto}” será removido. A música não será alterada.`,"Apagar recado");
+            if(!confirmed)return;
+            const backup=note.data(),batch=writeBatch(db);batch.delete(doc(recados,id));batch.set(doc(auditCollection),auditData("excluir_recado","recado",id,note.data().nomeMusica||"Recado"));
+            await batch.commit();
+            showUndoToast("Recado apagado.",async()=>{
+              const restoreBatch=writeBatch(db);restoreBatch.set(doc(recados,id),backup);restoreBatch.set(doc(auditCollection),auditData("restaurar_recado","recado",id,note.data().nomeMusica||"Recado"));await restoreBatch.commit();
+            });
+          }else{
+            const selectedSong=Object.values(lists).flat().find(song=>song.id===id);if(!selectedSong)throw new Error("Pedido não encontrado.");
+            const songData=selectedSong.data(),confirmed=await askDelete("Apagar pedido?",`“${songData.nome}” será removida das músicas e da fila. O histórico de reprodução será preservado.`,"Apagar pedido");
+            if(!confirmed)return;
+            const {wasCurrentSong,songData:deletedSongData}=await deleteSong(id);
+            showUndoToast("Pedido apagado; o histórico foi mantido.",async()=>{
+              await runTransaction(db,async transaction=>{
+                const songRef=doc(songs,id),[songSnapshot,settingsSnapshot]=await Promise.all([transaction.get(songRef),transaction.get(settingsRef)]);
+                if(songSnapshot.exists())throw new Error("O pedido já foi restaurado ou substituído.");
+                if(wasCurrentSong&&settingsSnapshot.data()?.currentSongId)throw new Error("Outra música começou. Para evitar interrompê-la, a faixa atual não foi restaurada.");
+                transaction.set(songRef,deletedSongData);
+                if(wasCurrentSong)transaction.set(settingsRef,{currentSongId:id,currentSongName:deletedSongData.nome,updatedAt:serverTimestamp()},{merge:true});
+                transaction.set(doc(auditCollection),auditData("restaurar_pedido","musica",id,deletedSongData.nome));
+              });
+            });
+          }
         }else if(type==="copy"){
-          const d=lists[active].find(s=>s.id===id).data(),text=`m!p ${d.nome}${d.artista?` - ${d.artista}`:""}`;
-          await navigator.clipboard.writeText(text);showToast("Texto copiado.");return;
+          const song=Object.values(lists).flat().find(item=>item.id===id);if(!song)throw new Error("Música não encontrada.");
+          const data=song.data(),text=`m!p ${data.nome}${data.artista?` - ${data.artista}`:""}`;
+          await navigator.clipboard.writeText(text);showToast("Comando copiado.");return;
         }
-        showToast(type==="play"?"Estado da reprodução atualizado.":type==="approve"?"Música aprovada.":type==="approve-note"?"Recado liberado.":"Ação realizada.");
-      }catch(error){console.error(error);showToast(type==="approve"&&error.code==="permission-denied"?"O Firestore recusou a aprovação. Verifique as regras de acesso.":"Não foi possível concluir a ação.");}
+      }catch(error){showError(error,"Não foi possível concluir a ação.");}
+      finally{actionInProgress=false;render();}
     }
-    async function reject(){const reason=document.getElementById("custom-reject-reason").value.trim(),rejectingNote=rejectType==="note";if(!reason){showToast(rejectingNote?"Informe o motivo para apagar o recado.":"Digite um motivo para barrar a música.");return}try{if(rejectingNote)await updateDoc(doc(recados,rejectId),{status:"barrada",motivo:reason});else{const song=lists[active].find(item=>item.id===rejectId)?.data();if(!song)throw new Error("Pedido pendente não encontrado.");await updateDoc(doc(db,"musicas",rejectId),{status:"barrada",motivo:reason,requestedBy:Array.isArray(song.requestedBy)?song.requestedBy:Array.isArray(song.votedBy)?song.votedBy:[]});}closeModal();showToast(rejectingNote?"Recado removido; a música não foi alterada.":"Pedido barrado.");}catch(error){console.error(error);showToast("Não foi possível concluir a moderação.");}}
-    function closeModal(){document.getElementById("reject-modal").classList.replace("flex","hidden");rejectId=null;rejectType="song";}function showToast(text){const t=document.getElementById("toast");t.textContent=text;t.classList.remove("hidden");setTimeout(()=>t.classList.add("hidden"),2500);}function askDelete(title="Excluir pedido?",description="Essa ação não pode ser desfeita.",confirmLabel="Excluir"){return new Promise(resolve=>{const modal=document.getElementById("confirm-modal"),yes=document.getElementById("confirm-delete"),no=document.getElementById("cancel-delete");modal.querySelector("h2").textContent=title;modal.querySelector("p").textContent=description;yes.textContent=confirmLabel;modal.classList.replace("hidden","flex");const finish=value=>{modal.classList.replace("flex","hidden");yes.onclick=null;no.onclick=null;resolve(value)};yes.onclick=()=>finish(true);no.onclick=()=>finish(false)})}
+    async function reject(){
+      const reason=document.getElementById("custom-reject-reason").value.trim(),rejectingNote=rejectType==="note";
+      if(!rejectingNote&&!reason){showToast("Digite um motivo para barrar a música.");return}
+      if(actionInProgress)return;
+      actionInProgress=true;document.getElementById("confirm-reject").disabled=true;
+      try{
+        if(rejectingNote){
+          const note=noteDocs.find(item=>item.id===rejectId);if(!note)throw new Error("Recado não encontrado.");
+          await updateWithAudit(doc(recados,rejectId),{status:"barrada",motivo:reason},"barrar_recado","recado",note.data().nomeMusica||"Recado",{motivo:reason});
+          closeModal();showToast("Recado barrado; a aprovação da música não foi alterada.");
+        }else{
+          const song=Object.values(lists).flat().find(item=>item.id===rejectId)?.data();if(!song)throw new Error("Pedido pendente não encontrado.");
+          await updateWithAudit(doc(songs,rejectId),{status:"barrada",motivo:reason,requestedBy:Array.isArray(song.requestedBy)?song.requestedBy:Array.isArray(song.votedBy)?song.votedBy:[]},"barrar_musica","musica",song.nome,{motivo:reason});
+          closeModal();showToast("Pedido barrado.");
+        }
+      }catch(error){showError(error,"Não foi possível concluir a moderação.");}
+      finally{actionInProgress=false;document.getElementById("confirm-reject").disabled=false;render();}
+    }
+    function closeModal(){document.getElementById("reject-modal").classList.replace("flex","hidden");rejectId=null;rejectType="song";}
+    function showUndoToast(text,undo){showToast(text,undo);}
+    function showToast(text,undo=null){
+      const toast=document.getElementById("toast"),message=document.getElementById("toast-message"),undoButton=document.getElementById("toast-undo");
+      if(toastTimeout)clearTimeout(toastTimeout);message.textContent=text;undoAction=undo;undoButton.classList.toggle("hidden",!undo);
+      undoButton.onclick=undo?async()=>{undoButton.disabled=true;try{await undoAction();undoAction=null;showToast("Ação desfeita.");}catch(error){showError(error,"Não foi possível desfazer a ação.");}finally{undoButton.disabled=false;}}:null;
+      toast.classList.remove("hidden");toastTimeout=setTimeout(()=>{toast.classList.add("hidden");undoAction=null;},undo?7000:3000);
+    }
+    function askDelete(title="Excluir pedido?",description="Essa ação não pode ser desfeita.",confirmLabel="Excluir"){return new Promise(resolve=>{const modal=document.getElementById("confirm-modal"),yes=document.getElementById("confirm-delete"),no=document.getElementById("cancel-delete");modal.querySelector("h2").textContent=title;modal.querySelector("p").textContent=description;yes.textContent=confirmLabel;modal.classList.replace("hidden","flex");const finish=value=>{modal.classList.replace("flex","hidden");yes.onclick=null;no.onclick=null;resolve(value)};yes.onclick=()=>finish(true);no.onclick=()=>finish(false)})}
     document.getElementById("confirm-reject").onclick=reject;document.getElementById("cancel-reject").onclick=closeModal;document.getElementById("cancel-reject-2").onclick=closeModal;
   </script>
 </body>
