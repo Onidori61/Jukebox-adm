@@ -10,7 +10,7 @@
   <style>html,body{width:100%;max-width:100%;overflow-x:hidden}.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 500,'GRAD' 0,'opsz' 24}.doodle{position:relative}.doodle:after{content:"";position:absolute;inset:5px;border:1px solid rgba(0,98,157,.13);border-radius:18px 14px 20px 15px;pointer-events:none;transform:rotate(-.35deg)}.doodle>*{position:relative;z-index:1}</style>
 </head>
 <body class="bg-surface text-ink font-body min-h-screen">
-  <header id="admin-header" class="fixed top-0 z-20 w-full bg-white/90 backdrop-blur-xl shadow-sm"><div class="h-14 max-w-md mx-auto px-3 flex items-center justify-between gap-2.5"><div class="flex min-w-0 items-center gap-2.5"><img src="assets/logo-al.png" alt="Logo AL" class="w-8 h-8 object-contain"><div><div class="font-headline text-sm font-bold leading-tight">Chapa Renovação</div><div id="admin-identity" class="text-[11px] text-muted leading-tight">Painel do Grêmio</div></div></div><div class="flex items-center gap-1"><button id="open-settings" type="button" aria-label="Configurações" title="Configurações" class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-muted hover:bg-soft hover:text-primary"><span class="material-symbols-outlined">settings</span></button></div></div></header>
+  <header id="admin-header" class="fixed top-0 z-20 w-full bg-white/90 backdrop-blur-xl shadow-sm"><div class="h-14 max-w-md mx-auto px-3 flex items-center justify-between gap-2.5"><div class="flex min-w-0 items-center gap-2.5"><img src="assets/logo-al.png" alt="Logo AL" class="w-8 h-8 object-contain"><div><div class="font-headline text-sm font-bold leading-tight">Chapa Renovação</div><div id="admin-identity" class="text-[11px] text-muted leading-tight">Painel do Grêmio</div></div></div><div class="flex items-center gap-1"><span class="flex shrink-0 items-center gap-1 rounded-full bg-emerald-50 px-2 py-1 text-[10px] font-bold text-emerald-800"><span class="material-symbols-outlined text-sm">groups</span><span id="online-students-count">…</span> online</span><button id="open-settings" type="button" aria-label="Configurações" title="Configurações" class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-muted hover:bg-soft hover:text-primary"><span class="material-symbols-outlined">settings</span></button></div></div></header>
   <main id="admin-app" class="max-w-md w-full mx-auto pt-16 px-3 pb-6 min-h-screen flex flex-col">
     <div class="mb-3 flex shrink-0 gap-1 overflow-x-auto rounded-xl bg-slate-200 p-1">
       <button data-tab="pendente" class="tab shrink-0 rounded-lg bg-white px-2.5 py-2 text-[10px] font-bold text-primary shadow-sm">Pendentes <b id="count-pendente" class="ml-1">0</b></button>
@@ -45,11 +45,18 @@
         <button data-settings-view="announcement" class="flex min-h-14 items-center gap-3 rounded-xl border border-slate-200 p-3 text-left hover:bg-slate-50"><span class="flex h-9 w-9 items-center justify-center rounded-lg bg-blue-50 text-primary"><span class="material-symbols-outlined">campaign</span></span><span class="min-w-0 flex-1"><b class="block text-xs">Avisos</b><small class="text-[10px] text-muted">Publicar ou remover aviso</small></span><span class="material-symbols-outlined text-muted">chevron_right</span></button>
         <button data-settings-view="maintenance" class="flex min-h-14 items-center gap-3 rounded-xl border border-slate-200 p-3 text-left hover:bg-slate-50"><span class="flex h-9 w-9 items-center justify-center rounded-lg bg-amber-50 text-amber-800"><span class="material-symbols-outlined">build</span></span><span class="min-w-0 flex-1"><b class="block text-xs">Manutenção</b><small class="text-[10px] text-muted">Configurar aviso de indisponibilidade</small></span><span class="material-symbols-outlined text-muted">chevron_right</span></button>
         <button data-settings-view="theme" class="flex min-h-14 items-center gap-3 rounded-xl border border-slate-200 p-3 text-left hover:bg-slate-50"><span class="flex h-9 w-9 items-center justify-center rounded-lg bg-violet-50 text-violet-700"><span class="material-symbols-outlined">palette</span></span><span class="min-w-0 flex-1"><b class="block text-xs">Tema visual</b><small class="text-[10px] text-muted">Escolher a aparência do site do aluno</small></span><span class="material-symbols-outlined text-muted">chevron_right</span></button>
+        <button data-settings-view="visitas" class="flex min-h-14 items-center gap-3 rounded-xl border border-slate-200 p-3 text-left hover:bg-slate-50"><span class="flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-50 text-emerald-700"><span class="material-symbols-outlined">groups</span></span><span class="min-w-0 flex-1"><b class="block text-xs">Histórico de visitas</b><small class="text-[10px] text-muted">Pico de alunos online e horário</small></span><span class="material-symbols-outlined text-muted">chevron_right</span></button>
       </div>
       <section data-settings-panel="jukebox" class="hidden mt-4 rounded-xl border border-slate-200 p-4"><h3 class="text-sm font-bold">Controle da Jukebox</h3><p class="mt-1 text-xs text-muted">Quando desligada, os alunos não podem enviar pedidos. Ao ligar, presenças sem atividade por mais de 90 segundos são removidas; alunos online são mantidos.</p><button id="toggle-jukebox" class="mt-4 w-full justify-center rounded-full bg-soft px-3 py-2.5 text-xs font-bold text-primary flex items-center gap-1"><span class="material-symbols-outlined text-sm">power_settings_new</span><span>Carregando...</span></button></section>
       <section data-settings-panel="announcement" class="hidden mt-4"><label for="announcement-message" class="text-xs font-bold">Aviso para todos os alunos</label><textarea id="announcement-message" maxlength="240" rows="3" class="mt-2 w-full rounded-xl border border-slate-200 p-3 text-xs outline-none focus:ring-2 focus:ring-brand" placeholder="Escreva um aviso curto para aparecer em uma janela no site do aluno."></textarea><div class="mt-3 flex gap-2"><button id="publish-announcement" class="flex-1 rounded-lg bg-blue-50 py-2.5 text-xs font-bold text-primary">Publicar aviso</button><button id="clear-announcement" class="rounded-lg bg-soft px-3 py-2.5 text-xs font-bold text-muted">Remover</button></div></section>
       <section data-settings-panel="maintenance" class="hidden mt-4"><label for="maintenance-message" class="text-xs font-bold">Mensagem para os alunos</label><textarea id="maintenance-message" maxlength="240" rows="3" class="mt-2 w-full rounded-xl border border-slate-200 p-3 text-xs outline-none focus:ring-2 focus:ring-brand" placeholder="Explique por que a Jukebox está temporariamente indisponível."></textarea><button id="toggle-maintenance" class="mt-3 w-full rounded-lg bg-amber-50 py-2.5 text-xs font-bold text-amber-800">Ativar manutenção</button></section>
       <section data-settings-panel="theme" class="hidden mt-4"><label for="theme-select" class="block text-xs font-bold">Tema visual</label><select id="theme-select" class="mt-2 w-full rounded-xl border border-slate-200 bg-white p-3 text-sm outline-none focus:ring-2 focus:ring-brand"><option value="default">Padrão da Jukebox</option><option value="halloween">Halloween 🎃</option></select><p class="mt-2 text-[11px] leading-relaxed text-muted">Você pode mudar o tema sempre que quiser.</p><button id="save-theme" type="button" class="mt-4 w-full rounded-xl bg-primary py-2.5 text-xs font-bold text-white">Aplicar tema</button></section>
+      <section data-settings-panel="visitas" class="hidden mt-4">
+        <div class="rounded-xl bg-emerald-50 p-4 text-center"><span class="material-symbols-outlined text-emerald-700">groups</span><p class="mt-1 text-xs text-emerald-900"><b id="settings-online-count">0</b> alunos online agora</p></div>
+        <h3 class="mt-4 text-xs font-bold">Histórico de visitas</h3>
+        <p class="mt-1 text-[10px] leading-relaxed text-muted">Registra apenas a quantidade e o horário quando o total passa de 2 alunos. Não guarda identificadores dos visitantes.</p>
+        <div id="visit-history-list" class="mt-3 grid max-h-64 gap-2 overflow-y-auto"><p class="rounded-xl bg-white p-4 text-center text-xs text-muted">Carregando histórico...</p></div>
+      </section>
       <p id="settings-feedback" class="hidden mt-3 text-xs text-muted" role="status"></p>
       <button id="cancel-settings" type="button" class="mt-4 w-full rounded-xl bg-soft py-2.5 text-xs font-bold text-ink">Fechar</button>
     </div>
@@ -71,13 +78,14 @@
   </div>
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getFirestore, collection, query, where, getDocs, getDoc, onSnapshot, doc, setDoc, runTransaction, writeBatch, serverTimestamp, Timestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    import { getFirestore, collection, query, where, orderBy, limit, getDocs, getDoc, onSnapshot, doc, setDoc, runTransaction, writeBatch, serverTimestamp, Timestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
     const config={apiKey:"AIzaSyDGbDeolFBC-Dw6EBZnNXygq9WuEdH8nS4",authDomain:"jukebox-c6d07.firebaseapp.com",projectId:"jukebox-c6d07",storageBucket:"jukebox-c6d07.firebasestorage.app",messagingSenderId:"56386350624",appId:"1:56386350624:web:df7a6fe404a1242176d645"},
       app=initializeApp(config),db=getFirestore(app),songs=collection(db,"musicas"),recados=collection(db,"recados"),
       presence=collection(db,"presenca"),settingsRef=doc(db,"configuracoes","jukebox"),historyCollection=collection(db,"historico_musicas"),
+      visitHistory=collection(db,"historico_visitas"),
       auditCollection=collection(db,"admin_auditoria");
     let legacyHistoryCheckedDate="",toastTimeout=null;
-    const lists={pendente:[],aprovada:[],barrada:[]};let noteDocs=[],historyDocs=[],auditDocs=[],playHistory=[],playHistoryDate="",active="pendente",rejectId=null,rejectType="song",currentSongId=null,maintenanceEnabled=false,activeTheme="default",selectedHistoryDate=localDateKey(),selectedAuditDate=localDateKey(),historyUnsubscribe=null,auditUnsubscribe=null,undoAction=null,actionInProgress=false;
+    const lists={pendente:[],aprovada:[],barrada:[]};let noteDocs=[],historyDocs=[],auditDocs=[],visitHistoryDocs=[],presenceDocs=[],presenceReady=false,playHistory=[],playHistoryDate="",active="pendente",rejectId=null,rejectType="song",currentSongId=null,maintenanceEnabled=false,activeTheme="default",selectedHistoryDate=localDateKey(),selectedAuditDate=localDateKey(),historyUnsubscribe=null,auditUnsubscribe=null,undoAction=null,actionInProgress=false;
     const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
     function localDateKey(date=new Date()){return `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,"0")}-${String(date.getDate()).padStart(2,"0")}`;}
     function historyMillis(track){const value=track.playedAt?.toMillis?.()??Date.parse(track.playedAt||"");return Number.isFinite(value)?value:0;}
@@ -95,6 +103,20 @@
       return [...tracksBySong.values()];
     }
     function historyExpiration(date){return Timestamp.fromDate(new Date(date.getTime()+90*24*60*60*1000));}
+    function refreshOnlineStudents(){
+      if(!presenceReady)return;
+      const cutoff=Date.now()-90000,count=presenceDocs.filter(item=>(item.data().lastSeen?.toMillis?.()||0)>cutoff).length;
+      document.getElementById("online-students-count").textContent=String(count);
+      document.getElementById("settings-online-count").textContent=String(count);
+    }
+    function renderVisitHistory(){
+      const list=document.getElementById("visit-history-list");
+      list.innerHTML=visitHistoryDocs.length?visitHistoryDocs.map(snapshot=>{
+        const visit=snapshot.data(),count=Math.max(0,Number(visit.onlineCount)||0),
+          date=visit.visitedAt?.toDate?.(),time=date?date.toLocaleString("pt-BR",{dateStyle:"short",timeStyle:"short"}):"Horário indisponível";
+        return `<article class="flex items-center justify-between gap-3 rounded-xl bg-white p-3 shadow-sm ring-1 ring-slate-200"><b class="text-xs">${count} ${count===1?"aluno online":"alunos online"}</b><time class="text-[10px] text-muted">${esc(time)}</time></article>`;
+      }).join(""):'<p class="rounded-xl bg-white p-4 text-center text-xs text-muted">Nenhum registro ainda. O histórico começa quando houver mais de 2 alunos online.</p>';
+    }
     function auditData(action,targetType,targetId,targetLabel,details={}){
       const now=new Date();
       return {action,targetType,targetId:targetId||"",targetLabel:String(targetLabel||"").slice(0,180),details,adminUid:"Painel do Grêmio",adminEmail:"",actionDate:localDateKey(now),createdAt:serverTimestamp(),expiresAt:historyExpiration(now)};
@@ -197,6 +219,19 @@
     }
     ["pendente","aprovada","barrada"].forEach(status=>onSnapshot(query(songs,where("status","==",status)),snap=>{lists[status]=snap.docs;document.getElementById(`count-${status}`).textContent=status==="aprovada"?snap.docs.filter(song=>song.data().jaTocou!==true).length:snap.size;render();},error=>{showError(error,`Falha ao carregar ${status}.`);}));
     onSnapshot(recados,snap=>{noteDocs=snap.docs;document.getElementById("count-recados").textContent=noteDocs.filter(s=>s.data().status==="pendente").length;render();},error=>showError(error,"Falha ao carregar os recados."));
+    onSnapshot(presence,snapshot=>{presenceDocs=snapshot.docs;presenceReady=true;refreshOnlineStudents();},error=>{
+      presenceReady=false;
+      document.getElementById("online-students-count").textContent="—";
+      document.getElementById("settings-online-count").textContent="—";
+      console.error("Falha ao ler as presenças dos alunos",error);
+    });
+    setInterval(refreshOnlineStudents,15000);
+    onSnapshot(query(visitHistory,orderBy("visitedAt","desc"),limit(100)),snapshot=>{
+      visitHistoryDocs=snapshot.docs;renderVisitHistory();
+    },error=>{
+      document.getElementById("visit-history-list").innerHTML='<p class="rounded-xl bg-amber-50 p-4 text-center text-xs text-amber-800">Não foi possível carregar o histórico de visitas.</p>';
+      console.error("Falha ao carregar o histórico de visitas",error);
+    });
     document.getElementById("admin-date").value=selectedHistoryDate;
     document.querySelectorAll(".tab").forEach(btn=>btn.onclick=()=>{
       active=btn.dataset.tab;document.querySelectorAll(".tab").forEach(item=>item.className="tab shrink-0 rounded-lg px-2.5 py-2 text-[10px] font-bold text-muted");
@@ -245,7 +280,7 @@
       finally{power.disabled=false;}
     };
     const settingsHome=document.getElementById("settings-home"),settingsTitle=document.getElementById("settings-title"),settingsSubtitle=document.getElementById("settings-subtitle"),settingsBack=document.getElementById("settings-back"),settingsIcon=document.getElementById("settings-icon");
-    const settingsViews={jukebox:{title:"Jukebox",subtitle:"Ligue ou desligue os pedidos",icon:"power_settings_new"},announcement:{title:"Avisos",subtitle:"Comunique-se com os alunos",icon:"campaign"},maintenance:{title:"Manutenção",subtitle:"Configure a indisponibilidade",icon:"build"},theme:{title:"Tema visual",subtitle:"Personalize o site do aluno",icon:"palette"}};
+    const settingsViews={jukebox:{title:"Jukebox",subtitle:"Ligue ou desligue os pedidos",icon:"power_settings_new"},announcement:{title:"Avisos",subtitle:"Comunique-se com os alunos",icon:"campaign"},maintenance:{title:"Manutenção",subtitle:"Configure a indisponibilidade",icon:"build"},theme:{title:"Tema visual",subtitle:"Personalize o site do aluno",icon:"palette"},visitas:{title:"Histórico de visitas",subtitle:"Alunos online e horários",icon:"groups"}};
     function showSettingsHome(){settingsHome.classList.remove("hidden");document.querySelectorAll("[data-settings-panel]").forEach(panel=>panel.classList.add("hidden"));settingsBack.classList.add("hidden");settingsTitle.textContent="Configurações";settingsSubtitle.textContent="Escolha o que deseja configurar";settingsIcon.querySelector(".material-symbols-outlined").textContent="settings";}
     function openSettingsView(name){const view=settingsViews[name];if(!view)return;settingsHome.classList.add("hidden");document.querySelectorAll("[data-settings-panel]").forEach(panel=>panel.classList.toggle("hidden",panel.dataset.settingsPanel!==name));settingsBack.classList.remove("hidden");settingsTitle.textContent=view.title;settingsSubtitle.textContent=view.subtitle;settingsIcon.querySelector(".material-symbols-outlined").textContent=view.icon;}
     const closeSettings=()=>{settingsModal.classList.add("hidden");settingsModal.classList.remove("flex");showSettingsHome()};
