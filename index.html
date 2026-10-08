@@ -2,625 +2,478 @@
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Jukebox • Intervalo</title>
+  <title>Chapa Renovação • Jukebox</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Plus+Jakarta+Sans:wght@700;800&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>tailwind.config={theme:{extend:{fontFamily:{body:["Inter"],headline:["Plus Jakarta Sans"]},colors:{primary:"#00629d",brand:"#1d9bf0",surface:"#f7f9ff",ink:"#171c21",muted:"#3f4851",soft:"#f0f4fb",green:"#006d2f",orange:"#db7e00"}}}};</script>
-  <style>html,body{width:100%;max-width:100%;min-height:100%;overflow-x:hidden;overflow-y:auto}body{touch-action:pan-y;-webkit-overflow-scrolling:touch}.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 500,'GRAD' 0,'opsz' 24}.doodle{position:relative}.doodle:after{content:"";position:absolute;inset:5px;border:1px solid rgba(0,98,157,.13);border-radius:18px 14px 20px 15px;pointer-events:none;transform:rotate(-.35deg)}.doodle>*{position:relative;z-index:1}.student-note{display:flex;align-items:baseline;gap:.35rem;margin-top:.5rem;padding:.5rem .625rem;border:0!important;border-left:2px solid #00629d!important;border-radius:0 .375rem .375rem 0!important;background:#f0f6fc!important;color:#273342!important;box-shadow:none!important}.student-note .material-symbols-outlined{display:none}.student-note-label{display:inline!important;flex:none;color:#315b7b!important;font-size:10px!important;font-weight:700!important;letter-spacing:0!important;text-transform:none!important}.student-note-text{display:inline!important;margin:0!important;color:#273342!important;font-size:12px!important;font-weight:400!important;line-height:1.5!important}</style>
-  <style>
-    body.theme-halloween{position:relative;background:#0c0a09!important;color:#fafaf9!important}
-    body.theme-halloween header,body.theme-halloween footer{background:#0c0a09!important;border-color:#292524!important;color:#a8a29e!important}
-    body.theme-halloween header h1,body.theme-halloween footer .font-headline{color:#fafaf9!important}
-    body.theme-halloween header .bg-green,body.theme-halloween header .animate-ping{background:#f97316!important}
-    body.theme-halloween header .bg-soft{background:#1c1917!important;border-color:#292524!important;color:#e7e5e4!important}
-    body.theme-halloween header .text-muted,body.theme-halloween footer .text-muted{color:#a8a29e!important}
-    body.theme-halloween main,body.theme-halloween footer{position:relative;z-index:1}
-    body.theme-halloween .doodle{background:#171513!important;border-color:#292524!important;box-shadow:0 1px 3px #0008!important}
-    body.theme-halloween .doodle:after{border-color:#fb92341c}
-    body.theme-halloween #my-rejected-notes{--tw-ring-color:#854d0e!important}
-    body.theme-halloween #my-rejected-notes h2{color:#fb923c!important}
-    body.theme-halloween #my-rejected-notes #rejected-notes-list>div{background:#21180f!important;border:1px solid #713f12;color:#fff7ed!important}
-    body.theme-halloween #my-rejected-notes #rejected-notes-list .text-amber-900{color:#fed7aa!important}
-    body.theme-halloween #my-rejected-notes #rejected-notes-list .text-amber-800{color:#fdba74!important}
-    body.theme-halloween #maintenance-notice{background:#1c1710!important;border-color:#854d0e!important;color:#fde68a!important}
-    body.theme-halloween #maintenance-notice h2,body.theme-halloween #maintenance-notice p{color:#fde68a!important}
-    body.theme-halloween #song-request-form>div:first-of-type{background:#110f0d!important;border-color:#57534e!important}
-    body.theme-halloween #song-input{color:#fafaf9!important}
-    body.theme-halloween #song-input::placeholder{color:#78716c!important}
-    body.theme-halloween #submit-song{background:#ea580c!important;color:white!important}
-    body.theme-halloween #search-results{background-color:#171513!important;border-color:#44403c!important}
-    body.theme-halloween #search-results button{background-color:#171513!important;color:#e7e5e4!important;border-color:#292524!important}
-    body.theme-halloween #search-results button:hover{background:#292524!important}
-    body.theme-halloween #playlist-state{color:#a8a29e!important}
-    body.theme-halloween #tab-top,body.theme-halloween #tab-requests,body.theme-halloween #tab-recent{background:#1c1917!important;color:#a8a29e!important}
-    body.theme-halloween #tab-top.bg-ink,body.theme-halloween #tab-requests.bg-ink,body.theme-halloween #tab-recent.bg-ink{background:#ea580c!important;color:white!important}
-    body.theme-halloween #approved-list>p.bg-white{background:#171513!important;color:#a8a29e!important}
-    body.theme-halloween #approved-list>article{background:#171513!important;color:#fafaf9!important;--tw-ring-color:#292524!important}
-    body.theme-halloween #approved-list>article .text-muted{color:#a8a29e!important}
-    body.theme-halloween #approved-list>article .bg-soft{background:#292524!important;color:#e7e5e4!important}
-    body.theme-halloween #approved-list .vote-btn,body.theme-halloween #playback-status .vote-btn{background:#292524!important;color:#fed7aa!important}
-    body.theme-halloween #approved-list .vote-btn.is-voted,body.theme-halloween #playback-status .vote-btn.is-voted{background:#ea580c!important;color:#fff!important}
-    body.theme-halloween #approved-list .vote-icon,body.theme-halloween #playback-status .vote-icon{filter:brightness(0) saturate(100%)}
-    body.theme-halloween #approved-list .vote-btn.is-voted .vote-icon,body.theme-halloween #playback-status .vote-btn.is-voted .vote-icon{filter:none}
-    body.theme-halloween #approved-list>article .bg-blue-50{background:#1c1917!important;color:#fed7aa!important}
-    body.theme-halloween #approved-list .student-note{background:#1c1917!important;border-color:#fb923c!important;color:#fff7ed!important}
-    body.theme-halloween #approved-list .student-note-label{color:#fdba74!important}
-    body.theme-halloween #approved-list .student-note-text{color:#fff7ed!important}
-    body.theme-halloween #playback-status{background:#1c1917!important;border:1px solid #44403c;color:#e7e5e4!important}
-    body.theme-halloween #playback-status .border-blue-100{border-color:#44403c!important}
-    body.theme-halloween #rules-modal>div,body.theme-halloween #request-confirm-modal>div,body.theme-halloween #rejected-song-modal>div,body.theme-halloween #announcement-modal>div{background:#171513!important;color:#e7e5e4!important;border:1px solid #292524}
-    body.theme-halloween #rules-modal h2,body.theme-halloween #request-confirm-modal h2,body.theme-halloween #announcement-modal h2{color:#fafaf9!important}
-    body.theme-halloween #rules-modal .text-muted,body.theme-halloween #request-confirm-modal .text-muted,body.theme-halloween #announcement-modal .text-muted{color:#a8a29e!important}
-    body.theme-halloween #request-confirm-song{background:#1c1917!important;border-color:#292524!important;color:#fafaf9!important}
-    body.theme-halloween #request-note{background:#110f0d!important;border-color:#57534e!important;color:#fafaf9!important}
-    body.theme-halloween #cancel-request,body.theme-halloween #close-rejected-song{background:#292524!important;border-color:#44403c!important;color:#e7e5e4!important}
-    body.theme-halloween #confirm-request,body.theme-halloween #announcement-modal button{background:#ea580c!important;color:#fff!important}
-    body.theme-halloween #rejected-song-title{color:#e7e5e4!important}
-    body.theme-halloween #rejected-song-reason{color:#fecaca!important}
-    body.theme-halloween #notice{background:#1c1917!important;border:1px solid #44403c!important;color:#fafaf9!important}
-    body.theme-halloween #rules-modal{background:#000c!important}
-    body.theme-halloween #rules-modal>div{background:#171513!important;border:1px solid #292524!important;color:#e7e5e4}
-    body.theme-halloween #rules-modal .bg-blue-50,body.theme-halloween #rules-modal .bg-blue-50\/80,body.theme-halloween #rules-modal .bg-red-50\/80,body.theme-halloween #rules-modal .bg-green-50\/80,body.theme-halloween #rules-modal .bg-violet-50\/80{background:#211c18!important;--tw-ring-color:#403329!important}
-    body.theme-halloween #rules-modal .text-muted,body.theme-halloween #rules-modal .text-muted\/80{color:#c4b9ae!important}
-    body.theme-halloween #rules-modal .text-ink,body.theme-halloween #rules-modal h2{color:#fff7ed!important}
-    body.theme-halloween #rules-modal .text-primary,body.theme-halloween #rules-modal .text-brand,body.theme-halloween #rules-modal .text-red-500,body.theme-halloween #rules-modal .text-green,body.theme-halloween #rules-modal .text-violet-600{color:#fb923c!important}
-    body.theme-halloween #close-rules{background:#ea580c!important;color:#fff!important}
-    body.theme-halloween #announcement-modal>div{background:#171513!important;border:1px solid #292524!important;color:#e7e5e4}
-    body.theme-halloween #announcement-modal h2{color:#fff7ed!important}
-    body.theme-halloween #announcement-modal #announcement-message-display{color:#e7e5e4!important}
-    body.theme-halloween #announcement-modal button{background:#ea580c!important;color:#fff!important}
-  </style>
-  <style>
-    :root{color-scheme:dark}
-    body{--page:#100b0a;--panel:#1b1210;--panel-raised:#241714;--line:rgba(255,255,255,.1);--primary-text:#f5f2f1;--secondary-text:#a99f9c;--accent:#e11d2e;--accent-soft:rgba(225,29,46,.13);position:relative;isolation:isolate;min-height:100vh;background:#100c0b!important;color:var(--primary-text)!important;font-family:Inter,sans-serif;padding-bottom:28px}
-    body:before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:0;background-image:url("assets/halloween-wallpaper.png");background-size:180px 180px}
-    body.theme-halloween{--page:#0c0a09;--panel:#171513;--panel-raised:#211c18;--line:rgba(251,146,60,.18);--primary-text:#fff7ed;--secondary-text:#c4b9ae;--accent:#f97316;--accent-soft:rgba(249,115,22,.14);background:#0c0a09!important}
-    body.theme-halloween .player-artwork{background:radial-gradient(circle at 50% 38%,#653d20 0,#291c15 42%,#17100f 78%)}
-    body.theme-halloween #close-rules:disabled{background:#3b2c20!important;color:#c4b9ae!important}
-    body *{scrollbar-color:#59413a transparent}
-    .material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 500,'GRAD' 0,'opsz' 24}
-    .doodle{position:relative;background:rgba(27,18,16,.72)!important;border:1px solid var(--line)!important;border-radius:18px!important;box-shadow:0 16px 40px rgba(0,0,0,.2)!important;backdrop-filter:blur(22px) saturate(1.15);-webkit-backdrop-filter:blur(22px) saturate(1.15)}
-    .doodle:after{display:none!important}
-    .music-header{position:sticky!important;top:0;z-index:40;height:64px!important;background:rgba(15,10,9,.94)!important;border-color:var(--line)!important;box-shadow:0 1px 18px rgba(0,0,0,.24)!important;color:var(--primary-text)!important}
-    #album-atmosphere{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;background:#100c0b}
-    #album-atmosphere img{position:absolute;inset:-12%;width:124%;height:124%;object-fit:cover;object-position:center 62%;opacity:.55;filter:blur(68px) saturate(1.35) brightness(.65);transform:scale(1.12);transition:opacity .7s ease}
-    #album-atmosphere:after{position:absolute;inset:0;background:linear-gradient(180deg,rgba(16,12,11,.4),rgba(16,12,11,.56) 48%,rgba(11,8,7,.78));content:""}
-    body.theme-halloween #album-atmosphere:after{background-image:url("assets/halloween-wallpaper.png"),linear-gradient(rgba(0,0,0,.40),rgba(0,0,0,.18)),linear-gradient(180deg,rgba(9,7,6,.76),rgba(9,7,6,.84) 48%,rgba(3,3,3,.94));background-repeat:repeat,no-repeat,no-repeat;background-size:180px 180px,cover,cover;background-blend-mode:screen,normal,normal}
-    .music-header-inner{max-width:560px!important;height:100%!important;padding:0 16px!important}
-    .music-header img{border:0;border-radius:0;background:transparent!important}
-    .music-header h1{color:#fff!important}
-    .music-header .text-muted{color:var(--secondary-text)!important}
-    #theme-badge{border-color:var(--line)!important;background:var(--accent-soft)!important;color:var(--accent)!important}
-    .header-actions{gap:8px!important}
-    #rules-info{display:inline-flex;align-items:center;gap:5px;padding:7px 10px!important;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.05)!important;color:#e6dcda!important;font-size:11px;font-weight:600}
-    #rules-info:hover{background:rgba(255,255,255,.1)!important}
-    .online-pill{background:rgba(255,255,255,.05)!important;border-color:var(--line)!important;color:#e6dcda!important}
-    .online-pill .bg-green,.online-pill .animate-ping{background:#10b981!important}
-    .music-main{position:relative;z-index:1;width:100%;max-width:560px!important;min-height:calc(100vh - 64px)!important;margin:0 auto;padding:18px 16px 32px!important;gap:14px!important}
-    #request-status{display:inline-flex;min-height:26px;align-items:center;gap:6px;max-width:100%;padding:5px 9px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.045);color:var(--secondary-text);font-size:9px;font-weight:700;line-height:1.2;white-space:nowrap}
-    #request-status .status-dot{width:6px;height:6px;flex:none;border-radius:50%;background:#78716c}
-    #request-status[data-state="open"]{border-color:rgba(52,211,153,.2);background:rgba(16,185,129,.1);color:#a7f3d0}
-    #request-status[data-state="open"] .status-dot{background:#34d399;box-shadow:0 0 8px rgba(52,211,153,.55)}
-    #request-status[data-state="maintenance"]{border-color:rgba(251,191,36,.24);background:rgba(245,158,11,.1);color:#fde68a}
-    #request-status[data-state="maintenance"] .status-dot{background:#fbbf24}
-    #request-status[data-state="closed"]{color:var(--secondary-text)}
-    body.theme-halloween #request-status[data-state="open"]{border-color:rgba(52,211,153,.2);background:rgba(16,185,129,.1);color:#a7f3d0}
-    body.theme-halloween #request-status[data-state="maintenance"]{border-color:rgba(251,191,36,.24);background:rgba(245,158,11,.1);color:#fde68a}
-    #maintenance-notice{background:#291b0b!important;border-color:#8b5b18!important;color:#fde68a!important}
-    #maintenance-notice h2,#maintenance-notice p{color:#fde68a!important}
-    .request-panel{position:relative;z-index:5;padding:16px!important}
-    .my-request-row{display:grid;grid-template-columns:42px minmax(0,1fr);align-items:center;gap:10px;padding:10px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.025)}
-    .my-request-cover{display:flex;width:42px;height:42px;align-items:center;justify-content:center;overflow:hidden;border-radius:9px;background:var(--panel-raised);color:var(--secondary-text)}
-    .my-request-cover img{width:100%;height:100%;object-fit:cover}
-    .my-request-info{min-width:0}
-    .my-request-title{display:block;overflow:hidden;color:var(--primary-text);font-size:11px;font-weight:700;text-overflow:ellipsis;white-space:nowrap}
-    .my-request-artist{display:block;overflow:hidden;margin-top:2px;color:var(--secondary-text);font-size:10px;text-overflow:ellipsis;white-space:nowrap}
-    .my-request-state{display:inline-flex;align-items:center;gap:4px;margin-top:5px;color:var(--secondary-text);font-size:9px;font-weight:700}
-    .my-request-state .material-symbols-outlined{font-size:13px}
-    .my-request-state[data-status="pendente"]{color:#fbbf24}
-    .my-request-state[data-status="aprovada"]{color:#86efac}
-    .my-request-state[data-status="tocando"],.my-request-state[data-status="tocou"]{color:#93c5fd}
-    .my-request-state[data-status="barrada"]{color:#fca5a5}
-    .my-request-reason{margin-top:4px;color:var(--secondary-text);font-size:10px;line-height:1.4}
-    .my-request-empty{padding:10px 2px;color:var(--secondary-text);font-size:11px;line-height:1.5}
-    .section-heading{color:var(--primary-text)!important}
-    .request-form{margin-bottom:0!important}
-    .search-field{background:#110d0c!important;border-color:var(--line)!important;box-shadow:inset 0 1px 6px rgba(0,0,0,.28)!important}
-    .search-field:focus-within{--tw-ring-color:var(--accent)!important;border-color:var(--accent)!important}
-    .search-field .material-symbols-outlined{color:var(--secondary-text)!important}
-    #song-input{color:var(--primary-text)!important}
-    #song-input::placeholder{color:#817775!important}
-    #submit-song,#confirm-request,#announcement-modal button,#close-rules:not(:disabled),#institutional-done{background:var(--accent)!important;color:white!important}
-    #submit-song:hover,#confirm-request:hover,#announcement-modal button:hover,#close-rules:not(:disabled):hover{filter:brightness(1.1)}
-    #close-rules:disabled{background:#3b3331!important;color:#a99f9c!important;filter:none;cursor:not-allowed}
-    #search-results{position:absolute!important;z-index:30;left:0;right:0;width:100%;box-sizing:border-box;margin-top:8px!important;max-height:256px;overflow-y:auto;overflow-x:hidden;border:1px solid var(--line)!important;border-radius:14px;background-color:#1b1210!important;color:var(--primary-text)!important;box-shadow:0 18px 38px rgba(0,0,0,.62)!important;backdrop-filter:blur(18px)}
-    #search-results button{width:100%;min-height:68px;align-items:center;padding:12px!important;gap:12px!important;border-color:var(--line)!important;background-color:#1b1210!important;color:var(--primary-text)!important}
-    #search-results button>img{width:48px;height:48px;flex:none;border-radius:10px}
-    #search-results button b{font-size:14px;line-height:1.35}
-    #search-results button small{margin-top:3px;font-size:12px;line-height:1.3}
-    #search-results button:hover{background:var(--panel-raised)!important}
-    .request-hint{color:var(--secondary-text)!important}
-    .playlist-panel{overflow:hidden}
-    .playlist-heading{padding:12px 14px!important;border-color:var(--line)!important}
-    .playlist-tabs{gap:clamp(8px,2.2vw,14px)!important}
-    #tab-top,#tab-requests,#tab-recent{position:relative;display:inline-flex;align-items:center;gap:4px;padding:7px 1px!important;border-radius:0!important;background:transparent!important;color:var(--secondary-text)!important;font-size:11px!important;font-weight:700!important;letter-spacing:.05em;text-transform:uppercase;white-space:nowrap}
-    #tab-requests.hidden,#playlist-state-indicator.hidden{display:none!important}
-    #tab-top[aria-selected="true"],#tab-requests[aria-selected="true"],#tab-recent[aria-selected="true"]{color:#fff!important}
-    #tab-top[aria-selected="true"]:after,#tab-requests[aria-selected="true"]:after,#tab-recent[aria-selected="true"]:after{position:absolute;right:0;bottom:-13px;left:0;height:2px;background:var(--accent);content:""}
-    #tab-recent:disabled{cursor:not-allowed;opacity:.45}
-    #my-requests-count{display:inline-flex;min-width:16px;height:16px;align-items:center;justify-content:center;padding:0 4px;border-radius:999px;background:rgba(255,255,255,.1);color:var(--secondary-text);font-size:9px;font-weight:800;letter-spacing:0}
-    #my-requests-count.hidden{display:none!important}
-    #my-requests-count[data-state="pending"]{background:rgba(251,191,36,.16);color:#fcd34d}
-    #my-requests-count[data-state="approved"]{background:rgba(52,211,153,.15);color:#6ee7b7}
-    #my-requests-count[data-state="rejected"]{background:#dc2626;color:#fff}
-    #my-requests-count[data-unread="true"]{animation:request-status-pulse 1s ease-in-out infinite}
-    @keyframes request-status-pulse{50%{opacity:.42;transform:scale(.92)}}
-    #playlist-state{color:var(--secondary-text)!important}
-    #playlist-indicator.text-green{color:#34d399!important}
-    #playback-status{margin:0!important;padding:14px!important;border:1px solid var(--line)!important;border-radius:18px!important;background:linear-gradient(145deg,rgba(36,23,20,.64),rgba(27,18,16,.76))!important;color:var(--primary-text)!important;backdrop-filter:blur(22px) saturate(1.15);-webkit-backdrop-filter:blur(22px) saturate(1.15)}
-    .player-feature{display:grid;gap:12px}
-    .player-artwork{position:relative;overflow:hidden;width:100%;aspect-ratio:1/1;border:1px solid var(--line);border-radius:14px;background:radial-gradient(circle at 50% 38%,#653130 0,#291817 42%,#17100f 78%);box-shadow:0 18px 36px rgba(0,0,0,.36)}
-    .player-artwork img{display:block;width:100%;height:100%;object-fit:cover}
-    .player-artwork .artwork-fallback{display:flex;width:100%;height:100%;align-items:center;justify-content:center;color:rgba(255,255,255,.55)}
-    .player-artwork .artwork-fallback .material-symbols-outlined{font-size:72px}
-    .player-state-badge{position:absolute;top:12px;left:12px;display:inline-flex;align-items:center;gap:6px;padding:6px 9px;border:1px solid rgba(255,255,255,.17);border-radius:999px;background:rgba(0,0,0,.68);color:#fff;font-size:9px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;backdrop-filter:blur(10px)}
-    .player-state-badge .material-symbols-outlined{font-size:15px;color:var(--accent)}
-    .player-caption{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;padding:0 2px}
-    .player-caption>.min-w-0{flex:1 1 180px}
-    .player-caption>.skip-vote-btn{flex:none;align-self:center;margin:0;padding:7px 10px;border-radius:999px;background:rgba(255,255,255,.055);font-size:10px}
-    .player-caption>.skip-vote-btn .skip-vote-copy>small{display:none}
-    .player-caption>.skip-vote-btn .skip-vote-count{min-width:0;flex-direction:row;gap:3px;padding-left:7px;border-left:1px solid var(--line)}
-    .player-caption>.skip-vote-btn .skip-vote-count small{font-size:9px}
-    .player-caption .student-note{flex:1 0 100%;width:100%;margin-top:0!important}
-    .player-caption .student-note+.student-note{margin-top:0!important}
-    .player-title{display:block;color:var(--primary-text);font-family:"Plus Jakarta Sans",sans-serif;font-size:17px;font-weight:800;line-height:1.3;overflow-wrap:anywhere}
-    .player-artist{display:block;margin-top:3px;color:var(--secondary-text);font-size:12px;overflow-wrap:anywhere}
-    .player-duration{display:block;margin-top:5px;color:#827875;font-size:10px}
-    .player-next{display:flex;align-items:center;gap:10px;margin-top:2px;padding:10px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.035)}
-    .player-next-cover{width:40px;height:40px;flex:none;overflow:hidden;border-radius:8px;background:var(--panel-raised);color:var(--accent)}
-    .player-next-cover img{width:100%;height:100%;object-fit:cover}
-    .player-next-cover .material-symbols-outlined{display:flex;height:100%;align-items:center;justify-content:center}
-    .player-next-label{display:block;color:var(--secondary-text);font-size:9px;font-weight:800;letter-spacing:.09em;text-transform:uppercase}
-    .player-next-title{display:block;margin-top:2px;color:var(--primary-text);font-size:11px;font-weight:700}
-    .player-next-waiting{padding:10px 2px 0;border-top:1px solid var(--line);color:var(--secondary-text);font-size:11px}
-    .playback-panel{position:relative;isolation:isolate;overflow:hidden;margin:0!important;padding:14px!important;background:linear-gradient(145deg,rgba(36,23,20,.64),rgba(27,18,16,.76))!important}
-    .playback-backdrop{position:absolute;inset:-18%;z-index:0;overflow:hidden;pointer-events:none;opacity:.46;filter:blur(34px) saturate(1.7)}
-    .playback-backdrop img{width:100%;height:100%;object-fit:cover;transform:scale(1.08)}
-    .player-content{position:relative;z-index:2}
-    #playback-status:after{display:block!important;position:absolute;inset:0;z-index:1;border:0;border-radius:inherit;background:linear-gradient(135deg,rgba(12,9,9,.3),rgba(12,9,9,.74));content:"";pointer-events:none}
-    .student-note{display:flex!important;align-items:flex-start!important;gap:9px!important;margin-top:12px!important;padding:11px 12px!important;border:1px solid rgba(255,255,255,.09)!important;border-left:0!important;border-radius:12px!important;background:rgba(8,7,7,.3)!important;color:var(--primary-text)!important;box-shadow:inset 0 1px rgba(255,255,255,.025)!important}
-    .student-note-copy{min-width:0;padding-top:1px}
-    .student-note-label{display:block!important;color:var(--secondary-text)!important;font-size:9px!important;font-weight:700!important;letter-spacing:.07em!important;text-transform:uppercase!important}
-    .student-note-text{display:block!important;margin:3px 0 0!important;color:var(--primary-text)!important;font-size:12px!important;font-weight:500!important;line-height:1.55!important}
-    #approved-list{padding:12px!important;gap:8px!important}
-    #approved-list>article{padding:10px!important;border:1px solid var(--line)!important;border-radius:12px!important;background:rgba(255,255,255,.025)!important;color:var(--primary-text)!important;box-shadow:none!important}
-    #approved-list>article:hover{background:rgba(255,255,255,.055)!important}
-    #approved-list>.track-row{display:grid;grid-template-columns:48px minmax(0,1fr) auto;align-items:center;gap:10px}
-    .track-cover{position:relative;width:48px;height:48px;overflow:hidden;border-radius:8px;background:var(--panel-raised);color:var(--accent)}
-    .track-cover>img{width:100%;height:100%;object-fit:cover}
-    .track-cover>.material-symbols-outlined{display:flex;width:100%;height:100%;align-items:center;justify-content:center}
-    .track-rank{position:absolute;top:2px;left:3px;border-radius:4px;background:rgba(0,0,0,.7);padding:1px 3px;color:#fff;font-size:8px;font-weight:800}
-    .track-info{min-width:0}
-    .track-info>b,.track-info>span,.track-info>small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-    .track-info>b{font-size:12px}
-    .track-info>span{margin-top:3px;color:var(--secondary-text);font-size:10px}
-    .track-info>small{margin-top:3px;color:#827875;font-size:9px}
-    .history-time{color:var(--secondary-text)!important;font-size:10px;font-variant-numeric:tabular-nums;white-space:nowrap}
-    .history-popular{display:inline-flex;align-items:center;justify-content:center;color:#f87171}
-    .history-popular .material-symbols-outlined{font-size:16px;font-variation-settings:'FILL' 1,'wght' 500}
-    #approved-list .student-note{grid-column:1/-1}
-    #approved-list>article b,#playback-status b{color:var(--primary-text)!important}
-    #approved-list>article .text-muted,#playback-status .text-muted{color:var(--secondary-text)!important}
-    #approved-list>article .bg-soft{background:var(--panel-raised)!important;color:var(--accent)!important}
-    #approved-list>article [class*="bg-brand"]{background:var(--accent)!important}
-    .vote-btn{min-height:40px!important;border:1px solid var(--line)!important;background:rgba(255,255,255,.055)!important;color:var(--primary-text)!important}
-    .vote-btn.is-voted{border-color:var(--accent)!important;background:var(--accent)!important;color:#fff!important}
-    .vote-btn .material-symbols-outlined{color:inherit}
-    .skip-vote-btn{display:flex;min-height:48px;align-items:center;gap:8px;margin-top:2px;padding:9px 12px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.055);color:var(--primary-text);font-size:11px;font-weight:700;text-align:left}
-    .skip-vote-btn .material-symbols-outlined{color:var(--accent);font-size:18px}
-    .skip-vote-copy{min-width:0;flex:1}
-    .skip-vote-copy>span,.skip-vote-copy>small{display:block}
-    .skip-vote-copy>small{margin-top:2px;color:var(--secondary-text);font-size:9px;font-weight:500}
-    .skip-vote-count{display:flex;min-width:32px;flex-direction:column;align-items:center}
-    .skip-vote-count strong{color:var(--primary-text);font-size:12px;font-variant-numeric:tabular-nums}
-    .skip-vote-count small{color:var(--secondary-text);font-size:8px}
-    .skip-vote-btn.is-voted{border-color:color-mix(in srgb,var(--accent) 45%,transparent);background:var(--accent-soft)}
-    .skip-vote-btn:disabled{cursor:default;opacity:.88}
-    #my-rejected,#my-rejected-notes{color:var(--primary-text)!important}
-    #my-rejected>h2{color:#fca5a5!important}
-    #my-rejected-notes>h2{color:#fcd34d!important}
-    #my-rejected #rejected-list>div{background:rgba(127,29,29,.24)!important;color:#fee2e2!important}
-    #my-rejected-notes #rejected-notes-list>div{background:rgba(120,53,15,.23)!important;color:#fef3c7!important}
-    #my-rejected-notes #rejected-notes-list .text-amber-900{color:#fde68a!important}
-    #my-rejected-notes #rejected-notes-list .text-amber-800{color:#fcd34d!important}
-    #approved-list>p{border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.025)!important;color:var(--secondary-text)!important}
-    #notice{border:1px solid var(--line);background:#241714!important;color:#fff!important}
-    #rules-modal,#announcement-modal,#request-confirm-modal,#rejected-song-modal,#institutional-modal{background:rgba(0,0,0,.74)!important}
-    #rules-modal>div,#announcement-modal>div,#request-confirm-modal>div,#rejected-song-modal>div,#institutional-modal>div{max-height:min(88dvh,760px);overflow-y:auto;border:1px solid var(--line)!important;border-radius:22px!important;background:var(--panel)!important;color:var(--primary-text)!important;box-shadow:0 28px 90px rgba(0,0,0,.62)!important}
-    #rules-modal h2,#announcement-modal h2,#request-confirm-modal h2,#institutional-modal h2{color:var(--primary-text)!important}
-    #rules-modal .text-muted,#announcement-modal .text-muted,#request-confirm-modal .text-muted,#institutional-modal .text-muted{color:var(--secondary-text)!important}
-    #rules-modal .text-ink,#request-confirm-modal .text-ink{color:var(--primary-text)!important}
-    #rules-modal .bg-blue-50,#rules-modal .bg-blue-50\/80,#rules-modal .bg-red-50\/80,#rules-modal .bg-green-50\/80,#rules-modal .bg-violet-50\/80{background:var(--panel-raised)!important;border-color:var(--line)!important}
-    #rules-modal p,#institutional-modal p,#institutional-modal li{color:var(--secondary-text)}
-    #rules-modal b,#institutional-modal strong{color:var(--primary-text)}
-    #rules-modal .text-primary,#rules-modal .text-brand,#rules-modal .text-red-500,#rules-modal .text-green,#rules-modal .text-violet-600{color:var(--accent)!important}
-    #request-confirm-modal .text-primary,#announcement-modal .text-primary,#request-confirm-modal .material-symbols-outlined,#announcement-modal .material-symbols-outlined{color:var(--accent)!important}
-    #request-confirm-modal .bg-blue-50,#announcement-modal .bg-blue-50{background:var(--accent-soft)!important;border-color:var(--line)!important}
-    #request-confirm-song .bg-white{background:var(--panel-raised)!important;color:var(--accent)!important;box-shadow:none!important}
-    #request-confirm-song,#request-note{border-color:var(--line)!important;background:var(--panel-raised)!important;color:var(--primary-text)!important}
-    #request-note::placeholder{color:#817775}
-    #announcement-message-display{color:var(--primary-text)!important}
-    #cancel-request,#close-rejected-song{border:1px solid var(--line);background:var(--panel-raised)!important;color:var(--primary-text)!important}
-    #rejected-song-modal .bg-red-50{background:rgba(127,29,29,.24)!important;border-color:rgba(248,113,113,.2)!important}
-    #rejected-song-modal .text-red-700{color:#fca5a5!important}
-    #rejected-song-modal .text-red-900{color:#fecaca!important}
-    #institutional-modal{background:rgba(0,0,0,.78)!important;backdrop-filter:blur(4px)!important}
-    #institutional-modal>div{border:1px solid rgba(255,255,255,.12)!important;border-radius:16px!important;background:#171513!important;box-shadow:0 18px 54px rgba(0,0,0,.48)!important}
-    #institutional-modal>div>div:first-child{padding-bottom:15px;border-bottom:1px solid var(--line)}
-    #institutional-modal>div>div:first-child>div>p:first-child{letter-spacing:.08em!important}
-    #institutional-modal .institutional-section{padding:0 0 12px;border:0;border-bottom:1px solid var(--line);border-radius:0;background:transparent}
-    #institutional-modal .institutional-section:last-child{padding-bottom:0;border-bottom:0}
-    #institutional-modal .institutional-section h3{margin:0;color:var(--primary-text);font-size:11px;font-weight:700;letter-spacing:.01em}
-    #institutional-modal .institutional-section p{margin:5px 0 0;font-size:11px;line-height:1.6}
-    #institutional-modal .institutional-section ul{margin:6px 0 0;padding-left:17px;font-size:11px;line-height:1.6}
-    #institutional-modal .institutional-section li{padding-left:2px}
-    #institutional-modal .institutional-section li::marker{color:var(--accent)}
-    #institutional-modal .institutional-icon{display:flex;width:22px;height:22px;flex:none;align-items:center;justify-content:center;border-radius:0;background:transparent;color:var(--accent)}
-    #institutional-modal .institutional-icon .material-symbols-outlined{font-size:18px}
-    #close-institutional{display:flex;width:32px;height:32px;align-items:center;justify-content:center;border:1px solid var(--line);border-radius:8px;background:rgba(255,255,255,.035);color:var(--secondary-text)}
-    #close-institutional:hover{background:rgba(255,255,255,.08);color:var(--primary-text)}
-    #institutional-done{border:1px solid var(--line)!important;background:rgba(255,255,255,.05)!important;color:var(--primary-text)!important}
-    #institutional-done:hover{background:rgba(255,255,255,.09)!important}
-    #institutional-modal>div>p:last-child{padding-top:10px;border-top:1px solid var(--line)}
-    #institutional-modal a{color:var(--accent);font-weight:700;text-decoration:none}
-    #institutional-modal a:hover{text-decoration:underline}
-    @media(min-width:640px){.music-main{padding-top:22px!important}.player-artwork{max-height:520px}.request-panel{padding:18px!important}}
-    @media(max-width:380px){.music-header-inner{padding:0 11px!important}.music-main{padding-right:11px!important;padding-left:11px!important}.header-actions{gap:5px!important}#rules-info{padding:6px 8px!important;font-size:10px}.online-pill{padding-right:7px!important;padding-left:7px!important}.player-title{font-size:15px}}
-    body.theme-halloween #playback-status.playback-panel{background:linear-gradient(145deg,rgba(42,27,18,.82),rgba(23,21,19,.94))!important;border-color:rgba(251,146,60,.2)!important}
-    body.theme-halloween .my-request-row{background:#171513!important;border-color:#292524!important}
-    body.theme-halloween .my-request-cover{background:#211c18!important}
-    body.theme-halloween #tab-top[aria-selected="true"],body.theme-halloween #tab-requests[aria-selected="true"],body.theme-halloween #tab-recent[aria-selected="true"]{background:transparent!important;color:#fff7ed!important}
-    body.theme-halloween #tab-top[aria-selected="false"],body.theme-halloween #tab-requests[aria-selected="false"],body.theme-halloween #tab-recent[aria-selected="false"]{background:transparent!important;color:#a8a29e!important}
-    @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}#my-requests-count[data-unread="true"]{animation:none}}
-  </style>
+  <script>tailwind.config={theme:{extend:{fontFamily:{body:["Inter"],headline:["Plus Jakarta Sans"]},colors:{primary:"#00629d",brand:"#1d9bf0",surface:"#f7f9ff",ink:"#171c21",muted:"#3f4851",soft:"#f0f4fb",green:"#006d2f",orange:"#db7e00",danger:"#f4212e"}}}};</script>
+  <style>html,body{width:100%;max-width:100%;overflow-x:hidden}.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 500,'GRAD' 0,'opsz' 24}.doodle{position:relative}.doodle:after{content:"";position:absolute;inset:5px;border:1px solid rgba(0,98,157,.13);border-radius:18px 14px 20px 15px;pointer-events:none;transform:rotate(-.35deg)}.doodle>*{position:relative;z-index:1}</style>
 </head>
-<body class="font-body min-h-screen">
-  <div id="album-atmosphere" aria-hidden="true"><img id="album-atmosphere-image" alt=""></div>
-  <header class="music-header sticky top-0 z-40 w-full backdrop-blur-xl border-b">
-    <div class="music-header-inner mx-auto flex items-center justify-between">
-      <div class="flex items-center gap-2.5 min-w-0">
-        <img src="assets/logo-al.png" alt="Logo Grêmio AL" class="w-9 h-9 object-contain">
-        <div class="min-w-0"><div class="flex items-center gap-1.5"><h1 class="font-headline text-base font-bold leading-none tracking-tight">Jukebox</h1><span id="theme-badge" class="hidden rounded border border-orange-500/30 bg-orange-500/15 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-orange-400">Halloween</span></div><span class="text-muted truncate text-[11px] leading-tight font-medium">Uma ação da Chapa Renovação</span></div>
-      </div>
-      <div class="header-actions flex items-center"><button aria-label="Regras e informações" aria-haspopup="dialog" aria-controls="institutional-modal" title="Regras e informações" id="rules-info" type="button"><span class="material-symbols-outlined text-base" aria-hidden="true">info</span><span>Regras</span></button><div class="online-pill flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs shrink-0 border"><i class="w-2 h-2 rounded-full bg-green animate-ping"></i><b><span id="online-count">0</span> online</b></div></div>
+<body class="bg-surface text-ink font-body min-h-screen">
+  <header id="admin-header" class="fixed top-0 z-20 w-full bg-white/90 backdrop-blur-xl shadow-sm"><div class="h-14 max-w-md mx-auto px-3 flex items-center justify-between gap-2.5"><div class="flex min-w-0 items-center gap-2.5"><img src="assets/logo-al.png" alt="Logo AL" class="w-8 h-8 object-contain"><div><div class="font-headline text-sm font-bold leading-tight">Chapa Renovação</div><div id="admin-identity" class="text-[11px] text-muted leading-tight">Painel do Grêmio</div></div></div><div class="flex items-center gap-1"><button id="open-settings" type="button" aria-label="Configurações" title="Configurações" class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-muted hover:bg-soft hover:text-primary"><span class="material-symbols-outlined">settings</span></button></div></div></header>
+  <main id="admin-app" class="max-w-md w-full mx-auto pt-16 px-3 pb-6 min-h-screen flex flex-col">
+    <div class="mb-3 flex shrink-0 gap-1 overflow-x-auto rounded-xl bg-slate-200 p-1">
+      <button data-tab="pendente" class="tab shrink-0 rounded-lg bg-white px-2.5 py-2 text-[10px] font-bold text-primary shadow-sm">Pendentes <b id="count-pendente" class="ml-1">0</b></button>
+      <button data-tab="aprovada" class="tab shrink-0 rounded-lg px-2.5 py-2 text-[10px] font-bold text-muted">Aprovadas <b id="count-aprovada" class="ml-1">0</b></button>
+      <button data-tab="historico" class="tab shrink-0 rounded-lg px-2.5 py-2 text-[10px] font-bold text-muted">Histórico <b id="count-historico" class="ml-1">0</b></button>
+      <button data-tab="barrada" class="tab shrink-0 rounded-lg px-2.5 py-2 text-[10px] font-bold text-muted">Barradas <b id="count-barrada" class="ml-1">0</b></button>
+      <button data-tab="recados" class="tab shrink-0 rounded-lg px-2.5 py-2 text-[10px] font-bold text-muted">Recados <b id="count-recados" class="ml-1">0</b></button>
+      <button data-tab="atividade" class="tab shrink-0 rounded-lg px-2.5 py-2 text-[10px] font-bold text-muted">Atividade <b id="count-atividade" class="ml-1">0</b></button>
     </div>
-  </header>
-  <main class="music-main flex flex-col">
-    <section id="maintenance-notice" class="hidden rounded-2xl border border-amber-200 bg-amber-50 p-4 text-amber-950 shadow-sm" role="status"><div class="flex items-start gap-3"><span class="material-symbols-outlined mt-0.5 text-amber-700">construction</span><div><h2 class="text-sm font-bold">Jukebox em manutenção</h2><p id="maintenance-message-display" class="mt-1 text-xs leading-relaxed"></p></div></div></section>
-    <div class="flex justify-end"><span id="request-status" data-state="closed" role="status" aria-live="polite"><i class="status-dot" aria-hidden="true"></i><span id="request-status-text">Pedidos fechados</span></span></div>
-    <section id="playback-status" class="doodle playback-panel hidden" aria-live="polite"></section>
-    <section class="doodle request-panel">
-      <div class="flex items-center justify-between gap-2 mb-3"><h2 class="section-heading font-headline text-sm font-bold tracking-tight">Peça a próxima música</h2></div>
-    <form id="song-request-form" class="request-form relative">
-      <label for="song-input" class="sr-only">Buscar faixa ou artista</label>
-      <div class="search-field relative w-full flex items-center rounded-full border focus-within:ring-2">
-        <span class="material-symbols-outlined ml-3">search</span>
-        <input id="song-input" autocomplete="off" required class="w-full px-2.5 py-3 bg-transparent outline-none text-sm" placeholder="Buscar faixa ou artista...">
-        <button id="submit-song" class="mr-1.5 px-4 py-2 rounded-full text-white text-xs font-bold flex items-center gap-1" type="submit"><span class="material-symbols-outlined text-sm">send</span>Pedir</button>
-      </div>
-      <div id="search-results" class="hidden mt-2 max-h-64 overflow-y-auto rounded-xl shadow-md ring-1"></div>
-      <div class="request-hint flex items-center mt-2.5"><span class="text-[10px] flex items-center gap-1"><span class="material-symbols-outlined text-sm" style="color:var(--accent)">verified</span>Pedidos e recados passam por revisão do Grêmio</span></div></form></section>
-    <section class="doodle playlist-panel"><div class="playlist-heading flex items-center justify-between border-b"><div class="playlist-tabs flex"><button id="tab-top" aria-selected="true" class="font-semibold">Fila</button><button id="tab-requests" aria-selected="false" class="font-semibold hidden" aria-controls="approved-list">Meus pedidos <span id="my-requests-count" data-state="pending" aria-label="0 ainda não aprovados">0</span></button><button id="tab-recent" aria-selected="false" class="font-medium" disabled aria-disabled="true" title="Carregando configurações">Histórico</button></div><span id="playlist-state-indicator" class="text-[11px] flex items-center gap-1"><span id="playlist-indicator" class="material-symbols-outlined text-xs animate-spin">sync</span><span id="playlist-state">Ao vivo</span></span></div><div id="approved-list" class="flex flex-col"><p class="text-xs p-4 text-center">Carregando playlist...</p></div></section>
-    <section id="my-rejected-notes" class="doodle hidden bg-white rounded-2xl p-4 shadow-sm ring-1 ring-amber-200"><h2 class="font-headline text-sm font-bold flex items-center gap-1.5 text-amber-700"><span class="material-symbols-outlined text-base">chat_error</span>Sobre seus recados</h2><div id="rejected-notes-list" class="mt-2 space-y-2"></div></section>
+    <div id="admin-toolbar" class="mb-3 grid shrink-0 grid-cols-[minmax(0,1fr)_auto] gap-2">
+      <label class="relative"><span class="sr-only">Buscar nesta aba</span><span class="material-symbols-outlined absolute left-2.5 top-2.5 text-base text-muted">search</span><input id="admin-search" type="search" placeholder="Buscar música ou artista" class="w-full rounded-xl border border-slate-200 bg-white py-2.5 pl-9 pr-3 text-xs outline-none focus:ring-2 focus:ring-brand"></label>
+      <select id="admin-filter" aria-label="Filtrar conteúdo" class="max-w-36 rounded-xl border border-slate-200 bg-white px-2 text-[11px] outline-none focus:ring-2 focus:ring-brand"><option value="all">Todos</option><option value="explicit">Sinalizados</option></select>
+      <select id="admin-sort" aria-label="Ordenar pedidos" class="hidden col-span-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs outline-none focus:ring-2 focus:ring-brand"><option value="votes">Ordenar: mais votados</option><option value="recent">Ordenar: mais recentes</option></select>
+      <label id="admin-date-wrap" class="hidden col-span-2"><span class="sr-only">Data do histórico</span><input id="admin-date" type="date" class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs outline-none focus:ring-2 focus:ring-brand"></label>
+      <label id="admin-audit-date-wrap" class="hidden col-span-2"><span class="sr-only">Data da atividade</span><input id="admin-audit-date" type="date" class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs outline-none focus:ring-2 focus:ring-brand"></label>
+      <select id="recado-filter" aria-label="Filtrar estado dos recados" class="hidden col-span-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs outline-none focus:ring-2 focus:ring-brand"><option value="pendente">Pendentes</option><option value="aprovada">Aprovados</option><option value="barrada">Barrados</option><option value="all">Todos os estados</option></select>
+    </div>
+    <div id="admin-list" class="flex flex-col gap-2.5 flex-1 min-h-0"><p class="text-xs text-muted text-center p-4 bg-white rounded-xl">Carregando pedidos...</p></div>
   </main>
-  <div id="rules-modal" class="hidden fixed inset-0 z-50 items-center justify-center p-4 bg-black/60 backdrop-blur-md" role="dialog" aria-modal="true" aria-labelledby="rules-modal-title">
-    <div class="w-full max-w-sm bg-white rounded-3xl p-5 shadow-2xl ring-1 ring-white/20">
-      <div class="flex items-center justify-between"><span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-blue-50 text-primary text-[10px] font-bold uppercase"><span class="material-symbols-outlined text-sm">waving_hand</span>Boas-vindas</span><img src="assets/logo-al.png" alt="Logo AL" class="w-8 h-8 object-contain"></div>
-      <h2 id="rules-modal-title" class="font-headline text-lg font-bold mt-3">Diretrizes do Pátio</h2><p class="text-xs text-muted mt-1">Leia rapidinho antes de escolher o som do intervalo.</p>
-      <div class="space-y-2.5 mt-4">
-        <div class="flex gap-3 p-3 rounded-2xl bg-blue-50/80 ring-1 ring-blue-100"><span class="material-symbols-outlined text-brand">favorite</span><p class="text-[11px] text-muted"><b class="text-ink block">Uma curtida é um voto</b>Cada aluno pode votar uma vez em cada música. As mais votadas ganham prioridade na playlist.</p></div>
-        <div class="flex gap-3 p-3 rounded-2xl bg-red-50/80 ring-1 ring-red-100"><span class="material-symbols-outlined text-red-500">shield</span><p class="text-[11px] text-muted"><b class="text-ink block">Respeito sempre</b>Conteúdo ofensivo, discriminatório ou explícito não será aprovado.</p></div>
-        <div class="flex gap-3 p-3 rounded-2xl bg-green-50/80 ring-1 ring-green-100"><span class="material-symbols-outlined text-green">fact_check</span><p class="text-[11px] text-muted"><b class="text-ink block">Todo pedido passa por revisão</b>O Grêmio confere as sugestões antes de liberar qualquer música para o som do pátio.</p></div>
-        <div class="flex gap-3 p-3 rounded-2xl bg-blue-50/80 ring-1 ring-blue-100"><span class="material-symbols-outlined text-primary">chat</span><p class="text-[11px] text-muted"><b class="text-ink block">Recado é opcional e revisado à parte</b>O Grêmio pode liberar ou remover o recado sem barrar uma música adequada. Não inclua dados pessoais.</p></div>
-        <div class="flex gap-3 p-3 rounded-2xl bg-violet-50/80 ring-1 ring-violet-100"><span class="material-symbols-outlined text-violet-600">manage_search</span><p class="text-[11px] text-muted"><b class="text-ink block">Não encontrou sua faixa?</b>Use o envio manual. A equipe procurará a capa e a versão adequada depois.</p></div>
-      </div><p class="mt-3 text-[10px] leading-relaxed text-muted/80">Ao enviar uma sugestão, você concorda em colaborar com um ambiente escolar respeitoso. Consulte os termos completos no botão Regras, no topo da página.</p>
-      <button id="close-rules" disabled class="mt-4 w-full py-3 rounded-xl bg-slate-200 text-muted text-xs font-bold cursor-not-allowed"><span id="rules-count">Aguarde (5s)...</span></button>
-    </div>
-  </div>
-  <div id="institutional-modal" class="hidden fixed inset-0 z-[58] items-center justify-center p-4 bg-black/70 backdrop-blur-md" role="dialog" aria-modal="true" aria-labelledby="institutional-title">
-    <div class="w-full max-w-lg p-5 sm:p-6">
-      <div class="flex items-start justify-between gap-4">
-        <div class="flex items-center gap-3"><span class="institutional-icon"><span class="material-symbols-outlined">info</span></span><div><p class="text-[9px] font-bold uppercase tracking-[.16em]" style="color:var(--accent)">Jukebox • Grêmio Azarias Leite</p><h2 id="institutional-title" class="mt-1 font-headline text-lg font-bold">Regras e informações</h2><p class="mt-1 text-[11px] text-muted">Como participar, como os pedidos são tratados e como cuidamos das informações.</p></div></div>
-        <button id="close-institutional" type="button" aria-label="Fechar informações"><span class="material-symbols-outlined">close</span></button>
+  <div id="reject-modal" class="hidden fixed inset-0 z-30 bg-black/60 backdrop-blur-sm items-center justify-center p-4"><div class="w-full max-w-sm bg-white rounded-2xl p-5 shadow-2xl"><div class="flex justify-between items-center mb-3"><h2 id="reject-title" class="font-headline font-bold">Barrar pedido</h2><button id="cancel-reject" class="text-muted"><span class="material-symbols-outlined">close</span></button></div><p id="reject-song-name" class="text-xs text-muted mb-3"></p><label id="reject-reason-label" for="custom-reject-reason" class="text-xs font-bold">Motivo</label><textarea id="custom-reject-reason" rows="4" class="mt-1 w-full rounded-xl border border-slate-200 p-3 text-sm outline-none focus:ring-2 focus:ring-brand" placeholder="Explique brevemente a decisão..."></textarea><div class="flex gap-2 mt-3"><button id="confirm-reject" class="flex-1 py-2.5 rounded-xl bg-danger text-white text-xs font-bold">Confirmar</button><button id="cancel-reject-2" class="flex-1 py-2.5 rounded-xl bg-soft text-xs font-bold">Cancelar</button></div></div></div>
+  <div id="toast" role="status" class="hidden fixed bottom-4 left-1/2 z-[80] flex w-max max-w-[calc(100vw-24px)] -translate-x-1/2 items-center gap-4 rounded-xl bg-slate-900 px-4 py-3 text-xs text-white shadow-xl"><span id="toast-message"></span><button id="toast-undo" type="button" class="hidden shrink-0 font-bold text-amber-300 hover:text-amber-200">Desfazer</button></div>
+  <div id="settings-modal" class="hidden fixed inset-0 z-50 items-center justify-center bg-black/60 p-4 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="settings-title">
+    <div class="w-full max-w-sm rounded-2xl bg-white p-5 shadow-2xl">
+      <div class="flex items-center gap-2">
+        <button id="settings-back" type="button" aria-label="Voltar às opções" class="hidden flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-muted hover:bg-soft"><span class="material-symbols-outlined">arrow_back</span></button>
+        <span id="settings-icon" class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-primary"><span class="material-symbols-outlined">settings</span></span>
+        <div class="min-w-0 flex-1"><h2 id="settings-title" class="font-headline font-bold">Configurações</h2><p id="settings-subtitle" class="text-[11px] text-muted">Escolha o que deseja configurar</p></div>
+        <button id="close-settings" type="button" aria-label="Fechar configurações" class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-muted hover:bg-soft"><span class="material-symbols-outlined">close</span></button>
       </div>
-      <div class="mt-5 space-y-3">
-        <section class="institutional-section">
-          <div class="flex items-center gap-2"><span class="institutional-icon"><span class="material-symbols-outlined text-base">rule</span></span><h3>Diretrizes do pátio</h3></div>
-          <ul><li>Uma curtida por aluno em cada música; as mais votadas ganham prioridade.</li><li>Todo pedido passa por revisão do Grêmio antes de entrar na playlist.</li><li>Conteúdo ofensivo, discriminatório ou inadequado ao ambiente escolar não será aprovado.</li><li>Recados são opcionais e moderados separadamente; podem ser removidos sem barrar a música. Não inclua dados pessoais.</li><li>Se não encontrar a faixa, envie o título manualmente; a equipe tentará localizá-la.</li></ul>
-        </section>
-        <section class="institutional-section">
-          <div class="flex items-center gap-2"><span class="institutional-icon"><span class="material-symbols-outlined text-base">gavel</span></span><h3>Termos de uso</h3></div>
-          <p>Use a Jukebox para sugerir músicas e recados respeitosos, adequados a toda a comunidade escolar. Ao enviar um pedido, você concorda com a análise e as decisões de moderação do Grêmio. A reprodução depende da aprovação, da disponibilidade da faixa, dos equipamentos e do horário do intervalo.</p>
-        </section>
-        <section class="institutional-section">
-          <div class="flex items-center gap-2"><span class="institutional-icon"><span class="material-symbols-outlined text-base">visibility</span></span><h3>Transparência e privacidade</h3></div>
-          <p>A playlist aprovada é atualizada em tempo real. Um identificador anônimo do Firebase, associado a este navegador, ajuda a limitar votos repetidos e a mostrar o resultado dos seus pedidos; a Jukebox não solicita nome, e-mail ou senha. Sugestões e recados ficam visíveis à equipe do Grêmio para moderação. O histórico de reprodução e os registros de ações administrativas são apagados automaticamente após 90 dias. As alterações do painel não ficam associadas a uma identidade.</p>
-        </section>
-        <section class="institutional-section">
-          <div class="flex items-center gap-2"><span class="institutional-icon"><span class="material-symbols-outlined text-base">alternate_email</span></span><h3>Contato</h3></div>
-          <p>Dúvidas ou sugestões? Fale com o Grêmio Estudantil Azarias Leite pelo <a href="https://www.instagram.com/gremioestudantilazariasleite/" target="_blank" rel="noopener noreferrer">@gremioestudantilazariasleite</a>.</p>
-        </section>
+      <div id="settings-home" class="mt-4 grid gap-2">
+        <button data-settings-view="jukebox" class="flex min-h-14 items-center gap-3 rounded-xl border border-slate-200 p-3 text-left hover:bg-slate-50"><span class="flex h-9 w-9 items-center justify-center rounded-lg bg-blue-50 text-primary"><span class="material-symbols-outlined">power_settings_new</span></span><span class="min-w-0 flex-1"><b class="block text-xs">Jukebox</b><small class="text-[10px] text-muted">Ligar ou desligar os pedidos</small></span><span class="material-symbols-outlined text-muted">chevron_right</span></button>
+        <button data-settings-view="announcement" class="flex min-h-14 items-center gap-3 rounded-xl border border-slate-200 p-3 text-left hover:bg-slate-50"><span class="flex h-9 w-9 items-center justify-center rounded-lg bg-blue-50 text-primary"><span class="material-symbols-outlined">campaign</span></span><span class="min-w-0 flex-1"><b class="block text-xs">Avisos</b><small class="text-[10px] text-muted">Publicar ou remover aviso</small></span><span class="material-symbols-outlined text-muted">chevron_right</span></button>
+        <button data-settings-view="maintenance" class="flex min-h-14 items-center gap-3 rounded-xl border border-slate-200 p-3 text-left hover:bg-slate-50"><span class="flex h-9 w-9 items-center justify-center rounded-lg bg-amber-50 text-amber-800"><span class="material-symbols-outlined">build</span></span><span class="min-w-0 flex-1"><b class="block text-xs">Manutenção</b><small class="text-[10px] text-muted">Configurar aviso de indisponibilidade</small></span><span class="material-symbols-outlined text-muted">chevron_right</span></button>
+        <button data-settings-view="theme" class="flex min-h-14 items-center gap-3 rounded-xl border border-slate-200 p-3 text-left hover:bg-slate-50"><span class="flex h-9 w-9 items-center justify-center rounded-lg bg-violet-50 text-violet-700"><span class="material-symbols-outlined">palette</span></span><span class="min-w-0 flex-1"><b class="block text-xs">Tema visual</b><small class="text-[10px] text-muted">Escolher a aparência do site do aluno</small></span><span class="material-symbols-outlined text-muted">chevron_right</span></button>
       </div>
-      <button id="institutional-done" type="button" class="mt-4 w-full rounded-xl py-3 text-xs font-bold text-white" style="background:var(--accent)">Fechar</button>
-      <p class="mt-3 text-center text-[9px] text-muted">© <span id="footer-year"></span> Grêmio Estudantil Azarias Leite • Chapa Renovação</p>
+      <section data-settings-panel="jukebox" class="hidden mt-4 rounded-xl border border-slate-200 p-4"><h3 class="text-sm font-bold">Controle da Jukebox</h3><p class="mt-1 text-xs text-muted">Quando desligada, os alunos não podem enviar pedidos. Ao ligar, presenças sem atividade por mais de 90 segundos são removidas; alunos online são mantidos.</p><button id="toggle-jukebox" class="mt-4 w-full justify-center rounded-full bg-soft px-3 py-2.5 text-xs font-bold text-primary flex items-center gap-1"><span class="material-symbols-outlined text-sm">power_settings_new</span><span>Carregando...</span></button></section>
+      <section data-settings-panel="announcement" class="hidden mt-4"><label for="announcement-message" class="text-xs font-bold">Aviso para todos os alunos</label><textarea id="announcement-message" maxlength="240" rows="3" class="mt-2 w-full rounded-xl border border-slate-200 p-3 text-xs outline-none focus:ring-2 focus:ring-brand" placeholder="Escreva um aviso curto para aparecer em uma janela no site do aluno."></textarea><div class="mt-3 flex gap-2"><button id="publish-announcement" class="flex-1 rounded-lg bg-blue-50 py-2.5 text-xs font-bold text-primary">Publicar aviso</button><button id="clear-announcement" class="rounded-lg bg-soft px-3 py-2.5 text-xs font-bold text-muted">Remover</button></div></section>
+      <section data-settings-panel="maintenance" class="hidden mt-4"><label for="maintenance-message" class="text-xs font-bold">Mensagem para os alunos</label><textarea id="maintenance-message" maxlength="240" rows="3" class="mt-2 w-full rounded-xl border border-slate-200 p-3 text-xs outline-none focus:ring-2 focus:ring-brand" placeholder="Explique por que a Jukebox está temporariamente indisponível."></textarea><button id="toggle-maintenance" class="mt-3 w-full rounded-lg bg-amber-50 py-2.5 text-xs font-bold text-amber-800">Ativar manutenção</button></section>
+      <section data-settings-panel="theme" class="hidden mt-4"><label for="theme-select" class="block text-xs font-bold">Tema visual</label><select id="theme-select" class="mt-2 w-full rounded-xl border border-slate-200 bg-white p-3 text-sm outline-none focus:ring-2 focus:ring-brand"><option value="default">Padrão da Jukebox</option><option value="halloween">Halloween 🎃</option></select><p class="mt-2 text-[11px] leading-relaxed text-muted">Você pode mudar o tema sempre que quiser.</p><button id="save-theme" type="button" class="mt-4 w-full rounded-xl bg-primary py-2.5 text-xs font-bold text-white">Aplicar tema</button></section>
+      <p id="settings-feedback" class="hidden mt-3 text-xs text-muted" role="status"></p>
+      <button id="cancel-settings" type="button" class="mt-4 w-full rounded-xl bg-soft py-2.5 text-xs font-bold text-ink">Fechar</button>
     </div>
   </div>
-  <div id="notice" class="hidden fixed bottom-4 left-1/2 -translate-x-1/2 z-[70] w-[min(92vw,360px)] rounded-xl px-4 py-3 text-xs text-center shadow-xl" role="status" aria-live="polite"></div>
-  <div id="announcement-modal" class="hidden fixed inset-0 z-[55] items-center justify-center p-4 bg-black/60 backdrop-blur-md" role="dialog" aria-modal="true" aria-labelledby="announcement-title"><div class="w-full max-w-sm rounded-3xl bg-white p-5 shadow-2xl ring-1 ring-blue-100"><div class="flex items-center gap-2 text-primary"><span class="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50"><span class="material-symbols-outlined">campaign</span></span><h2 id="announcement-title" class="font-headline text-base font-bold">Aviso do Grêmio</h2></div><p id="announcement-message-display" class="mt-4 whitespace-pre-wrap text-sm leading-relaxed text-ink"></p><button id="close-announcement" class="mt-5 w-full rounded-xl bg-primary py-3 text-xs font-bold text-white">Entendi</button></div></div>
-  <div id="request-confirm-modal" class="hidden fixed inset-0 z-[45] items-center justify-center p-4 bg-black/60 backdrop-blur-md">
-    <div class="w-full max-w-sm bg-white rounded-3xl p-5 shadow-2xl ring-1 ring-white/20">
-      <div class="flex items-center gap-2 text-primary"><span class="w-9 h-9 rounded-xl bg-blue-50 flex items-center justify-center"><span class="material-symbols-outlined">playlist_add_check</span></span><div><h2 class="font-headline text-base font-bold">Enviar esta música?</h2><p class="text-[10px] text-muted">Seu pedido será encaminhado ao Grêmio.</p></div></div>
-      <div id="request-confirm-song" class="mt-4 rounded-2xl bg-soft p-3"></div>
-      <label for="request-note" class="mt-4 block text-xs font-bold text-ink">Recado (opcional)</label>
-      <textarea id="request-note" maxlength="200" rows="3" class="mt-1 w-full resize-none rounded-xl border border-slate-200 p-3 text-xs outline-none focus:ring-2 focus:ring-brand" placeholder="Ex.: Esta música é para..."></textarea>
-      <p class="mt-1 text-[10px] leading-relaxed text-muted">O recado também será revisado pelo Grêmio. Ele pode ser removido sem barrar a música.</p>
-      <p class="mt-3 text-xs leading-relaxed text-muted">A música será enviada para verificação. Ela só aparecerá na playlist se for aprovada pela moderação e poderá receber votos dos demais alunos.</p>
-      <div class="flex gap-2 mt-5"><button id="cancel-request" type="button" class="flex-1 py-3 rounded-xl bg-soft text-xs font-bold text-ink">Voltar</button><button id="confirm-request" type="button" class="flex-1 py-3 rounded-xl bg-brand text-white text-xs font-bold shadow-sm">Enviar para análise</button></div>
-    </div>
-  </div>
-  <div id="rejected-song-modal" class="hidden fixed inset-0 z-[46] items-center justify-center p-4 bg-black/60 backdrop-blur-md">
-    <div class="w-full max-w-sm bg-white rounded-3xl p-5 shadow-2xl ring-1 ring-red-100">
-      <div class="flex items-center gap-2 text-red-700"><span class="w-9 h-9 rounded-xl bg-red-50 flex items-center justify-center"><span class="material-symbols-outlined">playlist_remove</span></span><div><h2 class="font-headline text-base font-bold">Este pedido já foi analisado</h2><p class="text-[10px] text-muted">A música não pode ser enviada novamente.</p></div></div>
-      <div id="rejected-song-title" class="mt-4 text-sm font-bold text-ink"></div>
-      <div class="mt-3 rounded-2xl bg-red-50 p-3 ring-1 ring-red-100"><span class="block text-[10px] font-bold uppercase tracking-wide text-red-700">Justificativa do Grêmio</span><p id="rejected-song-reason" class="mt-1 text-xs leading-relaxed text-red-900"></p></div>
-      <button id="close-rejected-song" type="button" class="mt-5 w-full py-3 rounded-xl bg-soft text-xs font-bold text-ink">Entendi</button>
+  <div id="confirm-modal" class="hidden fixed inset-0 z-40 bg-black/60 backdrop-blur-sm items-center justify-center p-4"><div class="w-full max-w-xs bg-white rounded-2xl p-5 shadow-2xl"><h2 class="font-headline font-bold">Excluir pedido?</h2><p class="text-xs text-muted mt-2">Essa ação não pode ser desfeita.</p><div class="flex gap-2 mt-4"><button id="confirm-delete" class="flex-1 py-2.5 rounded-xl bg-danger text-white text-xs font-bold">Excluir</button><button id="cancel-delete" class="flex-1 py-2.5 rounded-xl bg-soft text-xs font-bold">Cancelar</button></div></div></div>
+  <div id="institutional-modal" aria-hidden="true" class="hidden fixed inset-0 z-50 items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+    <div class="w-full max-w-md max-h-[90vh] overflow-y-auto bg-white rounded-3xl shadow-2xl">
+      <div class="sticky top-0 bg-white/95 backdrop-blur px-5 py-4 border-b border-slate-100 flex items-center justify-between">
+        <div class="flex items-center gap-2"><span class="w-9 h-9 rounded-xl bg-blue-50 text-primary flex items-center justify-center"><span class="material-symbols-outlined">gavel</span></span><div><h2 class="font-headline text-base font-bold">Institucional</h2><p class="text-[10px] text-muted">Termos, transparência e contato</p></div></div>
+        <button id="institutional-close" class="w-8 h-8 rounded-full bg-soft text-muted"><span class="material-symbols-outlined text-lg">close</span></button>
+      </div>
+      <div class="p-5 space-y-4 text-xs text-muted">
+        <section class="rounded-2xl bg-soft p-4"><h3 class="font-headline font-bold text-ink flex items-center gap-2"><span class="material-symbols-outlined text-primary text-lg">music_note</span>Sobre a Jukebox</h3><p class="mt-2 leading-relaxed">Iniciativa do Grêmio Estudantil Azarias Leite para organizar sugestões musicais e a moderação da playlist.</p></section>
+        <section><h3 class="font-bold text-ink flex items-center gap-2"><span class="material-symbols-outlined text-green text-lg">visibility</span>Transparência</h3><p class="mt-1.5 leading-relaxed">Pedidos são analisados antes da publicação. Aprovações, recusas, reproduções e ações administrativas ficam registradas. Como o painel não exige login, esses registros não identificam quem realizou cada ação. O histórico de reprodução e os registros administrativos são apagados automaticamente após 90 dias.</p></section>
+        <section><h3 class="font-bold text-ink flex items-center gap-2"><span class="material-symbols-outlined text-orange text-lg">description</span>Termos de uso</h3><ul class="mt-1.5 space-y-1.5 list-disc pl-5 leading-relaxed"><li>Modere com respeito e coerência com as regras do ambiente escolar.</li><li>O Grêmio pode aprovar ou barrar pedidos inadequados.</li><li>Não insira informações pessoais nos campos de justificativa.</li><li>Um identificador anônimo limita votos repetidos e permite acompanhar seus pedidos neste navegador.</li></ul></section>
+        <section class="rounded-2xl border border-blue-100 bg-blue-50/60 p-4"><h3 class="font-bold text-ink flex items-center gap-2"><span class="material-symbols-outlined text-brand text-lg">alternate_email</span>Contato oficial</h3><a class="mt-2 inline-flex items-center gap-2 font-bold text-primary hover:underline" href="https://www.instagram.com/gremioestudantilazariasleite/" target="_blank" rel="noopener noreferrer"><span class="material-symbols-outlined">photo_camera</span>@gremioestudantilazariasleite<span class="material-symbols-outlined text-sm">open_in_new</span></a></section>
+      </div>
     </div>
   </div>
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-    import { getFirestore, collection, query, where, getDocs, onSnapshot, runTransaction, serverTimestamp, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-    const firebaseConfig={apiKey:"AIzaSyDGbDeolFBC-Dw6EBZnNXygq9WuEdH8nS4",authDomain:"jukebox-c6d07.firebaseapp.com",projectId:"jukebox-c6d07",storageBucket:"jukebox-c6d07.firebasestorage.app",messagingSenderId:"56386350624",appId:"1:56386350624:web:df7a6fe404a1242176d645"};
-    const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app);
-    let anonymousUser;
-    try{anonymousUser=auth.currentUser?.isAnonymous?auth.currentUser:(await signInAnonymously(auth)).user;}
-    catch(error){
-      console.error("Não foi possível iniciar a sessão anônima",error);
-      const status=document.getElementById("request-status"),message=document.getElementById("request-status-text");
-      status.dataset.state="maintenance";status.classList.remove("hidden");message.textContent="Serviço temporariamente indisponível. Tente atualizar a página.";
-      throw error;
-    }
-    const songs=collection(db,"musicas"),recados=collection(db,"recados"),presence=collection(db,"presenca"),
-      historyCollection=collection(db,"historico_musicas"),settingsRef=doc(db,"configuracoes","jukebox"),
-      uid=anonymousUser.uid;
-    localStorage.setItem("jukebox_uid",uid);
-    const myRequestsSeenKey=`jukebox_my_requests_seen_${uid}`;
-    let acknowledgedRequestSignature=localStorage.getItem(myRequestsSeenKey)||"",currentRequestSignature="";
-    const input=document.getElementById("song-input"), results=document.getElementById("search-results"), list=document.getElementById("approved-list"),notice=document.getElementById("notice");let approvedDocs=[],approvedNotes=[],myRequestDocs=[],myRequestsError="",playHistory=[],historyDocs=[],playHistoryDate="",playHistoryLoaded=false,legacyHistoryMigratedDate="",sortMode="queue",jukeboxOverride=false,currentSongId=null,maintenanceEnabled=false,settingsLoaded=false,requestingAllowed=false;
-    function showNotice(text){notice.textContent=text;notice.classList.remove("hidden");setTimeout(()=>notice.classList.add("hidden"),2800)}
-    function updateBreak(){
-      const now=new Date(),start=new Date(now),end=new Date(now);
-      start.setHours(9,30,0,0);end.setHours(9,50,0,0);
-      const scheduled=now>=start&&now<end,active=!maintenanceEnabled&&(scheduled||jukeboxOverride),
-        status=document.getElementById("request-status"),statusText=document.getElementById("request-status-text");
-      requestingAllowed=active;
-      const historyTab=document.getElementById("tab-recent");
-      historyTab.disabled=!settingsLoaded||maintenanceEnabled;
-      historyTab.setAttribute("aria-disabled",String(historyTab.disabled));
-      historyTab.title=!settingsLoaded?"Carregando configurações":maintenanceEnabled?"Indisponível durante a manutenção":"";
-      if(maintenanceEnabled&&sortMode==="history"){
-        sortMode="queue";
-        document.getElementById("tab-top").setAttribute("aria-selected","true");
-        historyTab.setAttribute("aria-selected","false");
-      }
-      status.dataset.state=maintenanceEnabled?"maintenance":active?"open":"closed";
-      statusText.textContent=maintenanceEnabled?"Em manutenção":scheduled&&active?`Pedidos abertos · ${Math.ceil((end-now)/60000)} min restantes`:active?"Pedidos abertos":"Pedidos fechados";
-      document.getElementById("song-request-form").classList.toggle("opacity-50",!active);
-      document.getElementById("song-request-form").classList.toggle("pointer-events-none",!active);
-      document.getElementById("submit-song").disabled=!active;
-      document.getElementById("playlist-state").textContent=maintenanceEnabled?"Manutenção":active?"Ao vivo":"Jukebox desligada";
-      const indicator=document.getElementById("playlist-indicator");
-      indicator.textContent=active?"sync":"pause_circle";
-      indicator.classList.toggle("animate-spin",active);
-      indicator.classList.toggle("text-green",active);
-      indicator.classList.toggle("text-muted",!active);
-      document.getElementById("maintenance-notice").classList.toggle("hidden",!maintenanceEnabled);
-      syncMyRequestsTab();
-    }
-    document.getElementById("footer-year").textContent=new Date().getFullYear();document.getElementById("close-announcement").onclick=()=>{const modal=document.getElementById("announcement-modal");localStorage.setItem("jukebox_announcement_seen",modal.dataset.announcementId||"");modal.classList.add("hidden");modal.classList.remove("flex")};updateBreak();setInterval(updateBreak,15000);
-    function applyTheme(theme){const halloween=theme==="halloween";document.body.classList.toggle("theme-halloween",halloween);document.getElementById("theme-badge").classList.toggle("hidden",!halloween)}
-    onSnapshot(settingsRef,snap=>{const settings=snap.data()||{};settingsLoaded=true;jukeboxOverride=settings.enabled===true;maintenanceEnabled=settings.maintenance===true;currentSongId=settings.currentSongId||null;playHistoryDate=settings.playHistoryDate||"";playHistory=Array.isArray(settings.playHistory)?settings.playHistory:[];legacyHistoryMigratedDate=settings.legacyHistoryMigratedDate||"";applyTheme(settings.theme);document.getElementById("maintenance-message-display").textContent=settings.maintenanceMessage||"A equipe está trabalhando para restabelecer o serviço.";updateBreak();renderApproved();const announcementId=settings.announcementId||"",announcementText=settings.announcementText||"";if(announcementId&&announcementText&&announcementId!==localStorage.getItem("jukebox_announcement_seen")){const modal=document.getElementById("announcement-modal");modal.dataset.announcementId=announcementId;document.getElementById("announcement-message-display").textContent=announcementText;modal.classList.remove("hidden");modal.classList.add("flex")}else if(!announcementId||!announcementText){const modal=document.getElementById("announcement-modal");modal.classList.add("hidden");modal.classList.remove("flex")}},error=>console.error("Falha ao ler estado da Jukebox",error));
-    onSnapshot(query(historyCollection,where("playDate","==",localDateKey())),snap=>{historyDocs=snap.docs;playHistoryLoaded=true;renderApproved()},error=>{console.error("Falha ao carregar histórico de hoje",error);playHistoryLoaded=false;if(sortMode==="history")renderApproved()});
-    async function heartbeat(){try{await setDoc(doc(presence,uid),{lastSeen:serverTimestamp()},{merge:true})}catch(error){console.error("Falha na presença",error)}}heartbeat();setInterval(heartbeat,30000);onSnapshot(presence,snap=>{const cutoff=Date.now()-90000;document.getElementById("online-count").textContent=[...snap.docs].filter(s=>(s.data().lastSeen?.toMillis?.()||0)>cutoff).length});
-    let timer, apiSongs=[], pendingRequest=null, requestCheckId=0;
-    const escapeHtml=value=>String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-    function highResolutionArtwork(url){return String(url||"").replace(/\/\d{2,4}x\d{2,4}bb(?=\.)/i,"/600x600bb");}
-    let albumAtmosphereUrl="";
-    function updateAlbumAtmosphere(url){
-      const image=document.getElementById("album-atmosphere-image"),source=highResolutionArtwork(url);
-      if(source===albumAtmosphereUrl)return;
-      albumAtmosphereUrl=source;
-      image.style.opacity="0";
-      if(!source){image.onload=null;image.onerror=null;image.removeAttribute("src");return}
-      image.onload=()=>{if(albumAtmosphereUrl===source)image.style.opacity=".55"};
-      image.onerror=()=>{if(albumAtmosphereUrl===source){image.style.opacity="0";console.error("Não foi possível carregar a capa para o fundo da Jukebox.")}};
-      image.src=source;
-    }
-    function titleLooksExplicit(value){const words=String(value??"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();return /(?:^|[^a-z0-9])(puta|putinha|putas|puto|putinho|putos|caralho|porra|buceta|bucetinha|foda|foder|fodendo|fuck|fucking|shit|bitch|dick|pussy|motherfucker)(?:$|[^a-z0-9])/.test(words);}
-    async function stableSongId(nameLow){const digest=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(nameLow));return `song-${Array.from(new Uint8Array(digest),byte=>byte.toString(16).padStart(2,"0")).join("")}`;}
-    function showResults(items,term){apiSongs=items; results.innerHTML=items.length?items.map((s,i)=>`<button type="button" data-index="${i}" class="w-full p-2.5 flex gap-2.5 text-left hover:bg-soft border-b border-slate-100"><img class="w-10 h-10 rounded-lg object-cover" src="${escapeHtml(highResolutionArtwork(s.artworkUrl100))}" alt=""><span class="min-w-0"><b class="block text-xs truncate">${escapeHtml(s.trackName)}</b><small class="text-[11px] text-muted truncate block">${escapeHtml(s.artistName)}</small></span></button>`).join(""):`<button type="button" id="manual-request" class="w-full p-3 text-left text-xs font-bold text-primary hover:bg-soft">Não achou? Enviar manualmente</button>`; results.classList.remove("hidden"); results.querySelectorAll("[data-index]").forEach(b=>b.onclick=()=>openRequestConfirmation(apiSongs[Number(b.dataset.index)])); const manual=document.getElementById("manual-request"); if(manual)manual.onclick=()=>openRequestConfirmation({trackName:term,artistName:"",artworkUrl100:"",trackTimeMillis:0,manual:true});}
-    async function search(term){try{const r=await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(term)}&entity=song&limit=4`); const data=await r.json(); showResults(data.results||[],term);}catch(error){console.error("Falha na busca do iTunes",error);showResults([],term);}}
-    input.addEventListener("input",()=>{clearTimeout(timer);const term=input.value.trim();if(!term){results.classList.add("hidden");return}timer=setTimeout(()=>search(term),500)});
-    document.addEventListener("click",e=>{if(!e.target.closest("#song-request-form"))results.classList.add("hidden")});
-    document.getElementById("song-request-form").addEventListener("submit",e=>{e.preventDefault();if(!requestingAllowed){showNotice(maintenanceEnabled?"A Jukebox está em manutenção no momento.":"A Jukebox está fechada agora.");return}openRequestConfirmation({trackName:input.value.trim(),artistName:"",artworkUrl100:"",trackTimeMillis:0,manual:true})});
-    async function openRequestConfirmation(meta){if(!meta?.trackName?.trim())return;const checkId=++requestCheckId;results.classList.add("hidden");try{const low=meta.trackName.trim().toLocaleLowerCase("pt-BR"),matches=await getDocs(query(songs,where("nome_low","==",low))),rejected=matches.docs.find(s=>s.data().status==="barrada");if(checkId!==requestCheckId)return;if(rejected){showRejectedSong(meta.trackName,rejected.data().motivo);return}}catch(error){console.error("Falha ao verificar histórico da música",error);showNotice("Não foi possível verificar se essa música já foi barrada. Tente novamente.");return}pendingRequest=meta;document.getElementById("request-note").value="";const cover=meta.artworkUrl100?`<img class="w-12 h-12 rounded-xl object-cover" src="${escapeHtml(highResolutionArtwork(meta.artworkUrl100))}" alt="">`:`<div class="w-12 h-12 rounded-xl bg-white text-primary flex items-center justify-center ring-1 ring-slate-200"><span class="material-symbols-outlined">album</span></div>`;document.getElementById("request-confirm-song").innerHTML=`<div class="flex items-center gap-3">${cover}<div class="min-w-0"><b class="block text-sm truncate">${escapeHtml(meta.trackName.trim())}</b><span class="block text-[11px] text-muted truncate">${escapeHtml(meta.artistName||"Artista não informado")}</span></div></div>`;const confirmModal=document.getElementById("request-confirm-modal");confirmModal.classList.remove("hidden");confirmModal.classList.add("flex");}
-    function showRejectedSong(name,reason){closeRequestConfirmation();document.getElementById("rejected-song-title").textContent=name;document.getElementById("rejected-song-reason").textContent=reason?.trim()||"O Grêmio não informou uma justificativa.";const modal=document.getElementById("rejected-song-modal");modal.classList.remove("hidden");modal.classList.add("flex");}
-    function closeRejectedSong(){const modal=document.getElementById("rejected-song-modal");modal.classList.add("hidden");modal.classList.remove("flex");}
-    function closeRequestConfirmation(){pendingRequest=null;const confirmModal=document.getElementById("request-confirm-modal");confirmModal.classList.add("hidden");confirmModal.classList.remove("flex");}
-    document.getElementById("cancel-request").onclick=closeRequestConfirmation;document.getElementById("close-rejected-song").onclick=closeRejectedSong;document.getElementById("confirm-request").onclick=async()=>{if(!pendingRequest)return;if(!requestingAllowed){closeRequestConfirmation();showNotice(maintenanceEnabled?"A Jukebox está em manutenção no momento.":"A Jukebox está fechada agora.");return}const request=pendingRequest,note=document.getElementById("request-note").value.trim();closeRequestConfirmation();await submitSong(request.trackName,request.manual?null:request,note);};
-    async function submitSong(name,meta,noteText=""){if(!name)return;if(!requestingAllowed){showNotice(maintenanceEnabled?"A Jukebox está em manutenção no momento.":"A Jukebox está fechada agora.");return}await saveSong(meta||{trackName:name,artistName:"",artworkUrl100:"",trackTimeMillis:0,manual:true},noteText);}
-    async function saveSong(meta,noteText=""){
-      const name=meta.trackName.trim(),low=name.toLocaleLowerCase("pt-BR"),apiExplicitness=String(meta.trackExplicitness||"desconhecida").toLowerCase(),titleExplicit=titleLooksExplicit(name),explicit=apiExplicitness==="explicit"||titleExplicit,explicitness=apiExplicitness==="explicit"?"itunes_explicit":titleExplicit?"termo_explicito_no_titulo":apiExplicitness;
-      const payload={nome:name,nome_low:low,artista:meta.artistName||"",capa:highResolutionArtwork(meta.artworkUrl100)||null,duracao:meta.trackTimeMillis?formatDuration(meta.trackTimeMillis):"",explicita:explicit,classificacaoConteudo:explicitness,status:"pendente",motivo:"",votos:1,votedBy:[uid],requestedBy:[uid],requestedAt:serverTimestamp(),skipVotes:0,skipVotedBy:[],createdAt:serverTimestamp()};
-      try{
-        const matches=await getDocs(query(songs,where("nome_low","==",low))),newSongRef=doc(songs,await stableSongId(low)),noteRef=noteText?doc(recados):null;
-        let blockedByRejection=null,savedSongRef=null;
-        await runTransaction(db,async tx=>{
-          blockedByRejection=null;savedSongRef=null;
-          const existingDocs=await Promise.all([...matches.docs.map(s=>tx.get(s.ref)),tx.get(newSongRef)]);
-          const rejected=existingDocs.find(s=>s.exists()&&s.data().status==="barrada");
-          if(rejected){blockedByRejection=rejected.data();return}
-          const existing=existingDocs.find(s=>s.exists());
-          if(existing){
-            savedSongRef=existing.ref;
-            const data=existing.data(),voters=Array.isArray(data.votedBy)?data.votedBy:[],requesters=Array.isArray(data.requestedBy)?data.requestedBy:[],updates={};
-            if(!voters.includes(uid)){updates.votedBy=[...voters,uid];updates.votos=(Number(data.votos)||0)+1;}
-            if(!requesters.includes(uid)){updates.requestedBy=[...requesters,uid];updates.requestedAt=serverTimestamp();}
-            if(data.jaTocou===true){updates.jaTocou=false;updates.status="pendente";updates.motivo="";updates.requestedAt=serverTimestamp();}
-            if(explicit&&!data.explicita){updates.explicita=true;updates.classificacaoConteudo=explicitness;}
-            if(Object.keys(updates).length)tx.update(existing.ref,updates);
-          }else{savedSongRef=newSongRef;tx.set(newSongRef,payload)}
-          if(noteRef&&savedSongRef)tx.set(noteRef,{songId:savedSongRef.id,nomeMusica:name,artista:meta.artistName||"",capa:meta.artworkUrl100||null,texto:noteText,uid,status:"pendente",motivo:"",createdAt:serverTimestamp()});
-        });
-        if(blockedByRejection){showRejectedSong(name,blockedByRejection.motivo);return}
-        input.value="";document.getElementById("request-note").value="";results.classList.add("hidden");
-        showNotice(noteText?`"${name}" e seu recado foram enviados para análise.`:meta.manual?"Pedido manual registrado. O Grêmio vai procurar a capa!":`"${name}" foi enviado para o Grêmio!`);
-      }catch(error){console.error("Falha ao salvar pedido",error);showNotice("Não foi possível registrar o pedido. Tente novamente.");}
-    }
-    function formatDuration(ms){const s=Math.floor(ms/1000);return `${String(Math.floor(s/60)).padStart(2,"0")}:${String(s%60).padStart(2,"0")}`;}
+    import { getFirestore, collection, query, where, getDocs, getDoc, onSnapshot, doc, setDoc, runTransaction, writeBatch, serverTimestamp, Timestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    const config={apiKey:"AIzaSyDGbDeolFBC-Dw6EBZnNXygq9WuEdH8nS4",authDomain:"jukebox-c6d07.firebaseapp.com",projectId:"jukebox-c6d07",storageBucket:"jukebox-c6d07.firebasestorage.app",messagingSenderId:"56386350624",appId:"1:56386350624:web:df7a6fe404a1242176d645"},
+      app=initializeApp(config),db=getFirestore(app),songs=collection(db,"musicas"),recados=collection(db,"recados"),
+      presence=collection(db,"presenca"),settingsRef=doc(db,"configuracoes","jukebox"),historyCollection=collection(db,"historico_musicas"),
+      auditCollection=collection(db,"admin_auditoria");
+    let legacyHistoryCheckedDate="",toastTimeout=null;
+    const lists={pendente:[],aprovada:[],barrada:[]};let noteDocs=[],historyDocs=[],auditDocs=[],playHistory=[],playHistoryDate="",active="pendente",rejectId=null,rejectType="song",currentSongId=null,maintenanceEnabled=false,activeTheme="default",selectedHistoryDate=localDateKey(),selectedAuditDate=localDateKey(),historyUnsubscribe=null,auditUnsubscribe=null,undoAction=null,actionInProgress=false;
+    const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
     function localDateKey(date=new Date()){return `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,"0")}-${String(date.getDate()).padStart(2,"0")}`;}
-    function renderHistoryCard(track){
-      const cover=track.capa?`<img src="${escapeHtml(highResolutionArtwork(track.capa))}" alt="Capa de ${escapeHtml(track.nome)}">`:'<span class="material-symbols-outlined">album</span>',
-        playedAt=new Date(historyMillis(track)),time=Number.isNaN(playedAt.getTime())?"":playedAt.toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"}),
-        popular=Number(track.playCount)>1?`<span class="history-popular" role="img" aria-label="Tocada ${Number(track.playCount)} vezes; música popular" title="Tocada ${Number(track.playCount)} vezes"><span class="material-symbols-outlined" aria-hidden="true">favorite</span></span>`:"";
-      return `<article class="track-row"><div class="track-cover">${cover}</div><div class="track-info"><b>${escapeHtml(track.nome||"Música")}</b><span>${escapeHtml(track.artista||"Artista não informado")}</span>${track.duracao?`<small>${escapeHtml(track.duracao)}</small>`:""}</div>${popular}${track.current?'<span class="history-time">Atual</span>':time?`<time class="history-time" datetime="${escapeHtml(playedAt.toISOString())}">${time}</time>`:""}</article>`;
-    }
-    function renderVoteButton(snap){
-      const d=snap.data(),voters=Array.isArray(d.votedBy)?d.votedBy:[],voted=voters.includes(uid),halloween=document.body.classList.contains("theme-halloween"),
-        voteIcon=halloween?'<img class="vote-icon h-5 w-5 object-contain" src="assets/halloween-abobora.png" alt="">':`<span class="material-symbols-outlined text-base">${voted?"favorite":"favorite_border"}</span>`;
-      return `<button data-vote="${snap.id}" aria-label="${voted?"Você já votou nesta música":"Votar nesta música"}" aria-pressed="${voted}" class="vote-btn inline-flex min-h-10 min-w-[4.25rem] shrink-0 items-center justify-center gap-1.5 whitespace-nowrap rounded-full px-2.5 py-2 text-xs font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400 ${voted?"is-voted bg-brand text-white":"bg-soft text-ink"}">${voteIcon}<span>${Number(d.votos)||0}</span></button>`;
-    }
-    function renderSkipVoteButton(snap){const d=snap.data(),voters=Array.isArray(d.skipVotedBy)?d.skipVotedBy:[],voted=voters.includes(uid),votes=Math.max(Number(d.skipVotes)||0,voters.length);return `<button data-skip-vote="${snap.id}" aria-label="${voted?"Seu voto para pular foi registrado":"Votar para pular esta música"}; ${votes} voto(s). O Grêmio decide quando avançar." title="O Grêmio decide quando avançar" aria-pressed="${voted}"${voted?" disabled":""} class="skip-vote-btn${voted?" is-voted":""}"><span class="material-symbols-outlined" aria-hidden="true">skip_next</span><span class="skip-vote-copy"><span>${voted?"Voto enviado":"Votar para pular"}</span><small>O Grêmio decide quando avançar</small></span><span class="skip-vote-count"><strong>${votes}</strong><small>votos</small></span></button>`}
-    function renderApprovedNotes(songId){return approvedNotes.filter(note=>note.data().songId===songId).map(note=>`<div role="note" class="student-note"><div class="student-note-copy"><b class="student-note-label">Recado desta música</b><p class="student-note-text whitespace-pre-wrap break-words">${escapeHtml(note.data().texto)}</p></div></div>`).join("");}
-    function renderCard(snap,index){
-      const d=snap.data(),
-        cover=d.capa?`<img src="${escapeHtml(d.capa)}" alt="Capa de ${escapeHtml(d.nome)}">`:`<span class="material-symbols-outlined">album</span>`,
-        notes=renderApprovedNotes(snap.id);
-      return `<article class="track-row"><div class="track-cover">${cover}<span class="track-rank">#${index+1}</span></div><div class="track-info"><b>${escapeHtml(d.nome)}</b><span>${escapeHtml(d.artista||"Artista não informado")}</span>${d.duracao?`<small>${escapeHtml(d.duracao)}</small>`:""}</div>${renderVoteButton(snap)}${notes}</article>`;
-    }
-    function renderApproved(){
-      const ranked=approvedDocs.filter(song=>song.data().jaTocou!==true).sort((a,b)=>(Number(b.data().votos)||0)-(Number(a.data().votos)||0)),
-        pinned=ranked.find(s=>s.id===currentSongId),rest=ranked.filter(s=>s.id!==currentSongId),
-        playback=document.getElementById("playback-status"),next=pinned?rest[0]:ranked[0],current=pinned?.data(),
-        queue=pinned?rest:ranked,
-        ordered=queue.filter(song=>song.id!==next?.id);
-      updateAlbumAtmosphere((current||next?.data())?.capa);
-      syncMyRequestsTab();
-      if(sortMode==="requests"){
-        list.classList.remove("hidden");
-        list.innerHTML=renderMyRequestsContent();
-      }else if(sortMode==="history"){
-        const todaysHistory=todayHistory().filter(track=>track.songId!==currentSongId);
-        list.classList.remove("hidden");
-        list.innerHTML=!playHistoryLoaded?'<p class="text-xs text-muted p-4 text-center">Carregando histórico...</p>':todaysHistory.length?[...todaysHistory].reverse().map(renderHistoryCard).join(""):'<p class="text-xs text-muted p-4 text-center">Nenhuma música tocou hoje ainda.</p>';
-      }else{
-        list.classList.toggle("hidden",!pinned&&!!next&&!ordered.length);
-        list.innerHTML=ordered.length?ordered.map(renderCard).join(""):pinned?'<p class="text-xs text-muted p-4 text-center bg-white rounded-xl">Não há outras músicas na fila.</p>':next?"":'<p class="text-xs text-muted p-4 text-center bg-white rounded-xl">Ainda não há músicas aprovadas.</p>';
-      }
-      if(current){
-        const artworkUrl=highResolutionArtwork(current.capa),artwork=artworkUrl?`<img src="${escapeHtml(artworkUrl)}" alt="Capa de ${escapeHtml(current.nome)}">`:'<div class="artwork-fallback"><span class="material-symbols-outlined">album</span></div>',
-          nextData=next?.data(),nextCover=nextData?.capa?`<img src="${escapeHtml(nextData.capa)}" alt="">`:'<span class="material-symbols-outlined">album</span>';
-        playback.classList.remove("hidden");
-        playback.innerHTML=`${artworkUrl?`<div class="playback-backdrop" aria-hidden="true"><img src="${escapeHtml(artworkUrl)}" alt=""></div>`:""}<div class="player-content"><div class="player-feature"><div class="player-artwork">${artwork}<span class="player-state-badge"><span class="material-symbols-outlined">equalizer</span>Tocando agora</span></div><div class="player-caption"><div class="min-w-0"><b class="player-title">${escapeHtml(current.nome)}</b><span class="player-artist">${escapeHtml(current.artista||"Artista não informado")}</span>${current.duracao?`<small class="player-duration">${escapeHtml(current.duracao)}</small>`:""}</div>${renderSkipVoteButton(pinned)}${renderApprovedNotes(pinned.id)}</div></div>${next?`<div class="player-next"><div class="player-next-cover">${nextCover}</div><div class="min-w-0"><span class="player-next-label">A seguir</span><b class="player-next-title truncate">${escapeHtml(nextData.nome)}</b><span class="block truncate text-[10px] text-muted">${escapeHtml(nextData.artista||"Artista não informado")}</span></div></div>`:'<div class="player-next-waiting">Aguardando a próxima música.</div>'}</div>`;
-      }else if(ranked.length){
-        const nextSnap=ranked[0],nextSong=nextSnap.data(),artworkUrl=highResolutionArtwork(nextSong.capa),artwork=artworkUrl?`<img src="${escapeHtml(artworkUrl)}" alt="Capa de ${escapeHtml(nextSong.nome)}">`:'<div class="artwork-fallback"><span class="material-symbols-outlined">album</span></div>';
-        playback.classList.remove("hidden");
-        playback.innerHTML=`${artworkUrl?`<div class="playback-backdrop" aria-hidden="true"><img src="${escapeHtml(artworkUrl)}" alt=""></div>`:""}<div class="player-content"><div class="player-feature"><div class="player-artwork">${artwork}<span class="player-state-badge"><span class="material-symbols-outlined">queue_music</span>Próxima na fila</span></div><div class="player-caption"><div class="min-w-0"><b class="player-title">${escapeHtml(nextSong.nome)}</b><span class="player-artist">${escapeHtml(nextSong.artista||"Artista não informado")}</span>${nextSong.duracao?`<small class="player-duration">${escapeHtml(nextSong.duracao)}</small>`:""}</div>${renderVoteButton(nextSnap)}${renderApprovedNotes(nextSnap.id)}</div></div></div>`;
-      }else{playback.classList.add("hidden");playback.innerHTML="";}
-      document.querySelectorAll("#approved-list [data-vote],#playback-status [data-vote]").forEach(b=>b.onclick=()=>vote(b.dataset.vote));
-      document.querySelectorAll("#playback-status [data-skip-vote]").forEach(b=>b.onclick=()=>voteToSkip(b.dataset.skipVote));
-    }
     function historyMillis(track){const value=track.playedAt?.toMillis?.()??Date.parse(track.playedAt||"");return Number.isFinite(value)?value:0;}
-    function normalizePlayHistory(history){
+    function compactPlayHistory(history){
       const tracksBySong=new Map();
       for(const track of history){
-        const key=track.songId||`${track.nome_low||track.nome||"unknown"}:${track.artista||""}`,
-          previous=tracksBySong.get(key),count=Math.max(1,Number(track.playCount)||1),
+        const key=track.songId||`legacy:${track.nome_low||track.nome||""}:${track.artista||""}`,
+          previous=tracksBySong.get(key),playCount=Math.max(1,Number(track.playCount)||1),
           eventIds=track.eventId?[track.eventId]:Array.isArray(track.eventIds)?track.eventIds:[];
-        if(!previous){tracksBySong.set(key,{...track,playCount:count,eventIds});continue}
+        if(!previous){tracksBySong.set(key,{...track,playCount,eventIds});continue}
         const previousTime=historyMillis(previous),trackTime=historyMillis(track),
           latest=trackTime>=previousTime?track:previous;
-        tracksBySong.set(key,{...previous,...latest,playCount:previous.playCount+count,current:previous.current||track.current,eventIds:[...new Set([...previous.eventIds,...eventIds])]});
+        tracksBySong.set(key,{...previous,...latest,playCount:previous.playCount+playCount,eventIds:[...new Set([...previous.eventIds,...eventIds])]});
       }
-      return [...tracksBySong.values()].sort((a,b)=>historyMillis(a)-historyMillis(b));
+      return [...tracksBySong.values()];
     }
-    function todayHistory(){
-      const persistent=historyDocs.map(snapshot=>({...snapshot.data(),eventId:snapshot.id})),
-        persistentSongs=new Set(persistent.map(track=>track.songId).filter(Boolean)),
-        legacy=playHistoryDate===localDateKey()&&legacyHistoryMigratedDate!==playHistoryDate?playHistory.filter(track=>!persistentSongs.has(track.songId)):[];
-      return normalizePlayHistory([...legacy,...persistent]);
+    function historyExpiration(date){return Timestamp.fromDate(new Date(date.getTime()+90*24*60*60*1000));}
+    function auditData(action,targetType,targetId,targetLabel,details={}){
+      const now=new Date();
+      return {action,targetType,targetId:targetId||"",targetLabel:String(targetLabel||"").slice(0,180),details,adminUid:"Painel do Grêmio",adminEmail:"",actionDate:localDateKey(now),createdAt:serverTimestamp(),expiresAt:historyExpiration(now)};
     }
-    function syncMyRequestsTab(){
-      const tab=document.getElementById("tab-requests"),count=document.getElementById("my-requests-count"),
-        stateIndicator=document.getElementById("playlist-state-indicator"),rejected=myRequestDocs.some(song=>song.data().status==="barrada"),
-        pendingCount=myRequestDocs.filter(song=>song.data().status==="pendente").length,
-        approvedCount=myRequestDocs.filter(song=>song.data().status==="aprovada").length,
-        playedCount=myRequestDocs.filter(song=>song.data().jaTocou===true).length,
-        visible=requestingAllowed&&myRequestDocs.length>0&&!myRequestsError,
-        hasUnread=currentRequestSignature!==acknowledgedRequestSignature;
-      tab.classList.toggle("hidden",!visible);
-      stateIndicator.classList.toggle("hidden",visible);
-      if(!visible&&sortMode==="requests"){
-        sortMode="queue";
-        document.getElementById("tab-top").setAttribute("aria-selected","true");
-        tab.setAttribute("aria-selected","false");
+    function recordAdminAction(action,targetType,targetId,targetLabel,details={}){return setDoc(doc(auditCollection),auditData(action,targetType,targetId,targetLabel,details));}
+    async function updateWithAudit(reference,updates,action,targetType,targetLabel,details={}){
+      await runTransaction(db,async transaction=>{
+        const snapshot=await transaction.get(reference);
+        if(!snapshot.exists())throw new Error("Este item não está mais disponível.");
+        transaction.update(reference,updates);
+        transaction.set(doc(auditCollection),auditData(action,targetType,reference.id,targetLabel,details));
+      });
+    }
+    async function saveSettingsWithAudit(updates,action,targetLabel){
+      await runTransaction(db,async transaction=>{
+        transaction.set(settingsRef,{...updates,updatedAt:serverTimestamp()},{merge:true});
+        transaction.set(doc(auditCollection),auditData(action,"configuracao","jukebox",targetLabel));
+      });
+    }
+    function showError(error,fallback="Não foi possível concluir a ação."){
+      console.error(fallback,error);
+      showToast(error?.code==="permission-denied"?"Sem permissão para esta ação. Confira a configuração de acesso.":fallback);
+    }
+    function titleLooksExplicit(value){const words=String(value??"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();return /(?:^|[^a-z0-9])(puta|putinha|putas|puto|putinho|putos|caralho|porra|buceta|bucetinha|foda|foder|fodendo|fuck|fucking|shit|bitch|dick|pussy|motherfucker)(?:$|[^a-z0-9])/.test(words);}
+    async function purgeStalePresence(){
+      const cutoff=Date.now()-90000,stale=await getDocs(query(presence,where("lastSeen","<=",Timestamp.fromMillis(cutoff))));
+      let deleted=0;
+      for(let offset=0;offset<stale.docs.length;offset+=40){
+        const results=await Promise.all(stale.docs.slice(offset,offset+40).map(snapshot=>runTransaction(db,async transaction=>{
+          const latest=await transaction.get(snapshot.ref);
+          if(!latest.exists())return false;
+          const lastSeen=latest.data().lastSeen?.toMillis?.()||0;
+          if(lastSeen>cutoff)return false;
+          transaction.delete(snapshot.ref);return true;
+        })));
+        deleted+=results.filter(Boolean).length;
       }
-      const priorityState=rejected?"rejected":pendingCount?"pending":approvedCount||playedCount?"approved":"pending",
-        priorityLabel=priorityState==="rejected"?"há pedido barrado":priorityState==="pending"?"há pedido em análise":playedCount&&!approvedCount?"pedidos já tocados":"pedidos aprovados",
-        countLabel=`${myRequestDocs.length} ${myRequestDocs.length===1?"pedido":"pedidos"}; ${priorityLabel}`;
-      count.dataset.state=priorityState;
-      count.dataset.unread=String(hasUnread);
-      count.textContent=String(myRequestDocs.length);
-      count.setAttribute("aria-label",countLabel);
-      count.classList.toggle("hidden",!hasUnread);
-      tab.setAttribute("aria-label",`Meus pedidos, ${countLabel}`);
+      return deleted;
     }
-    function markMyRequestsRead(){
-      acknowledgedRequestSignature=currentRequestSignature;
-      localStorage.setItem(myRequestsSeenKey,acknowledgedRequestSignature);
-      syncMyRequestsTab();
+    async function deleteSong(id){
+      const songRef=doc(songs,id);
+      return runTransaction(db,async transaction=>{
+        const [songSnapshot,settingsSnapshot]=await Promise.all([transaction.get(songRef),transaction.get(settingsRef)]);
+        if(!songSnapshot.exists())throw new Error("Pedido não encontrado.");
+        const settings=settingsSnapshot.data()||{},wasCurrentSong=settings.currentSongId===id,updates={};
+        if(wasCurrentSong){updates.currentSongId=null;updates.currentSongName="";}
+        if(Object.keys(updates).length)transaction.set(settingsRef,{...updates,updatedAt:new Date()},{merge:true});
+        transaction.delete(songRef);
+        transaction.set(doc(auditCollection),auditData("excluir_pedido","musica",id,songSnapshot.data().nome||"Pedido"));
+        return {wasCurrentSong,songData:songSnapshot.data()};
+      });
     }
-    function renderMyRequestsContent(){
-      if(myRequestsError)return '<p class="my-request-empty">Não foi possível carregar seus pedidos agora. Tente atualizar a página.</p>';
-      if(!myRequestDocs.length)return '<p class="my-request-empty">Você ainda não tem pedidos para acompanhar.</p>';
-      const ranked=approvedDocs.filter(song=>song.data().jaTocou!==true).sort((a,b)=>(Number(b.data().votos)||0)-(Number(a.data().votos)||0)),
-        currentIsApproved=ranked.some(song=>song.id===currentSongId),
-        queue=currentIsApproved?ranked.filter(song=>song.id!==currentSongId):ranked,
-        playedToday=new Set(todayHistory().map(track=>track.songId));
-      const statusFor=snap=>{
-        const d=snap.data();
-        if(d.status==="barrada")return {key:"barrada",icon:"block",label:"Barrada",detail:d.motivo?`Motivo: ${escapeHtml(d.motivo)}`:"O Grêmio não informou um motivo."};
-        if(d.status==="pendente")return {key:"pendente",icon:"schedule",label:"Em análise",detail:"Aguardando a revisão do Grêmio."};
-        if(snap.id===currentSongId)return {key:"tocando",icon:"equalizer",label:"Tocando agora",detail:"Seu pedido está tocando neste momento."};
-        if(playedToday.has(snap.id))return {key:"tocou",icon:"check_circle",label:"Já tocou hoje",detail:"Esta música já foi reproduzida hoje."};
-        if(d.jaTocou===true)return {key:"tocou",icon:"check_circle",label:"Já tocou",detail:"Esta música já foi reproduzida e não está mais na fila."};
-        const position=queue.findIndex(song=>song.id===snap.id)+1;
-        return {key:"aprovada",icon:"queue_music",label:"Aprovada e na fila",detail:position?`Posição aproximada: #${position} na fila.`:"Aprovada; posição da fila atualizando."};
-      };
-      return [...myRequestDocs].sort((a,b)=>(b.data().requestedAt?.toMillis?.()||b.data().createdAt?.toMillis?.()||0)-(a.data().requestedAt?.toMillis?.()||a.data().createdAt?.toMillis?.()||0)).map(snap=>{
-        const d=snap.data(),state=statusFor(snap),cover=d.capa?`<img src="${escapeHtml(highResolutionArtwork(d.capa))}" alt="">`:'<span class="material-symbols-outlined" aria-hidden="true">album</span>';
-        return `<article class="my-request-row"><div class="my-request-cover">${cover}</div><div class="my-request-info"><b class="my-request-title">${escapeHtml(d.nome||"Música")}</b><span class="my-request-artist">${escapeHtml(d.artista||"Artista não informado")}</span><span class="my-request-state" data-status="${state.key}"><span class="material-symbols-outlined" aria-hidden="true">${state.icon}</span>${state.label}</span><p class="my-request-reason">${state.detail}</p></div></article>`;
-      }).join("");
+    async function migrateLegacyHistory(){
+      const today=localDateKey();if(legacyHistoryCheckedDate===today)return;
+      const currentSettings=await getDoc(settingsRef),settings=currentSettings.data()||{},date=settings.playHistoryDate;
+      if(date&&settings.legacyHistoryMigratedDate===date&&Array.isArray(settings.playHistory)&&settings.playHistory.length){
+        await runTransaction(db,async transaction=>{
+          const latestSnapshot=await transaction.get(settingsRef),latest=latestSnapshot.data()||{};
+          if(latest.legacyHistoryMigratedDate===date)transaction.set(settingsRef,{playHistory:[],playHistoryDate:""},{merge:true});
+        });
+        legacyHistoryCheckedDate=today;return;
+      }
+      if(!date||date!==today||!Array.isArray(settings.playHistory)||!settings.playHistory.length){legacyHistoryCheckedDate=today;return}
+      const tracks=settings.playHistory;
+      for(let offset=0;offset<tracks.length;offset+=400){
+        const batch=writeBatch(db);
+        tracks.slice(offset,offset+400).forEach((track,index)=>{
+          const trackIndex=offset+index,key=track.songId||`${track.nome||"musica"}-${track.artista||trackIndex}`,
+            eventId=`legado-${date}-${trackIndex}-${encodeURIComponent(key)}`,
+            playedAt=track.playedAt?.toDate?track.playedAt.toDate():new Date(track.playedAt||Date.now());
+          batch.set(doc(historyCollection,eventId),{songId:track.songId||"",nome:track.nome||"Música",artista:track.artista||"",capa:track.capa||"",duracao:track.duracao||"",playCount:Math.max(1,Number(track.playCount)||1),playDate:date,playedAt:Timestamp.fromDate(playedAt),expiresAt:historyExpiration(playedAt),migrado:true});
+        });
+        await batch.commit();
+      }
+      await runTransaction(db,async transaction=>{
+        const latestSnapshot=await transaction.get(settingsRef),latest=latestSnapshot.data()||{};
+        if(latest.legacyHistoryMigratedDate===date)return;
+        if(latest.playHistoryDate!==date||(Array.isArray(latest.playHistory)?latest.playHistory.length:0)!==tracks.length)throw new Error("O histórico mudou durante a migração. Tente novamente.");
+        transaction.set(settingsRef,{legacyHistoryMigratedDate:date,playHistory:[],playHistoryDate:""},{merge:true});
+      });
+      legacyHistoryCheckedDate=today;
     }
-    onSnapshot(query(songs,where("status","==","aprovada")),snap=>{approvedDocs=snap.docs.filter(song=>song.data().jaTocou!==true);renderApproved()},error=>{console.error(error);list.innerHTML='<p class="text-xs text-red-600 p-4">Não foi possível carregar a playlist.</p>';});
-    onSnapshot(query(songs,where("votedBy","array-contains",uid)),snap=>{myRequestDocs=snap.docs.filter(s=>{const d=s.data();return Array.isArray(d.requestedBy)?d.requestedBy.includes(uid):["pendente","barrada"].includes(d.status)||(Array.isArray(d.votedBy)&&d.votedBy[0]===uid)});currentRequestSignature=JSON.stringify(myRequestDocs.map(s=>[s.id,s.data().status,s.data().jaTocou===true]).sort((a,b)=>a[0].localeCompare(b[0])));myRequestsError="";if(sortMode==="requests")markMyRequestsRead();else syncMyRequestsTab();renderApproved()},error=>{console.error("Falha ao carregar meus pedidos",error);myRequestsError="error";syncMyRequestsTab();if(sortMode==="requests")renderApproved()});
-    onSnapshot(query(recados,where("status","==","aprovada")),snap=>{approvedNotes=snap.docs;renderApproved()},error=>console.error("Falha ao carregar recados aprovados",error));
-    onSnapshot(query(recados,where("uid","==",uid)),snap=>{const rejected=snap.docs.filter(s=>s.data().status==="barrada"),box=document.getElementById("my-rejected-notes"),target=document.getElementById("rejected-notes-list");box.classList.toggle("hidden",!rejected.length);target.innerHTML=rejected.map(s=>{const d=s.data();return `<div class="rounded-xl bg-amber-50 p-3"><b class="block text-xs">${escapeHtml(d.nomeMusica||"Música")}</b><p class="mt-1 text-[11px] text-amber-900">${escapeHtml(d.texto)}</p>${d.motivo?`<span class="block text-[11px] text-amber-800 mt-1"><strong>Motivo:</strong> ${escapeHtml(d.motivo)}</span>`:""}</div>`}).join("")},error=>console.error("Falha ao carregar recados barrados",error));
-    const topTab=document.getElementById("tab-top"),requestsTab=document.getElementById("tab-requests"),historyTab=document.getElementById("tab-recent");topTab.onclick=()=>{sortMode="queue";topTab.setAttribute("aria-selected","true");requestsTab.setAttribute("aria-selected","false");historyTab.setAttribute("aria-selected","false");renderApproved()};requestsTab.onclick=()=>{if(requestsTab.classList.contains("hidden"))return;sortMode="requests";markMyRequestsRead();topTab.setAttribute("aria-selected","false");requestsTab.setAttribute("aria-selected","true");historyTab.setAttribute("aria-selected","false");renderApproved()};historyTab.onclick=()=>{if(historyTab.disabled)return;sortMode="history";historyTab.setAttribute("aria-selected","true");requestsTab.setAttribute("aria-selected","false");topTab.setAttribute("aria-selected","false");renderApproved()};
-    async function vote(id){try{await runTransaction(db,async tx=>{const ref=doc(db,"musicas",id),snap=await tx.get(ref);if(!snap.exists())return;const d=snap.data(),voters=Array.isArray(d.votedBy)?d.votedBy:[];if(voters.includes(uid))return;tx.update(ref,{votedBy:[...voters,uid],votos:(Number(d.votos)||0)+1});});}catch(error){console.error(error);showNotice("Não foi possível registrar o voto.");}}
-    async function voteToSkip(id){if(id!==currentSongId){showNotice("Essa música não está mais tocando.");return}try{await runTransaction(db,async tx=>{const ref=doc(db,"musicas",id),snap=await tx.get(ref);if(!snap.exists()||snap.data().status!=="aprovada"||id!==currentSongId)return;const d=snap.data(),voters=Array.isArray(d.skipVotedBy)?d.skipVotedBy:[];if(voters.includes(uid))return;tx.update(ref,{skipVotedBy:[...voters,uid],skipVotes:Math.max(Number(d.skipVotes)||0,voters.length)+1});});}catch(error){console.error("Falha ao registrar voto para pular",error);showNotice("Não foi possível registrar o voto para pular.");}}
-    let seconds=5;const modal=document.getElementById("rules-modal"),close=document.getElementById("close-rules"),count=document.getElementById("rules-count"),rulesSeenKey="jukebox_rules_seen",now=new Date(),today=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,"0")}-${String(now.getDate()).padStart(2,"0")}`,institutionalModal=document.getElementById("institutional-modal");if(localStorage.getItem(rulesSeenKey)!==today){modal.classList.remove("hidden");modal.classList.add("flex");localStorage.setItem(rulesSeenKey,today);}const countdown=setInterval(()=>{seconds--;count.textContent=seconds?`Aguarde (${seconds}s)...`:"Entendi, ir para a Jukebox";if(!seconds){clearInterval(countdown);close.disabled=false;close.className="mt-4 w-full py-3 rounded-xl bg-brand text-white text-xs font-bold shadow-md hover:brightness-105";}},1000);close.onclick=()=>{modal.classList.add("hidden");modal.classList.remove("flex");localStorage.setItem(rulesSeenKey,today)};const closeInstitutional=()=>{institutionalModal.classList.add("hidden");institutionalModal.classList.remove("flex")};document.getElementById("rules-info").onclick=()=>{institutionalModal.classList.remove("hidden");institutionalModal.classList.add("flex");document.getElementById("close-institutional").focus()};document.getElementById("close-institutional").onclick=closeInstitutional;document.getElementById("institutional-done").onclick=closeInstitutional;institutionalModal.addEventListener("click",event=>{if(event.target===institutionalModal)closeInstitutional()});document.addEventListener("keydown",event=>{if(event.key==="Escape"&&!institutionalModal.classList.contains("hidden"))closeInstitutional()});
+    function subscribeHistory(date){
+      selectedHistoryDate=date;document.getElementById("count-historico").textContent="…";
+      if(historyUnsubscribe)historyUnsubscribe();
+      historyUnsubscribe=onSnapshot(query(historyCollection,where("playDate","==",date)),snapshot=>{
+        historyDocs=snapshot.docs;
+        const tracks=compactPlayHistory(historyDocs.map(item=>({...item.data(),eventId:item.id}))).filter(track=>track.songId!==currentSongId);
+        document.getElementById("count-historico").textContent=String(tracks.length);
+        if(active==="historico")render();
+      },error=>{showError(error,"Não foi possível carregar o histórico.");document.getElementById("count-historico").textContent="!";});
+    }
+    function subscribeAudit(date){
+      selectedAuditDate=date;document.getElementById("count-atividade").textContent="…";
+      if(auditUnsubscribe)auditUnsubscribe();
+      auditUnsubscribe=onSnapshot(query(auditCollection,where("actionDate","==",date)),snapshot=>{
+        auditDocs=snapshot.docs;document.getElementById("count-atividade").textContent=String(auditDocs.length);
+        if(active==="atividade")render();
+      },error=>{showError(error,"Não foi possível carregar a atividade administrativa.");document.getElementById("count-atividade").textContent="!";});
+    }
+    ["pendente","aprovada","barrada"].forEach(status=>onSnapshot(query(songs,where("status","==",status)),snap=>{lists[status]=snap.docs;document.getElementById(`count-${status}`).textContent=status==="aprovada"?snap.docs.filter(song=>song.data().jaTocou!==true).length:snap.size;render();},error=>{showError(error,`Falha ao carregar ${status}.`);}));
+    onSnapshot(recados,snap=>{noteDocs=snap.docs;document.getElementById("count-recados").textContent=noteDocs.filter(s=>s.data().status==="pendente").length;render();},error=>showError(error,"Falha ao carregar os recados."));
+    document.getElementById("admin-date").value=selectedHistoryDate;
+    document.querySelectorAll(".tab").forEach(btn=>btn.onclick=()=>{
+      active=btn.dataset.tab;document.querySelectorAll(".tab").forEach(item=>item.className="tab shrink-0 rounded-lg px-2.5 py-2 text-[10px] font-bold text-muted");
+      btn.className="tab shrink-0 rounded-lg bg-white px-2.5 py-2 text-[10px] font-bold text-primary shadow-sm";
+      document.getElementById("admin-date-wrap").classList.toggle("hidden",active!=="historico");
+      document.getElementById("admin-audit-date-wrap").classList.toggle("hidden",active!=="atividade");
+      document.getElementById("recado-filter").classList.toggle("hidden",active!=="recados");
+      document.getElementById("admin-filter").classList.toggle("hidden",!["pendente","aprovada","barrada"].includes(active));
+      document.getElementById("admin-sort").classList.toggle("hidden",!["pendente","aprovada","barrada"].includes(active));
+      document.getElementById("admin-search").placeholder=active==="atividade"?"Buscar ação, conta ou música":active==="recados"?"Buscar recado ou música":"Buscar música ou artista";
+      if(active==="historico"&&!historyUnsubscribe)subscribeHistory(selectedHistoryDate);
+      if(active==="atividade"&&!auditUnsubscribe)subscribeAudit(selectedAuditDate);
+      render();
+    });
+    document.getElementById("admin-search").addEventListener("input",render);
+    document.getElementById("admin-filter").addEventListener("change",render);
+    document.getElementById("admin-sort").addEventListener("change",render);
+    document.getElementById("recado-filter").addEventListener("change",render);
+    document.getElementById("admin-date").addEventListener("change",event=>subscribeHistory(event.target.value||localDateKey()));
+    document.getElementById("admin-audit-date").value=selectedAuditDate;
+    document.getElementById("admin-audit-date").addEventListener("change",event=>subscribeAudit(event.target.value||localDateKey()));
+    subscribeHistory(selectedHistoryDate);subscribeAudit(selectedAuditDate);
+    const power=document.getElementById("toggle-jukebox"),maintenanceButton=document.getElementById("toggle-maintenance"),themeSelect=document.getElementById("theme-select"),settingsModal=document.getElementById("settings-modal");
+    onSnapshot(settingsRef,snap=>{
+      const settings=snap.data()||{},enabled=settings.enabled===true;
+      currentSongId=settings.currentSongId||null;playHistoryDate=settings.playHistoryDate||"";playHistory=Array.isArray(settings.playHistory)?settings.playHistory:[];
+      maintenanceEnabled=settings.maintenance===true;activeTheme=settings.theme==="halloween"?"halloween":"default";
+      if(document.activeElement!==themeSelect)themeSelect.value=activeTheme;
+      if(document.activeElement!==document.getElementById("announcement-message"))document.getElementById("announcement-message").value=settings.announcementText||"";
+      if(document.activeElement!==document.getElementById("maintenance-message"))document.getElementById("maintenance-message").value=settings.maintenanceMessage||"";
+      power.dataset.enabled=enabled;power.className=`px-3 py-2 rounded-full text-xs font-bold flex items-center gap-1 ${enabled?"bg-green-100 text-green":"bg-soft text-primary"}`;
+      power.lastElementChild.textContent=enabled?"Jukebox ligada":"Ligar Jukebox";
+      maintenanceButton.textContent=maintenanceEnabled?"Encerrar manutenção":"Ativar manutenção";
+      maintenanceButton.className=`mt-2 w-full rounded-lg py-2.5 text-xs font-bold ${maintenanceEnabled?"bg-green-50 text-green":"bg-amber-50 text-amber-800"}`;
+      migrateLegacyHistory().catch(error=>showError(error,"Não foi possível migrar o histórico de hoje."));
+      if(active==="aprovada"||active==="historico")render();
+    },error=>showError(error,"Falha ao ler o estado da Jukebox."));
+    power.onclick=async()=>{
+      const enabled=power.dataset.enabled!=="true";power.disabled=true;
+      try{
+        await saveSettingsWithAudit({enabled},enabled?"ligar_jukebox":"desligar_jukebox",enabled?"Jukebox ligada":"Jukebox desligada");
+        if(!enabled){showToast("Jukebox desligada.");return}
+        try{const deleted=await purgeStalePresence();if(deleted)await recordAdminAction("limpar_presencas","presenca","",`${deleted} presença(s) antiga(s)`,{deleted});showToast(`Jukebox ligada. ${deleted} presença(s) offline removida(s).`);}
+        catch(error){showError(error,"Jukebox ligada, mas não foi possível limpar as presenças antigas.");}
+      }catch(error){showError(error,"Não foi possível alterar o estado da Jukebox.");}
+      finally{power.disabled=false;}
+    };
+    const settingsHome=document.getElementById("settings-home"),settingsTitle=document.getElementById("settings-title"),settingsSubtitle=document.getElementById("settings-subtitle"),settingsBack=document.getElementById("settings-back"),settingsIcon=document.getElementById("settings-icon");
+    const settingsViews={jukebox:{title:"Jukebox",subtitle:"Ligue ou desligue os pedidos",icon:"power_settings_new"},announcement:{title:"Avisos",subtitle:"Comunique-se com os alunos",icon:"campaign"},maintenance:{title:"Manutenção",subtitle:"Configure a indisponibilidade",icon:"build"},theme:{title:"Tema visual",subtitle:"Personalize o site do aluno",icon:"palette"}};
+    function showSettingsHome(){settingsHome.classList.remove("hidden");document.querySelectorAll("[data-settings-panel]").forEach(panel=>panel.classList.add("hidden"));settingsBack.classList.add("hidden");settingsTitle.textContent="Configurações";settingsSubtitle.textContent="Escolha o que deseja configurar";settingsIcon.querySelector(".material-symbols-outlined").textContent="settings";}
+    function openSettingsView(name){const view=settingsViews[name];if(!view)return;settingsHome.classList.add("hidden");document.querySelectorAll("[data-settings-panel]").forEach(panel=>panel.classList.toggle("hidden",panel.dataset.settingsPanel!==name));settingsBack.classList.remove("hidden");settingsTitle.textContent=view.title;settingsSubtitle.textContent=view.subtitle;settingsIcon.querySelector(".material-symbols-outlined").textContent=view.icon;}
+    const closeSettings=()=>{settingsModal.classList.add("hidden");settingsModal.classList.remove("flex");showSettingsHome()};
+    settingsBack.onclick=showSettingsHome;document.querySelectorAll("[data-settings-view]").forEach(button=>button.onclick=()=>openSettingsView(button.dataset.settingsView));
+    document.getElementById("open-settings").onclick=()=>{themeSelect.value=activeTheme;showSettingsHome();settingsModal.classList.remove("hidden");settingsModal.classList.add("flex")};
+    document.getElementById("close-settings").onclick=closeSettings;document.getElementById("cancel-settings").onclick=closeSettings;
+    document.getElementById("save-theme").onclick=async()=>{
+      try{await saveSettingsWithAudit({theme:themeSelect.value},"alterar_tema",themeSelect.value==="halloween"?"Tema Halloween":"Tema padrão");closeSettings();showToast("Tema atualizado para os alunos.");}
+      catch(error){showError(error,"Não foi possível salvar o tema.");}
+    };
+    document.getElementById("publish-announcement").onclick=async()=>{
+      const text=document.getElementById("announcement-message").value.trim();if(!text){showToast("Escreva um aviso antes de publicar.");return}
+      try{await saveSettingsWithAudit({announcementText:text,announcementId:crypto.randomUUID()},"publicar_aviso",text);showToast("Aviso publicado para os alunos.");}
+      catch(error){showError(error,"Não foi possível publicar o aviso.");}
+    };
+    document.getElementById("clear-announcement").onclick=async()=>{
+      try{await saveSettingsWithAudit({announcementText:"",announcementId:""},"remover_aviso","Aviso removido");showToast("Aviso removido.");}
+      catch(error){showError(error,"Não foi possível remover o aviso.");}
+    };
+    maintenanceButton.onclick=async()=>{
+      const message=document.getElementById("maintenance-message").value.trim();if(!maintenanceEnabled&&!message){showToast("Explique o motivo antes de ativar a manutenção.");return}
+      try{await saveSettingsWithAudit({maintenance:!maintenanceEnabled,maintenanceMessage:maintenanceEnabled?"":message},maintenanceEnabled?"encerrar_manutencao":"ativar_manutencao",maintenanceEnabled?"Manutenção encerrada":"Manutenção ativada");showToast(maintenanceEnabled?"Manutenção encerrada.":"Modo de manutenção ativado.");}
+      catch(error){showError(error,"Não foi possível alterar o modo de manutenção.");}
+    };
+    function render(){
+      const list=document.getElementById("admin-list"),term=document.getElementById("admin-search").value.trim().toLocaleLowerCase("pt-BR"),
+        filter=document.getElementById("admin-filter").value,sortBy=document.getElementById("admin-sort").value,noteFilter=document.getElementById("recado-filter").value;
+      if(active==="recados"){
+        const docs=noteDocs.filter(snapshot=>(noteFilter==="all"||snapshot.data().status===noteFilter)&&`${snapshot.data().texto||""} ${snapshot.data().nomeMusica||""} ${snapshot.data().artista||""}`.toLocaleLowerCase("pt-BR").includes(term))
+          .sort((a,b)=>(b.data().createdAt?.toMillis?.()||0)-(a.data().createdAt?.toMillis?.()||0));
+        list.innerHTML=docs.length?docs.map(noteCard).join(""):`<p class="text-xs text-muted text-center p-4 bg-white rounded-xl">Nenhum recado ${noteFilter==="pendente"?"pendente":noteFilter==="aprovada"?"aprovado":noteFilter==="barrada"?"barrado":""}.</p>`;
+      }else if(active==="historico"){
+        const tracks=historyDocs.map(item=>({...item.data(),eventId:item.id}));
+        const filtered=compactPlayHistory(tracks).filter(track=>track.songId!==currentSongId&&`${track.nome||""} ${track.artista||""}`.toLocaleLowerCase("pt-BR").includes(term)).sort((a,b)=>historyMillis(b)-historyMillis(a));
+        list.innerHTML=filtered.length?filtered.map(historyCard).join(""):'<p class="text-xs text-muted text-center p-4 bg-white rounded-xl">Nenhuma música neste dia.</p>';
+      }else if(active==="atividade"){
+        const actions=auditDocs.map(item=>({...item.data(),eventId:item.id})).filter(item=>`${item.action||""} ${item.targetLabel||""} ${item.adminEmail||""}`.toLocaleLowerCase("pt-BR").includes(term)).sort((a,b)=>historyMillis({playedAt:b.createdAt})-historyMillis({playedAt:a.createdAt}));
+        list.innerHTML=actions.length?actions.map(auditCard).join(""):'<p class="text-xs text-muted text-center p-4 bg-white rounded-xl">Nenhuma ação nesta data.</p>';
+      }else{
+        let docs=[...lists[active]].filter(song=>active!=="aprovada"||song.data().jaTocou!==true);
+        docs=docs.filter(song=>{
+          const data=song.data(),matches=`${data.nome||""} ${data.artista||""}`.toLocaleLowerCase("pt-BR").includes(term),
+            explicit=data.explicita===true||titleLooksExplicit(data.nome);
+          return matches&&(filter!=="explicit"||explicit);
+        });
+        docs.sort((a,b)=>sortBy==="recent"?(b.data().createdAt?.toMillis?.()||0)-(a.data().createdAt?.toMillis?.()||0):(Number(b.data().votos)||0)-(Number(a.data().votos)||0));
+        if(active==="aprovada"&&currentSongId){const currentIndex=docs.findIndex(song=>song.id===currentSongId);if(currentIndex>0)docs.unshift(docs.splice(currentIndex,1)[0]);}
+        list.innerHTML=docs.length?docs.map(card).join(""):'<p class="text-xs text-muted text-center p-4 bg-white rounded-xl">Nenhum pedido corresponde a este filtro.</p>';
+      }
+      list.querySelectorAll("[data-action]").forEach(btn=>btn.onclick=()=>action(btn.dataset.action,btn.dataset.id));
+    }
+    function historyCard(track){
+      const cover=track.capa?`<img class="w-12 h-12 rounded-xl object-cover" src="${esc(track.capa)}" alt="">`:`<div class="w-12 h-12 rounded-xl bg-soft text-primary flex items-center justify-center"><span class="material-symbols-outlined">album</span></div>`,
+        playedAt=new Date(historyMillis(track)),time=Number.isNaN(playedAt.getTime())?"":playedAt.toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"}),
+        current=track.songId===currentSongId,playCount=Math.max(1,Number(track.playCount)||1);
+      return `<article class="doodle bg-white p-3 rounded-xl shadow-sm ring-1 ring-slate-200"><div class="flex items-center gap-3">${cover}<div class="min-w-0 flex-1"><b class="block truncate text-sm">${esc(track.nome||"Música")}</b><span class="block truncate text-xs text-muted">${esc(track.artista||"Artista não informado")}</span><small class="text-[10px] text-muted">${current?"Tocando agora":time||"Reproduzida"}${playCount>1?` • Tocada ${playCount} vezes`:""}</small></div>${track.songId?`<button data-action="delete-history" data-id="${esc(track.songId)}" aria-label="Remover ${esc(track.nome||"música")} apenas deste histórico" title="Remover deste histórico" class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-soft text-muted hover:bg-red-50 hover:text-danger"><span class="material-symbols-outlined text-base">delete</span></button>`:""}</div></article>`;
+    }
+    function auditCard(entry){
+      const createdAt=new Date(historyMillis({playedAt:entry.createdAt})),
+        time=Number.isNaN(createdAt.getTime())?"":createdAt.toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"}),
+        labels={aprovar_musica:"Aprovou música",barrar_musica:"Barrou música",aprovar_recado:"Aprovou recado",barrar_recado:"Barrou recado",avancar_faixa:"Avançou faixa",encerrar_faixa:"Encerrou faixa",iniciar_faixa:"Iniciou faixa",excluir_pedido:"Excluiu pedido",excluir_historico:"Removeu do histórico",excluir_recado:"Apagou recado",limpar_presencas:"Limpou presenças antigas"};
+      return `<article class="doodle bg-white p-3 rounded-xl shadow-sm ring-1 ring-slate-200"><div class="flex items-start justify-between gap-2"><div class="min-w-0"><b class="block text-xs text-ink">${esc(labels[entry.action]||entry.action||"Ação administrativa")}</b><span class="mt-1 block break-words text-xs text-muted">${esc(entry.targetLabel||"Configuração")}</span><small class="mt-1 block truncate text-[10px] text-muted">${esc(entry.adminEmail||entry.adminUid||"Admin")}${time?` • ${time}`:""}</small></div><span class="material-symbols-outlined text-base text-primary">history</span></div></article>`;
+    }
+    async function finishCurrentSong(currentId,nextId=null){
+      const finishedAt=new Date(),dateKey=localDateKey(finishedAt);
+      await runTransaction(db,async transaction=>{
+        const settingsSnapshot=await transaction.get(settingsRef),settings=settingsSnapshot.data()||{};
+        if(settings.currentSongId!==currentId)throw new Error("A música atual mudou. Atualize o painel e tente novamente.");
+        const currentRef=doc(songs,currentId),nextRef=nextId?doc(songs,nextId):null,
+          currentSnapshot=await transaction.get(currentRef),nextSnapshot=nextRef?await transaction.get(nextRef):null;
+        if(!currentSnapshot.exists()||currentSnapshot.data().status!=="aprovada")throw new Error("A música atual não está mais aprovada.");
+        if(nextId&&(!nextSnapshot?.exists()||nextSnapshot.data().status!=="aprovada"||nextSnapshot.data().jaTocou===true))throw new Error("A próxima música não está mais disponível na fila.");
+        const current=currentSnapshot.data(),historyRef=doc(historyCollection);
+        transaction.update(currentRef,{jaTocou:true,skipVotes:0,skipVotedBy:[]});
+        if(nextSnapshot&&nextRef)transaction.update(nextRef,{skipVotes:0,skipVotedBy:[]});
+        transaction.set(historyRef,{songId:currentId,nome:current.nome,artista:current.artista||"",capa:current.capa||"",duracao:current.duracao||"",playCount:1,playDate:dateKey,playedAt:Timestamp.fromDate(finishedAt),expiresAt:historyExpiration(finishedAt)});
+        transaction.set(settingsRef,{currentSongId:nextId,currentSongName:nextSnapshot?.data().nome||"",updatedAt:serverTimestamp()},{merge:true});
+        transaction.set(doc(auditCollection),auditData(nextId?"avancar_faixa":"encerrar_faixa","musica",currentId,current.nome,{nextSongId:nextId||""}));
+      });
+    }
+    function card(snap){
+      const d=snap.data(),explicit=d.explicita===true||titleLooksExplicit(d.nome),explicitByTitle=d.classificacaoConteudo==="termo_explicito_no_titulo"||titleLooksExplicit(d.nome),
+        cover=d.capa?`<img class="w-12 h-12 rounded-xl object-cover" src="${esc(d.capa)}" alt="">`:`<div class="w-12 h-12 rounded-xl bg-soft text-primary flex items-center justify-center"><span class="material-symbols-outlined">album</span></div>`,
+        songNotes=noteDocs.filter(note=>note.data().songId===snap.id&&note.data().status!=="barrada"),
+        skipVotes=Math.max(Number(d.skipVotes)||0,Array.isArray(d.skipVotedBy)?d.skipVotedBy.length:0),
+        skipSummary=active==="aprovada"&&currentSongId===snap.id?`<div class="mt-2 inline-flex items-center gap-1.5 rounded-full border border-amber-200 bg-amber-50 px-2.5 py-1 text-[10px] font-bold text-amber-800"><span class="material-symbols-outlined text-sm">skip_next</span>${skipVotes} voto(s) para pular — decisão do Grêmio</div>`:"",
+        moderation=active==="pendente"?`<button data-action="reject" data-id="${snap.id}" class="flex-1 rounded-lg bg-red-50 py-2 text-xs font-bold text-danger">Barrar música</button><button data-action="approve" data-id="${snap.id}" class="flex-1 rounded-lg bg-green-50 py-2 text-xs font-bold text-green">Aprovar música</button><button data-action="delete" data-id="${snap.id}" aria-label="Apagar pedido" title="Apagar pedido" class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-soft text-muted hover:bg-red-50 hover:text-danger"><span class="material-symbols-outlined text-base">delete</span></button>`:active==="barrada"?`<button data-action="delete" data-id="${snap.id}" aria-label="Apagar pedido barrado" title="Apagar pedido barrado" class="ml-auto flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-soft text-muted hover:bg-red-50 hover:text-danger"><span class="material-symbols-outlined text-base">delete</span></button>`:"",
+        player=active==="aprovada"?`<div class="mt-2 flex items-center rounded-xl border border-slate-200 bg-slate-50 p-1"><button data-action="copy" data-id="${snap.id}" aria-label="Copiar comando" class="flex min-h-9 flex-1 items-center justify-center gap-1 rounded-lg px-1 py-1.5 text-[10px] font-semibold text-muted hover:bg-white hover:text-primary"><span class="material-symbols-outlined text-base">content_copy</span>Copiar</button><button data-action="play" data-id="${snap.id}" aria-label="${currentSongId===snap.id?"Finalizar faixa":currentSongId?"Substituir música atual":"Tocar agora"}" class="flex min-h-9 flex-1 items-center justify-center gap-1 rounded-lg px-1 py-1.5 text-[10px] font-semibold ${currentSongId===snap.id?"bg-green-100 text-green":"text-muted hover:bg-white hover:text-primary"}"><span class="material-symbols-outlined text-base">${currentSongId===snap.id?"graphic_eq":"play_circle"}</span>${currentSongId===snap.id?"Finalizar":currentSongId?"Substituir atual":"Tocar agora"}</button><button data-action="delete" data-id="${snap.id}" aria-label="Apagar música" class="flex min-h-9 flex-1 items-center justify-center gap-1 rounded-lg px-1 py-1.5 text-[10px] font-semibold text-muted hover:bg-red-50 hover:text-danger"><span class="material-symbols-outlined text-base">delete</span>Apagar</button></div>`:"",
+        advance=active==="aprovada"&&currentSongId===snap.id?`<button data-action="next" data-id="${snap.id}" class="mt-2 inline-flex min-h-10 w-full items-center justify-center gap-2 rounded-xl bg-primary px-3 py-2 text-xs font-bold text-white hover:bg-blue-800"><span class="material-symbols-outlined text-base">skip_next</span>${lists.aprovada.some(song=>song.id!==snap.id&&song.data().jaTocou!==true)?"Próxima música":"Encerrar e enviar ao histórico"}</button>`:"";
+      return `<article class="doodle ${explicit?"bg-red-50/70 ring-1 ring-red-300":"bg-white ring-1 ring-slate-200"} p-3 rounded-xl shadow-sm"><div class="flex items-center gap-3">${cover}<div class="min-w-0 flex-1"><b class="block truncate text-sm ${explicit?"text-red-700":""}">${esc(d.nome)}</b><span class="block truncate text-xs text-muted">${esc(d.artista||"Artista não informado")}</span><small class="text-[10px] text-muted">${Number(d.votos)||0} voto(s) · ${Array.isArray(d.requestedBy)?d.requestedBy.length:1} pedido(s)${d.motivo?` • ${esc(d.motivo)}`:""}</small></div></div>${explicit?`<div class="mt-2 inline-flex items-center gap-1 rounded-full bg-red-100 px-2.5 py-1 text-[10px] font-bold text-red-700"><span class="material-symbols-outlined text-sm">explicit</span>${explicitByTitle?"Possível conteúdo explícito no título":"Faixa marcada como explícita pelo iTunes"} — revisar</div>`:""}${skipSummary}${songNotes.length?`<div class="mt-2 space-y-1.5">${songNotes.map(noteInline).join("")}</div>`:""}${moderation?`<div class="mt-2 flex gap-2">${moderation}</div>`:""}${player}${advance}</article>`;
+    }
+    function noteInline(snap){const d=snap.data(),pending=d.status==="pendente";return `<div class="flex items-start gap-2 rounded-xl border ${pending?"border-amber-200 bg-amber-50/70":"border-green-100 bg-green-50/60"} p-2.5"><span class="material-symbols-outlined mt-0.5 text-sm ${pending?"text-amber-700":"text-green"}">${pending?"schedule":"chat"}</span><div class="min-w-0 flex-1"><div class="flex items-center justify-between gap-2"><span class="text-[10px] font-bold ${pending?"text-amber-800":"text-green"}">${pending?"Recado pendente":"Recado liberado"}</span><div class="flex items-center gap-1">${pending?`<button data-action="approve-note" data-id="${esc(snap.id)}" aria-label="Aprovar recado" title="Aprovar recado" class="flex h-7 w-7 items-center justify-center rounded-full text-green hover:bg-green-100"><span class="material-symbols-outlined text-base">check</span></button>`:""}<button data-action="reject-note" data-id="${esc(snap.id)}" aria-label="Apagar recado" title="Apagar recado" class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-muted hover:bg-red-100 hover:text-danger"><span class="material-symbols-outlined text-base">close</span></button></div></div><p class="mt-1 whitespace-pre-wrap break-words text-xs leading-relaxed text-ink">${esc(d.texto)}</p></div></div>`;}
+    function noteCard(snap){
+      const d=snap.data(),song=Object.values(lists).flat().find(item=>item.id===d.songId)?.data(),
+        coverUrl=d.capa||song?.capa,artist=d.artista||song?.artista,
+        cover=coverUrl?`<img class="h-14 w-14 shrink-0 rounded-xl object-cover" src="${esc(coverUrl)}" alt="Capa de ${esc(d.nomeMusica||song?.nome||"música")}">`:`<div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-soft text-primary"><span class="material-symbols-outlined">album</span></div>`,
+        songName=d.nomeMusica||song?.nome||"Música não identificada",
+        statusLabel={pendente:"Pendente",aprovada:"Aprovado",barrada:"Barrado"}[d.status]||"Sem estado",
+        actions=d.status==="pendente"?`<button data-action="approve-note" data-id="${snap.id}" class="flex-1 rounded-lg bg-green-50 py-2.5 text-xs font-bold text-green">Aprovar recado</button><button data-action="reject-note" data-id="${snap.id}" class="flex-1 rounded-lg bg-red-50 py-2.5 text-xs font-bold text-danger">Barrar recado</button>`:
+          d.status==="aprovada"?`<button data-action="reject-note" data-id="${snap.id}" class="flex-1 rounded-lg bg-amber-50 py-2.5 text-xs font-bold text-amber-800">Reprovar recado</button>`:
+          `<button data-action="delete-note" data-id="${snap.id}" class="flex-1 rounded-lg bg-soft py-2.5 text-xs font-bold text-muted hover:bg-red-50 hover:text-danger">Apagar recado barrado</button>`;
+      return `<article class="doodle bg-white p-3.5 rounded-xl shadow-sm ring-1 ring-slate-200"><div class="flex min-w-0 items-start gap-3">${cover}<div class="min-w-0 flex-1"><div class="flex items-start justify-between gap-2"><div class="min-w-0"><b class="block text-xs ${d.status==="barrada"?"text-red-700":d.status==="pendente"?"text-amber-800":"text-green"}">Recado ${statusLabel.toLocaleLowerCase("pt-BR")}</b><p class="mt-1 break-words text-[11px] text-muted">Música: <b class="text-ink">${esc(songName)}</b></p>${artist?`<p class="mt-0.5 truncate text-[10px] text-muted">${esc(artist)}</p>`:""}</div><span class="shrink-0 text-[10px] text-muted">${d.createdAt?.toDate?.().toLocaleDateString?.("pt-BR")||""}</span></div></div></div><p class="mt-3 break-words rounded-xl bg-soft p-3 text-xs leading-relaxed text-ink">${esc(d.texto)}</p>${d.status==="barrada"?`<div class="mt-3 rounded-xl bg-red-50 p-3"><span class="text-[10px] font-bold uppercase tracking-wide text-red-700">Motivo informado</span><p class="mt-1 break-words text-xs leading-relaxed text-red-900">${esc(d.motivo||"Sem justificativa registrada.")}</p></div>`:""}<div class="mt-3 flex gap-2">${actions}</div></article>`;
+    }
+    async function action(type,id){
+      if(type==="reject"||type==="reject-note"){
+        rejectId=id;rejectType=type==="reject-note"?"note":"song";
+        const d=rejectType==="note"?noteDocs.find(item=>item.id===id)?.data():Object.values(lists).flat().find(item=>item.id===id)?.data();
+        if(!d){showToast("Este item não está mais disponível.");return}
+        document.getElementById("reject-title").textContent=rejectType==="note"?"Reprovar recado":"Barrar pedido";
+        document.getElementById("reject-song-name").textContent=rejectType==="note"?`Música: ${d.nomeMusica||"não identificada"}`:d.nome;
+        document.getElementById("reject-reason-label").textContent=rejectType==="note"?"Motivo para reprovar o recado (opcional)":"Motivo para barrar a música";
+        document.getElementById("custom-reject-reason").placeholder=rejectType==="note"?"Explique brevemente a decisão...":"Explique brevemente a decisão...";
+        document.getElementById("custom-reject-reason").value="";
+        document.getElementById("reject-modal").classList.replace("hidden","flex");document.getElementById("custom-reject-reason").focus();return;
+      }
+      if(actionInProgress)return;
+      actionInProgress=true;document.querySelectorAll("#admin-list button[data-action]").forEach(button=>button.disabled=true);
+      try{
+        if(type==="approve"){
+          const song=Object.values(lists).flat().find(item=>item.id===id)?.data();
+          if(!song)throw new Error("Pedido pendente não encontrado.");
+          await updateWithAudit(doc(songs,id),{status:"aprovada",motivo:"",jaTocou:false,requestedBy:Array.isArray(song.requestedBy)?song.requestedBy:Array.isArray(song.votedBy)?song.votedBy:[]},"aprovar_musica","musica",song.nome);
+          showToast("Música aprovada e adicionada à fila.");
+        }else if(type==="approve-note"){
+          const note=noteDocs.find(item=>item.id===id)?.data();if(!note||note.status!=="pendente")throw new Error("Recado pendente não encontrado.");
+          await updateWithAudit(doc(recados,id),{status:"aprovada",motivo:""},"aprovar_recado","recado",note.nomeMusica||"Recado");
+          showToast("Recado aprovado.");
+        }else if(type==="play"){
+          const selected=Object.values(lists).flat().find(item=>item.id===id);if(!selected)throw new Error("Música aprovada não encontrada.");
+          if(currentSongId===id){
+            await finishCurrentSong(id);showToast("Faixa finalizada e registrada no histórico.");return;
+          }
+          if(currentSongId){
+            const currentSong=lists.aprovada.find(item=>item.id===currentSongId)?.data(),target=selected.data();
+            const confirmed=await askDelete("Substituir música atual?",`“${currentSong?.nome||"A música atual"}” irá para o histórico e “${target.nome}” começará agora.`,"Substituir atual");
+            if(!confirmed)return;
+            await finishCurrentSong(currentSongId,id);showToast("Faixa substituída; a anterior foi para o histórico.");return;
+          }
+          await runTransaction(db,async transaction=>{
+            const songRef=doc(songs,id),songSnapshot=await transaction.get(songRef),settingsSnapshot=await transaction.get(settingsRef);
+            if(!songSnapshot.exists()||songSnapshot.data().status!=="aprovada"||songSnapshot.data().jaTocou===true)throw new Error("Música aprovada não encontrada na fila.");
+            if(settingsSnapshot.data()?.currentSongId)throw new Error("A música atual mudou. Atualize o painel e tente novamente.");
+            transaction.update(songRef,{skipVotes:0,skipVotedBy:[]});
+            transaction.set(settingsRef,{currentSongId:id,currentSongName:songSnapshot.data().nome,updatedAt:serverTimestamp()},{merge:true});
+            transaction.set(doc(auditCollection),auditData("iniciar_faixa","musica",id,songSnapshot.data().nome));
+          });
+          showToast("Música marcada como tocando agora.");
+        }else if(type==="next"){
+          const current=lists.aprovada.find(song=>song.id===id);if(!current||currentSongId!==id)throw new Error("A faixa atual mudou. Atualize e tente novamente.");
+          const next=lists.aprovada.filter(song=>song.id!==id&&song.data().jaTocou!==true).sort((a,b)=>(Number(b.data().votos)||0)-(Number(a.data().votos)||0))[0];
+          await finishCurrentSong(id,next?.id||null);
+          showToast(next?"Faixa finalizada; a mais votada da fila começou.":"Faixa finalizada. A fila está vazia.");
+        }else if(type==="delete-history"){
+          const selectedEvents=historyDocs.filter(item=>item.data().songId===id);
+          if(!selectedEvents.length)throw new Error("Não há reproduções desta música nesta data.");
+          const selectedTrack=selectedEvents[0].data(),confirmed=await askDelete("Remover do histórico?",`“${selectedTrack.nome||"Esta música"}” será removida apenas do histórico de ${new Date(`${selectedHistoryDate}T12:00:00`).toLocaleDateString("pt-BR")}. O pedido e os dados da música serão preservados.`,"Remover do histórico");
+          if(!confirmed)return;
+          if(selectedEvents.length>450)throw new Error("Há reproduções demais para remover em uma única ação. Exclua por outra data.");
+          const batch=writeBatch(db),backup=selectedEvents.map(item=>({id:item.id,data:item.data()}));
+          selectedEvents.forEach(item=>batch.delete(item.ref));batch.set(doc(auditCollection),auditData("excluir_historico","historico",id,selectedTrack.nome,{playDate:selectedHistoryDate,eventCount:selectedEvents.length}));
+          await batch.commit();
+          showUndoToast("Registros removidos apenas deste dia.",async()=>{
+            const restoreBatch=writeBatch(db);backup.forEach(item=>restoreBatch.set(doc(historyCollection,item.id),item.data));
+            restoreBatch.set(doc(auditCollection),auditData("restaurar_historico","historico",id,selectedTrack.nome,{playDate:selectedHistoryDate}));
+            await restoreBatch.commit();
+          });
+        }else if(type==="delete"||type==="delete-note"){
+          if(type==="delete-note"){
+            const note=noteDocs.find(item=>item.id===id);if(!note)throw new Error("Recado não encontrado.");
+            const confirmed=await askDelete("Apagar recado barrado?",`“${note.data().texto}” será removido. A música não será alterada.`,"Apagar recado");
+            if(!confirmed)return;
+            const backup=note.data(),batch=writeBatch(db);batch.delete(doc(recados,id));batch.set(doc(auditCollection),auditData("excluir_recado","recado",id,note.data().nomeMusica||"Recado"));
+            await batch.commit();
+            showUndoToast("Recado apagado.",async()=>{
+              const restoreBatch=writeBatch(db);restoreBatch.set(doc(recados,id),backup);restoreBatch.set(doc(auditCollection),auditData("restaurar_recado","recado",id,note.data().nomeMusica||"Recado"));await restoreBatch.commit();
+            });
+          }else{
+            const selectedSong=Object.values(lists).flat().find(song=>song.id===id);if(!selectedSong)throw new Error("Pedido não encontrado.");
+            const songData=selectedSong.data(),confirmed=await askDelete("Apagar pedido?",`“${songData.nome}” será removida das músicas e da fila. O histórico de reprodução será preservado.`,"Apagar pedido");
+            if(!confirmed)return;
+            const {wasCurrentSong,songData:deletedSongData}=await deleteSong(id);
+            showUndoToast("Pedido apagado; o histórico foi mantido.",async()=>{
+              await runTransaction(db,async transaction=>{
+                const songRef=doc(songs,id),[songSnapshot,settingsSnapshot]=await Promise.all([transaction.get(songRef),transaction.get(settingsRef)]);
+                if(songSnapshot.exists())throw new Error("O pedido já foi restaurado ou substituído.");
+                if(wasCurrentSong&&settingsSnapshot.data()?.currentSongId)throw new Error("Outra música começou. Para evitar interrompê-la, a faixa atual não foi restaurada.");
+                transaction.set(songRef,deletedSongData);
+                if(wasCurrentSong)transaction.set(settingsRef,{currentSongId:id,currentSongName:deletedSongData.nome,updatedAt:serverTimestamp()},{merge:true});
+                transaction.set(doc(auditCollection),auditData("restaurar_pedido","musica",id,deletedSongData.nome));
+              });
+            });
+          }
+        }else if(type==="copy"){
+          const song=Object.values(lists).flat().find(item=>item.id===id);if(!song)throw new Error("Música não encontrada.");
+          const data=song.data(),text=`m!p ${data.nome}${data.artista?` - ${data.artista}`:""}`;
+          await navigator.clipboard.writeText(text);showToast("Comando copiado.");return;
+        }
+      }catch(error){showError(error,"Não foi possível concluir a ação.");}
+      finally{actionInProgress=false;render();}
+    }
+    async function reject(){
+      const reason=document.getElementById("custom-reject-reason").value.trim(),rejectingNote=rejectType==="note";
+      if(!rejectingNote&&!reason){showToast("Digite um motivo para barrar a música.");return}
+      if(actionInProgress)return;
+      actionInProgress=true;document.getElementById("confirm-reject").disabled=true;
+      try{
+        if(rejectingNote){
+          const note=noteDocs.find(item=>item.id===rejectId);if(!note)throw new Error("Recado não encontrado.");
+          await updateWithAudit(doc(recados,rejectId),{status:"barrada",motivo:reason},"barrar_recado","recado",note.data().nomeMusica||"Recado",{motivo:reason});
+          closeModal();showToast("Recado barrado; a aprovação da música não foi alterada.");
+        }else{
+          const song=Object.values(lists).flat().find(item=>item.id===rejectId)?.data();if(!song)throw new Error("Pedido pendente não encontrado.");
+          await updateWithAudit(doc(songs,rejectId),{status:"barrada",motivo:reason,requestedBy:Array.isArray(song.requestedBy)?song.requestedBy:Array.isArray(song.votedBy)?song.votedBy:[]},"barrar_musica","musica",song.nome,{motivo:reason});
+          closeModal();showToast("Pedido barrado.");
+        }
+      }catch(error){showError(error,"Não foi possível concluir a moderação.");}
+      finally{actionInProgress=false;document.getElementById("confirm-reject").disabled=false;render();}
+    }
+    function closeModal(){document.getElementById("reject-modal").classList.replace("flex","hidden");rejectId=null;rejectType="song";}
+    function showUndoToast(text,undo){showToast(text,undo);}
+    function showToast(text,undo=null){
+      const toast=document.getElementById("toast"),message=document.getElementById("toast-message"),undoButton=document.getElementById("toast-undo");
+      if(toastTimeout)clearTimeout(toastTimeout);message.textContent=text;undoAction=undo;undoButton.classList.toggle("hidden",!undo);
+      undoButton.onclick=undo?async()=>{undoButton.disabled=true;try{await undoAction();undoAction=null;showToast("Ação desfeita.");}catch(error){showError(error,"Não foi possível desfazer a ação.");}finally{undoButton.disabled=false;}}:null;
+      toast.classList.remove("hidden");toastTimeout=setTimeout(()=>{toast.classList.add("hidden");undoAction=null;},undo?7000:3000);
+    }
+    function askDelete(title="Excluir pedido?",description="Essa ação não pode ser desfeita.",confirmLabel="Excluir"){return new Promise(resolve=>{const modal=document.getElementById("confirm-modal"),yes=document.getElementById("confirm-delete"),no=document.getElementById("cancel-delete");modal.querySelector("h2").textContent=title;modal.querySelector("p").textContent=description;yes.textContent=confirmLabel;modal.classList.replace("hidden","flex");const finish=value=>{modal.classList.replace("flex","hidden");yes.onclick=null;no.onclick=null;resolve(value)};yes.onclick=()=>finish(true);no.onclick=()=>finish(false)})}
+    document.getElementById("confirm-reject").onclick=reject;document.getElementById("cancel-reject").onclick=closeModal;document.getElementById("cancel-reject-2").onclick=closeModal;
   </script>
 </body>
 </html>
